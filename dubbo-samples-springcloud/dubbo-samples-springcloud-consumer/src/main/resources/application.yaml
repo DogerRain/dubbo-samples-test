@@ -1,0 +1,14 @@
+server:
+  port: 8091
+
+
+spring:
+  application:
+    name: dubbo-samples-consumer-springCloud
+
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181
+
+#  scan:
+#    base-packages: com.dubbo.service

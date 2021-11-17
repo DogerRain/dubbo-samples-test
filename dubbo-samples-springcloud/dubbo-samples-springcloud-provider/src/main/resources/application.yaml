@@ -1,0 +1,17 @@
+server:
+  port: 8090
+
+
+spring:
+  application:
+    name: dubbo-samples-privider-springCloud
+
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    protocol: dubbo
+    port: 20880
+    timeout: 2000
+
+#  scan:
+#    base-packages: com.dubbo.service
