@@ -1,0 +1,3670 @@
+﻿CSDN首页
+首页
+博客
+程序员学院
+下载
+论坛
+问答
+代码
+直播
+电子书
+import
+ 
+
+会员中心
+收藏
+动态
+消息21
+创作中心
+关闭缓冲区之前，务必调用flush()方法
+
+androiderComing 2011-05-16 17:00:00  4811  收藏 3
+文章标签： file api import string class java
+版权
+    这几天在看Java IO，感觉很乱。因为很重要，所以硬着头皮反复看，终于有点头绪。
+
+    昨晚写得测试代码只有FileReader，刚才上机课闲着没事，修改了下，增加了FileWriter、BufferedReader和BufferedWriter。
+
+如题，本文不想讲解怎么使用上面的类，只是想说一下flush()方法很重要！
+
+    开始的时候，在D盘根目录下建了个 love.txt文件，很小，就几个字符。开始没调用flush()方法，生成的android.txt文件下竟然是空的，预想的应该是love.txt文件内容的复制。反复看这段代码，难道是FileWriter或者BufferedWriter没用对，发现这部分没错。然后就看API，正好看到了flush()方法，然后恍然大悟。我竟然把这么重要的事儿忘了，关闭缓冲区前，应该把缓冲区的“残余”数据强制写出。后来，我把love.txt里的内容增加到了192k，先不调用flush()，那么输出的android.txt文件只有190k，很明显，数据有丢失，丢失的就是缓冲区“残余”的数据。后来调用flush()，输出的android.txt文件和love.txt文件的大小一样，数据没有丢失。
+
+开始的时候因为love.txt文件的内容太少了，还没装满缓冲区，被当成“残余”数据了，所以没复制过去。后来把love.txt文件增大，发现了是数据丢失了。。。
+
+API对flush()方法说明如下： 
+
+public void flush()
+           throws IOException刷新该流的缓冲。
+
+    个人感觉“刷新”一词用的不贴切，应该用"强制写出缓冲区的数据"比较贴切。
+小小flush()的用处竟然这么大，这回我可记忆犹新，永远忘不掉了。
+饿了，带着好心情吃饭去。。。
+
+ 
+
+
+ 
+
+import java.io.*;
+public class ReaderAndBufferedTest{				
+	public static void main(String[] args){
+		try{
+			File fileDir=new File("D:/aaa/bbb/ppls");
+			fileDir.mkdirs();
+			File file=new File(fileDir,"android.txt");
+			
+			FileReader in=new FileReader("D:/love.txt");
+			
+			FileWriter out=new FileWriter(file);
+			BufferedReader br=new BufferedReader(in);
+			BufferedWriter bw=new BufferedWriter(out);
+			
+			int b;
+			System.out.println("下面读取文件");
+			while((b=br.read())!=-1){
+				System.out.print((char)b);
+				bw.write(b);
+			}
+			bw.flush();//务必写
+			in.close();//勿写br.close()和bw.close()
+			out.close();
+
+			
+		}catch(FileNotFoundException e){
+			System.out.println("/n找不到文件");
+			System.exit(-1);
+		}catch(IOException e){
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		System.out.println("/n文件已复制");
+	}
+}
+
+ 
+
+ 
+
+
+点赞
+3
+
+评论
+
+分享
+
+收藏
+3
+
+打赏
+
+举报
+关注
+一键三连
+
+
+ 
+
+在做io流读写的时候为什么要先调用flush()方法然后在调用close()方法
+weixin_43167662的博客
+ 42
+带缓冲功能的流的原理 : 如果是需要频繁的对文件进行读或写 , 普通流的速度会比较慢 , 而缓冲流是在普通流的基础上多了一个缓冲区 , 当读或写的数据达到一定量 , 再自动往文件里进行读写 , 如果没有装满缓冲区文件就已经读(写)完毕 , 那么这个时候已经读写到缓冲区的数据需要手动使其朝目标文件进行读写. 这个手动的过程 , 就是我们这里提到的flush()方法 . 换句话说 , 如果是文件读写完的同时缓冲区刚好装满 , 那么缓冲区会把里面的数据
+
+
+优质评论可以帮助作者获得更高权重
+表情包
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用
+evilcry2012的专栏
+ 3260
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用  我来答 分享 举报浏览 480 次 1个回答 #你心中的江湖# 金庸武侠剧中都有哪些传唱为经典的歌曲？ 最佳答案 真×长门有希  2016-11-22 flush，是将缓冲区的数据强制写入，其实在close的时候，也会进行一次flush的，因此close之前其实可以不用专门做flush的 但是在某些情况下，流...
+为什么部分IO流在调用Close()方法之前要先调用flush()方法
+机智的大黄鱼的博客
+ 1万+
+很多人可能一直比较纠结为什么有的带有缓冲功能的流在CLose()方法之前要先调用flush()方法 ,  我们先大概说一下带缓冲功能的流的原理   :   如果是需要频繁的对文件进行读或写  ,   普通流的速度会比较慢  ,   而缓冲流是在普通流的基础上多了一个缓冲区  ,   当读或写的数据达到一定量   ,    再自动往文件里进行读写  ,   如果没有装满缓冲区文件就已经读(写)完毕
+【异步请求相关知识点】flush()缓冲区强制写出_xuzhuaa...
+1-15
+这时候如果你调用了close()方法关闭了读写流,那么这部分数据就会丢失,所以应该在关闭读写流之前先flush()。。 在网络web服务器上也是,为了防止写一个字节就发送...
+为什么在关闭缓冲区输出流之前要执行flush方法。_qq843...
+1-24
+为什么在关闭缓冲区输出流之前要执行flush方法。因为缓冲区输出流带有一个数据缓冲区,缓冲区输出流默认调用write一般不会马上就把数据写出而是等数据缓冲区满了之后...
+IO流缓冲区的清空(flush方法)
+valance_1的专栏
+ 4995
+在IO流中的字符流的使用时，会接触到缓冲区这样一个概念，什么是缓冲区呢？ 实际上它就是一个临时的储存室，会暂时的将一些数据放在里面，当缓冲区的数据存满之后，他就会向下一级发送数据(清空缓冲区)。 此时，如果缓冲区接受的文件并没有装满，但是需要传输的数据已经发送完毕，缓冲区的数据会不会发送给下一级呢？     import java.io.IOException; import java
+使用缓冲流时记得恰当的使用flush()方法
+hanhongfei929的博客
+ 1097
+import java.io.*; public class TestBufferStream {     public static void main(String[] args) {         BufferedWriter bw = null;         BufferedReader br = null;         String url = "c:/test/
+io---BufferedOutputStream_flush-缓冲区写出字节时的缓冲区问题
+1-29
+*/ bos.flush(); System.out.println("写出完毕!"); /* * 缓冲流关闭时会自动调用一次flush方法 */ bos.close(); }
+flush()的作用_懒人的博客
+12-26
+flush() 是把缓冲区的数据强行输出, 主要用在IO中,即清空缓冲区数据,一般在读写流(stream)的时候,数据是先被读到了内存中,再把数据写到文件中,当你数据读完...
+java里flush的作用是什么，在这个例子中为什么加了flush就能运行正常
+07-26
+这个程序的功能是server 端和client端对话 os.flush();这句加了 Server端的程序就能收到Client发过来的消息， 没加 os.flush();这句 Server端的程序就不
+面试题：close()和flush()的区别？
+ 2万+
+对于字符流 一般写入的时候想要马上看到一般需要flush(), 面试题：close()和flush()的区别？ A:close()关闭流对象，但是先刷新一次缓冲区，关闭之后，流对象不可以继续再使用了。 B:flush()仅仅是刷新缓冲区(一般写字符时要用,因为字符是先进入的缓冲区)，流对象还可以继续使用
+FileOutputStream的flush()方法
+llkoio的专栏
+ 1万+
+flush() 是清空的意思。 一般主要用在IO中，即清空缓冲区数据，就是说你用读写流的时候，其实数据是先被读到了内存中，然后用数据写到文件中，当你数据读完的时候不代表你的数据已经写完了，因为还有一部分有可能会留在内存这个缓冲区中。这时候如果你调用了 close()方法关闭了读写流，那么这部分数据就会丢失，所以应该在关闭读写流之前先flush()，先清空数据。  fos.flush();可不是摆
+write()方法和flush()的作用
+aozhouji0069的博客
+ 528
+冯诺依曼体系结构中，将计算机分为运算器，控制器，存储器，输入/输出设备。 运算器，控制器是CPU的组成成分（还有一些寄存器）。 存储器则可以分为内存储器（内存）和外存储器（硬盘）， 输入输出设备主要来完成系统的I/O操作，I/O操作只要是对硬盘（外存）中的数据进行读和取。 由于CPU的运算速度远远大于I/O操作，因此，当一个进程需要产生许多I/O操作，会耗费许多系统资源，同时也不...
+Android平台刷新cache flush
+ThomasKing2014的专栏
+ 4851
+前段时间做SO双重解密，发
+OutputStream的flush()方法
+维
+ 2万+
+public void flush() throws IOException刷新此输出流并强制写出所有缓冲的输出字节。flush 的常规协定是：如果此输出流的实现已经缓冲了以前写入的任何字节，则调用此方法指示应将这些字节立即写入它们预期的目标。 如果此流的预期目标是由基础操作系统提供的一个抽象（如一个文件），则刷新此流只能保证将以前写入到流的字节传递给操作系统进行写入，但不保...
+对OutputStream类的flush()方法的误解
+cmoaciopm的专栏
+ 5840
+最近使用java的FileOutputStream写文件，调用到了flush()方法。 在Code Review时，同事指出没有调用flush()的必要。 于是查看了FileInputStream类的源代码，发现flush()其实是继承于其父类OutputStream的。 而OutputStream类的flush()却什么也没做，恍然大悟，真是“看源代码者得真相啊”。 其实flush()是
+java 输出流中的flush()方法
+weixin_43329834的博客
+ 149
+@Test public void test1() throws IOException { OutputStreamWriter os = new OutputStreamWriter(null); os.write("file"); os.flush(); // 在关闭流之前，调用flush()方法 os.close(); ja...
+为什么关闭一个缓冲区输出流之前应使用flush方法?
+SecondDream_1017的博客
+ 1066
+这要搞清楚缓冲区的原理了，缓冲区其实就是封装了一个数组，对数据进行临时缓冲，存满后再集中对数据进行操作，这也是提高流操作数据效率的原因，当缓冲区存满后会自动对数据进行操作，不刷新也可以，但是如果不存满就必须刷新了才能把数据刷到目的地，打个比方，默认缓冲区大小是8k，如果你是用缓冲区操作10k的数据，你使用了flush方法那么数据不会有丢失，但是如果没有使用fulsh方法那么得到得数据只有8k，剩下...
+close与flush方法
+qq_14898247的博客
+ 173
+close方法具有刷新的功能，在关闭流之前，就会刷新一次缓冲区，将缓冲区的字节全都刷新到文件上，再关闭，close刷新完毕后就不能继续写了； flush方法具备刷新的功能，刷完之后还可以继续写。 ...
+使用字符流 必须刷新缓冲区 flush
+Hurricane_m的博客
+ 1343
+实际上字节流在操作时本身不会用到缓冲区（内存），是文件本身直接操作的，而字符流在操作时使用了缓冲区，通过缓冲区再操作文件，如图12-6所示。 /** * 字符流 使用输入流读取一个文件内容到cpu中，然后使用输出流将内容写出到指定位置的外部文件中。 （使用输入输出流进行了文件的复制 */ @Test void test02() { try { Reader is...
+自动抢茅台脚本.zip
+01-25
+自动抢购飞天茅台脚本，亲测有效，已经抢到2瓶（python和go两种语言，Windows和Mac版本都有），支持京东、天猫平台，立即下载保存，避免被失效！
+©️2020 CSDN 皮肤主题: 大白 设计师:CSDN官方博客 返回首页
+关于我们
+招贤纳士
+广告服务
+开发助手
+
+400-660-0108
+
+kefu@csdn.net
+
+在线客服
+工作时间 8:30-22:00
+公安备案号11010502030143
+京ICP备19004658号
+京网文〔2020〕1039-165号
+经营性网站备案信息
+北京互联网违法和不良信息举报中心
+网络110报警服务
+中国互联网举报中心
+家长监护
+Chrome商店下载
+©1999-2021北京创新乐知网络技术有限公司
+版权与免责声明
+版权申诉
+
+androiderComing
+码龄10年
+ 暂无认证
+1
+原创
+96万+
+周排名
+69万+
+总排名
+5210
+访问
+
+等级
+63
+积分
+0
+粉丝
+1
+获赞
+0
+评论
+3
+收藏
+私信
+关注
+搜博主文章
+
+热门文章
+关闭缓冲区之前，务必调用flush()方法  4807
+
+最新文章
+2011年1篇
+
+
+举报
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开发
+15 人赞同了该回答
+首先 解释下这个flush的作用
+这个是java.io.OutputStream的 空实现(java.io.FileOutputStream使用的是java.io.OutputStream的实现 java.net.SocketOutputStream也是一样)
+    /**
+     * Flushes this output stream and forces any buffered output bytes
+     * to be written out. The general contract of <code>flush</code> is
+     * that calling it is an indication that, if any bytes previously
+     * written have been buffered by the implementation of the output
+     * stream, such bytes should immediately be written to their
+     * intended destination.
+     * <p>
+     * If the intended destination of this stream is an abstraction provided by
+     * the underlying operating system, for example a file, then flushing the
+     * stream guarantees only that bytes previously written to the stream are
+     * passed to the operating system for writing; it does not guarantee that
+     * they are actually written to a physical device such as a disk drive.
+     * <p>
+     * The <code>flush</code> method of <code>OutputStream</code> does nothing.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+    }
+这个是java.io.BufferedOutputStream的
+    /**
+     * Flushes this buffered output stream. This forces any buffered
+     * output bytes to be written out to the underlying output stream.
+     *
+     * @exception  IOException  if an I/O error occurs.
+     * @see        java.io.FilterOutputStream#out
+     */
+    public synchronized void flush() throws IOException {
+        flushBuffer();
+        out.flush();
+    }
+
+为了防止过于频繁的写操作 所以Java提供了一个java.io.BufferedOutputStream类 内部持有一个缓冲区 默认不直接将数据写到硬盘上 而是存到缓冲区中 直到一定条件后触发(就是调用上面的flushBuffer()了) 也可以强制通过flush()方法提前触发
+
+所以当你认为你完成了某一个比较重要的操作的时候 最好进行一次flush 防止数据在内存中丢失
+
+========================以下是题外话=============================
+以上全部都是在语言层面上做出的优化 实际运行中 操作系统也会做优化 并不是实际调用了write方法 数据就会落到硬盘上 因为操作系统有IO缓存 所以保证数据真正落地的方法不仅仅是调用flush 还要调用java.io.FileDescriptor#sync()方法 这个方法是本地方法 我没看实现 不过应该就跟下面这个链接里说的是一回事
+文件I/O编程之sync、fsync和fdatasync函数
+发布于 2015-05-11
+​赞同 15​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+收起​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+资深铁锈
+资深铁锈
+互联网爱好者，非专业人士。
+这个要看输出流的具体实现。
+发布于 2015-05-12
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+阿茶
+阿茶
+软件工程师
+1 人赞同了该回答
+看需求！flush是刷新，调用了之后数据就会更新，但是依旧可以继续操作！close是关闭，但是关闭之前会刷新数据，调用之后就无法再次操作了！弄清楚两者的区别，再根据需求看选择哪一个！比如你需要实时更新数据就用flush，如果等所有操作结束再更新就用close。
+
+发布于 2019-03-10
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+赵云涛
+赵云涛
+资深技术人
+1 人赞同了该回答
+多数时候，如果你最后会调用一次close方法，flush方法是可以不使用的，除非你明确的想使数据尽早写到磁盘或者网络上。
+发布于 2015-05-12
+​赞同 1​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+白某人
+白某人
+混吃等死
+正常调用close方法关闭流的话，可以不调用flush，close会自动调用flush方法的
+
+发布于 2019-08-22
+​赞同​
+​添加评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+匿名用户
+匿名用户
+close会自动flush，什么时候都不用调用。
+发布于 2015-05-13
+​赞同​
+​1 条评论
+​分享
+​收藏
+​喜欢
+​
+继续浏览内容
+
+知乎
+发现更大的世界
+打开
+
+Chrome
+继续
+​写回答
+广告广告
+相关问题
+20岁想转Java能行吗? 7 个回答
+JAVA有一些把某种东西转换成对象，这样有什么意义吗？ 9 个回答
+想转行学java，不知道哪个培训机构靠谱些.求推荐？ 6 个回答
+#为什么我这个Java照着书打提示错误? 6 个回答
+Java能用来做什么？ 6 个回答
+相关推荐
+live
+Java 逍遥游记
+孙卫琴编著
+5 人读过
+​阅读
+live
+Java 程序设计
+韩建平
+4 人读过
+​阅读
+live
+Java Web 程序设计
+张磊 丁香乾编著
+7 人读过
+​阅读
+广告广告
+刘看山知乎指南知乎协议知乎隐私保护指引
+应用工作申请开通知乎机构号
+侵权举报网上有害信息举报专区
+京 ICP 证 110745 号
+京 ICP 备 13052560 号 - 1
+京公网安备 11010802020088 号
+互联网药品信息服务资格证书
+（京）- 非经营性 - 2017 - 0067违法和不良信息举报：010-82716601
+儿童色情信息举报专区
+证照中心
+联系我们 © 2021 知乎
+
+首页
+会员
+发现
+等你来答
+新电脑到手下载哪些软件呢
+​
+提问
+​3
+​
+
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+关注问题​写回答
+Java
+java的io流中，什么时候应该在流关闭之前加flush，什么时候不用呢？
+如题
+
+关注者
+29
+被浏览
+9,065
+关注问题​写回答
+​邀请回答
+​好问题
+​1 条评论
+​分享
+​修改问题
+​
+6 个回答
+默认排序
+赵北云
+赵北云
+Java开�

@@ -2,37 +2,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
         <artifactId>dubbo-samples-xml</artifactId>
         <groupId>com.dubbo</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <version>0.0.1-SNAPSHOT</version>
-    <name>dubbo-samples-xml-provider</name>
-    <description>Demo project for Spring Boot</description>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dubbo-samples-xml-provider</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.dubbo</groupId>
-            <artifactId>dubbo-samples-xml-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
         </dependency>
     </dependencies>
+
+    <artifactId>dubbo-samples-xml-api</artifactId>
 
 
 </project>

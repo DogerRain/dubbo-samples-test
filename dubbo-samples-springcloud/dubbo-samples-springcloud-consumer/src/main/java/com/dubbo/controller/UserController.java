@@ -4,6 +4,7 @@ import com.dubbo.api.UserService;
 import com.dubbo.vo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ public class UserController {
 
         log.info("applicationName:{}",applicationName);
         User user = userService.getUserInfo(id);
+        log.info("response from provider: {}" , user);
 
         return user;
     }
