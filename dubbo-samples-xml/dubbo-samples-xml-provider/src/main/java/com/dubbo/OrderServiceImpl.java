@@ -1,4 +1,4 @@
-package com.dubbo.service;
+package com.dubbo;
 
 import com.dubbo.api.OrderService;
 import com.dubbo.vo.Order;

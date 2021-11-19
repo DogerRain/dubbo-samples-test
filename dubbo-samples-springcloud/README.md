@@ -6,17 +6,17 @@ dubbo新版本（3.0以上）在相对于 dubbo 旧版本（2.5、2.6、2.7）�
 
 官方文档也说了新版本的特性：
 
-https://dubbo.apache.org/zh/docs/v3.0/new-in-dubbo3/
+[https://dubbo.apache.org/zh/docs/v3.0/new-in-dubbo3](https://dubbo.apache.org/zh/docs/v3.0/new-in-dubbo3)
 
-
-
-本文就来使用dubbo新版本 搭建一个 **dubbo+SpringBoot** 项目，项目结构：
+<font style="color:orange;font-size:20px;font-weight:500"> **本文就来使用dubbo3.0新版本 搭建一个dubbo+SpringBoot** 项目，项目结构：</font>
 
 ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202109/image-20211119100408971.png)
 
-源码已上传到github：https://github.com/DogerRain/dubbo-samples-test
+源码已上传到github：[https://github.com/DogerRain/dubbo-samples-test](https://github.com/DogerRain/dubbo-samples-test)
 
 （项目名字是带springCloud的，因为本来还想整合SpringCloud的，还没来得及整合.....先不改了）
+
+下面是十分详细的过程。
 
 环境要求：
 
@@ -267,6 +267,8 @@ public class UserServiceImpl implements UserService {
 
 @DubboService 表示这是一个暴露出去的接口。
 
+> 旧版本可能是 使用 @Service ，与 spring的 @Service 容易让人误解，不推荐使用
+
 @Component 表示这是一个bean，方便其他地方引用
 
 ###  2.4、添加一个Controller
@@ -423,7 +425,11 @@ public class ConsumerApplication {
 
 dubboAdmin 是一个后台可视化项目，可以看到 关于dubbo服务方、消费者相关的信息。
 
-这里就不阐述怎么搭建了，可以参考：
+![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202109/image-20211119160552651.png)
+
+这里就不阐述怎么搭建了，可以参考其他文章。
+
+
 
 ### 4.4、调用 consumer 的接口
 
@@ -491,7 +497,7 @@ consumer日志：
 
 ### 5.4、最后
 
-项目的地址已经上传到github：https://github.com/DogerRain/dubbo-samples-test
+项目的地址已经上传到github：[https://github.com/DogerRain/dubbo-samples-test](https://github.com/DogerRain/dubbo-samples-test)
 
 接下来还有两个TODO：
 
