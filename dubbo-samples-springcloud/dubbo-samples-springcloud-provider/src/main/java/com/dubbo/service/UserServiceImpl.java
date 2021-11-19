@@ -12,17 +12,34 @@ import org.springframework.stereotype.Component;
  * @date 2021/11/17
  * @Description
  */
-@DubboService
+//这里可以配置 version、group、协议、负载均衡、超时、超时 等等。见xml项目
+@DubboService(version = "1.0.0")
 @Component
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-
+    /**
+     *
+     * @param userId
+     * @return
+     * RPC provider 接口 实现
+     */
     @Override
     public User getUserInfo(long userId) {
 
         log.info("request from consumer: {}", RpcContext.getContext().getRemoteAddress());
         log.info("response from provider: {}" , RpcContext.getContext().getLocalAddress());
-        return new User(userId, "userName+" + userId + "  response from provider:" + RpcContext.getContext().getLocalAddress());
+        return new User(userId, "userName" + userId , " --->>>>response from remote RPC provider:" + RpcContext.getContext().getLocalAddress());
     }
+
+    /**
+     *
+     * @param userId
+     * @return
+     * 本地 provider 接口 实现
+     */
+    public User getUserInfoFromLocal(Long userId){
+        return new User(userId,"userName"+userId," --->>>>from Local provider ");
+    }
+
 }

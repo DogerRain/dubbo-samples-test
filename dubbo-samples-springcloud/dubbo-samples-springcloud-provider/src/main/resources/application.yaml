@@ -14,11 +14,11 @@ dubbo:
     timeout: 2000
 #    protocol: -1
 #    port: -1
-  metadata-report:
-    address: zookeeper://127.0.0.1:2181
-    protocol: -1
-    port: -1
-    default: false
+#  metadata-report:
+#    address: zookeeper://127.0.0.1:2181
+#    protocol: -1
+#    port: -1
+#    default: false
   protocol:
     name: dubbo
     port: 20890
