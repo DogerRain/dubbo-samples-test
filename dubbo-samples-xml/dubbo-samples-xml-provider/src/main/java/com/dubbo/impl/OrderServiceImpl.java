@@ -1,8 +1,7 @@
-package com.dubbo;
+package com.dubbo.impl;
 
 import com.dubbo.api.OrderService;
 import com.dubbo.vo.Order;
-import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
  * @date 2021/11/17
  * @Description
  */
-@DubboService
 public class OrderServiceImpl implements OrderService {
 
     @Override
@@ -25,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order2 = new Order();
         order1.setOrderId(200L);
-        order1.setOrderName("GTR 2060");
+        order1.setOrderName("RTX 2060");
 
         list.add(order1);
         list.add(order2);

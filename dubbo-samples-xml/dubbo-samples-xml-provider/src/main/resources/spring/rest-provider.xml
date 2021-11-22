@@ -15,18 +15,34 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
+
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
        xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder/>
 
-<dubbo:application name="dubbo-samples-consumer-xml"/>
+    <dubbo:application name="dubbo-samples-provider-xml"/>
 
     <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
-    <dubbo:protocol name="dubbo" port="20882"/>
 
-    <dubbo:reference id="orderService" check="false"
-                     interface="com.dubbo.api.OrderService"/>
+    <!-- 使用内部tomcat -->
+    <!-- 自定义filter 和 Interceptor -->
+    <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"/>
+    <!--使用外部tomcat-->
+    <!--<dubbo:protocol name="rest" port="8888" contextpath="services" server="servlet"/>-->
+    <dubbo:protocol name="dubbo" port="20883" threads="200"/>
+
+
+    <bean id="orderRESTService" class="com.dubbo.impl.OrderRESTServiceImpl"/>
+    <bean id="orderService" class="com.dubbo.impl.OrderServiceImpl"/>
+
+    <!--rest 接口-->
+    <dubbo:service interface="com.dubbo.api.OrderRESTService" ref="orderRESTService"
+                   protocol="rest" validation="true"/>
+    <!--dubbo 接口-->
+    <dubbo:service interface="com.dubbo.api.OrderService"
+                   ref="orderService" protocol="dubbo"/>
 
 </beans>

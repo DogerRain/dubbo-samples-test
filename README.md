@@ -6,11 +6,11 @@ dubbo3.0整合springboot、spring 的例子。
 
 Dubbo3.0 + SpringBoot 整合例子：
 
- [Dubbo3.0 + SpringBoot 整合例子 + zookeeper](dubbo-samples-xml\README.md) 
+ [Dubbo3.0 + SpringBoot 整合例子 + zookeeper](dubbo-samples-xml/README.md) 
 
 Duboo+Spring（xml形式）整合例子：
 
- [Duboo3.0+Spring（xml形式）+ zookeeper 整合例子](dubbo-samples-springcloud\README.md) 
+ [Duboo3.0 + Spring（xml形式）+ zookeeper 整合例子](dubbo-samples-springcloud/README.md) 
 
 
 

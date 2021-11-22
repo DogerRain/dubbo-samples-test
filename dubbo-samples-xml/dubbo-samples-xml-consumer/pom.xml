@@ -13,9 +13,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.dubbo</groupId>
+            <artifactId>dubbo-samples-xml-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>
