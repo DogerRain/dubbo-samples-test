@@ -29,9 +29,9 @@
 
     <!-- 使用内部tomcat -->
     <!-- 自定义filter 和 Interceptor -->
-    <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"/>
+    <dubbo:protocol name="rest" port="9999" threads="500" contextpath="services" server="tomcat" accepts="500"/>
     <!--使用外部tomcat-->
-    <!--<dubbo:protocol name="rest" port="8888" contextpath="services" server="servlet"/>-->
+    <!--<dubbo:protocol name="rest" port="9999" contextpath="services" server="servlet"/>-->
     <dubbo:protocol name="dubbo" port="20883" threads="200"/>
 
 
@@ -40,7 +40,7 @@
 
     <!--rest 接口-->
     <dubbo:service interface="com.dubbo.api.OrderRESTService" ref="orderRESTService"
-                   protocol="rest" validation="true"/>
+                   protocol="rest,dubbo" validation="true"/>
     <!--dubbo 接口-->
     <dubbo:service interface="com.dubbo.api.OrderService"
                    ref="orderService" protocol="dubbo"/>

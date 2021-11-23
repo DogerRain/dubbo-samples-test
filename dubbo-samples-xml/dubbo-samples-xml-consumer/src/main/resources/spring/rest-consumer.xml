@@ -25,7 +25,10 @@
 
     <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
 
-    <dubbo:reference id="orderRESTService" check="false" protocol="rest"
+    <dubbo:reference id="orderRESTService" check="false" protocol="rest,dubbo"
                      interface="com.dubbo.api.OrderRESTService"/>
+
+    <dubbo:reference id="orderService" check="false" protocol="dubbo"
+                     interface="com.dubbo.api.OrderService"/>
 
 </beans>

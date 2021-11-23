@@ -19,6 +19,7 @@
 package com.dubbo;
 
 import com.dubbo.api.OrderRESTService;
+import com.dubbo.api.OrderService;
 import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -28,14 +29,21 @@ public class RestConsumer {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring/rest-consumer.xml"});
         context.start();
 
-        OrderRESTService  orderRESTService= (OrderRESTService) context.getBean("orderRESTService");
+        OrderRESTService orderRESTService = context.getBean("orderRESTService",OrderRESTService.class);
 
+        OrderService orderService = context.getBean("orderService", OrderService.class);
+
+        System.out.println("consumer service start ......");
         while (true) {
             System.in.read();
             RpcContext rpcContext = RpcContext.getContext();
             rpcContext.setAttachment("clientName", "demoRest");
             rpcContext.setAttachment("clientImpl", "dubbo");
             System.out.println("SUCCESS: got order " + orderRESTService.getOrderInfo(1L));
+
+
+            System.out.println("SUCCESS: got order list : " + orderService.getOrderInfo(1L));
+
         }
 
     }
