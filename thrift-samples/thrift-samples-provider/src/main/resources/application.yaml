@@ -1,0 +1,7 @@
+server:
+  port: 7999
+
+
+spring:
+  application:
+    name: thrift-samples-consumer

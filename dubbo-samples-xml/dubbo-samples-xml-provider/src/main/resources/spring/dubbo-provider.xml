@@ -29,7 +29,7 @@
 
     <dubbo:protocol name="dubbo" port="20883"/>
 
-    <bean id="orderService" class="com.dubbo.impl.OrderServiceImpl"/>
+    <bean id="orderService" class="com.dubbo.com.thrift.impl.OrderServiceImpl"/>
 
     <dubbo:service interface="com.dubbo.api.OrderService"
                    ref="orderService"/>

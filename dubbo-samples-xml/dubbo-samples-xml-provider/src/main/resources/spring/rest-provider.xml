@@ -35,8 +35,8 @@
     <dubbo:protocol name="dubbo" port="20883" threads="200"/>
 
 
-    <bean id="orderRESTService" class="com.dubbo.impl.OrderRESTServiceImpl"/>
-    <bean id="orderService" class="com.dubbo.impl.OrderServiceImpl"/>
+    <bean id="orderRESTService" class="com.dubbo.com.thrift.impl.OrderRESTServiceImpl"/>
+    <bean id="orderService" class="com.dubbo.com.thrift.impl.OrderServiceImpl"/>
 
     <!--rest 接口-->
     <dubbo:service interface="com.dubbo.api.OrderRESTService" ref="orderRESTService"
