@@ -24,9 +24,15 @@
 <dubbo:application name="dubbo-samples-consumer-xml"/>
 
     <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
-    <dubbo:protocol name="dubbo" port="20882"/>
 
-    <dubbo:reference id="orderService" check="false"
-                     interface="com.dubbo.api.OrderService"/>
+    <dubbo:reference id="orderService1" check="false"
+                     interface="com.dubbo.api.OrderService" version="1" protocol="hessian"/>
+
+    <dubbo:reference id="orderService2" check="false"
+                     interface="com.dubbo.api.OrderService" version="2" protocol="dubbo"/>
+
+    <!--<dubbo:reference id="orderService3" check="false"-->
+                     <!--interface="com.dubbo.api.OrderRESTService" version="3"  protocol="rest"/>-->
+
 
 </beans>

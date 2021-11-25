@@ -28,10 +28,21 @@
     <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
 
     <dubbo:protocol name="dubbo" port="20883"/>
+    <dubbo:protocol name="hessian" port="8888" server="tomcat"/>
 
-    <bean id="orderService" class="com.dubbo.com.thrift.impl.OrderServiceImpl"/>
+    <!--<dubbo:protocol name="rest" port="9999" threads="500" contextpath="services" server="tomcat" accepts="500"/>-->
+
+
+    <bean id="orderService" class="com.dubbo.impl.OrderServiceImpl"/>
+    <bean id="orderRESTServiceImpl" class="com.dubbo.impl.OrderRESTServiceImpl"/>
 
     <dubbo:service interface="com.dubbo.api.OrderService"
-                   ref="orderService"/>
+                   ref="orderService" protocol="hessian" version="1"/>
+
+    <dubbo:service interface="com.dubbo.api.OrderService"
+                   ref="orderService" protocol="dubbo" version="2"/>
+
+    <!--<dubbo:service interface="com.dubbo.api.OrderRESTService"-->
+                   <!--ref="orderRESTServiceImpl" protocol="rest" version="3"/>-->
 
 </beans>
