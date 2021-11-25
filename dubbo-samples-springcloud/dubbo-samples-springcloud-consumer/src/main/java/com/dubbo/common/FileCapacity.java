@@ -10,7 +10,7 @@ import java.net.URLDecoder;
  */
 public class FileCapacity {
 
-    String getFileCapacity(long capacity) {
+    public String getFileCapacity(long capacity) {
         try {
 
             String fileName = this.getClass().getResource("/Hello.txt").getFile();

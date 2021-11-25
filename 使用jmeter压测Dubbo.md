@@ -1,8 +1,8 @@
 参考：
 
-- https://blog.csdn.net/u013815546/article/details/101385888
+- 压测dubbo：https://blog.csdn.net/u013815546/article/details/101385888
 
-- https://blog.csdn.net/cyjs1988/article/details/84258046
+- 压测dubbo：（有点不一样）https://blog.csdn.net/cyjs1988/article/details/84258046
 
 - https://blog.51cto.com/ydhome/1861956
 
@@ -22,6 +22,10 @@ https://dangdangdotcom.github.io/dubbox/rest.html
 
 https://www.cnblogs.com/imyalost/p/7751981.html
 
+jmeter版本和serverAgent版本问题：
+
+https://www.cnblogs.com/SunshineKimi/p/11361216.html
+
 
 
 博客推荐：
@@ -39,3 +43,20 @@ jdk：1.8
 2h4g
 
 宿主机带宽 1G
+
+java -Xmx2048m -Xms2048m  -jar 
+
+
+
+
+
+servergent：
+
+```
+[root@GZSB-CJB-SHH10-8-LASTMILE-32 ServerAgent-2.2.3]# ./startAgent.sh 
+INFO    2021-11-25 14:06:18.483 [kg.apc.p] (): Binding UDP to 4444
+INFO    2021-11-25 14:06:19.490 [kg.apc.p] (): Binding TCP to 4444
+INFO    2021-11-25 14:06:19.497 [kg.apc.p] (): JP@GC Agent v2.2.3 started
+
+```
+

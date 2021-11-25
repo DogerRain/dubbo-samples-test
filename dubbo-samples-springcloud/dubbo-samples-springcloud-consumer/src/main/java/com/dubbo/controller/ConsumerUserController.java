@@ -21,11 +21,22 @@ public class ConsumerUserController {
     @DubboReference(version = "*", protocol = "dubbo", loadbalance = "random")
     private UserService userService;
 
+    @DubboReference(version = "*",protocol = "hessian")
+    private UserService userService2;
+
     @RequestMapping("/user/{id}")
     public User getUser(@PathVariable("id") Long id) {
         User user = userService.getUserInfo(id);
         log.info("response from provider: {}", user);
         return user;
     }
+
+    @RequestMapping("/userHessian/{id}")
+    public User getUserHessian(@PathVariable("id") Long id) {
+        User user = userService2.getUserInfo(id);
+        log.info("response from provider: {}", user);
+        return user;
+    }
+
 
 }

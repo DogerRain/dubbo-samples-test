@@ -17,8 +17,8 @@ public interface StressTestService {
 
     List<User> StressListUser(List<User> list);
 
-    String StressTest50K(byte[] bytes);
+    String StressTest50K(String bytes);
 
-    String StressTest100K(byte[] bytes);
+    String StressTest100K(String bytes);
 
 }

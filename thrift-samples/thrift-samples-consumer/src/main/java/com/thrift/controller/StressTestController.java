@@ -1,7 +1,6 @@
 package com.thrift.controller;
 
 import com.shrift.api.Hello;
-import com.thrift.Configuration;
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class StressTestController {
 
     @Autowired
-    Configuration configuration;
+    Hello.Client client;
 
     @RequestMapping("/string")
     public Boolean string() throws TException {
-        Hello.Client client =  configuration.client();
+//        Hello.Client client =  configuration.client();
         String resp = client.helloString("wertyuiopsdfghjkl;");
         System.out.println(resp);
         return true;
