@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ConsumerUserController {
 
-    @DubboReference(version = "*", protocol = "dubbo", loadbalance = "random")
+    @DubboReference(version = "*", protocol = "dubbo", loadbalance = "random" )
     private UserService userService;
 
-    @DubboReference(version = "*",protocol = "hessian")
-    private UserService userService2;
+//    @DubboReference(version = "*",protocol = "dubbo")
+//    private UserService userService2;
 
     @RequestMapping("/user/{id}")
     public User getUser(@PathVariable("id") Long id) {
@@ -33,9 +33,10 @@ public class ConsumerUserController {
 
     @RequestMapping("/userHessian/{id}")
     public User getUserHessian(@PathVariable("id") Long id) {
-        User user = userService2.getUserInfo(id);
-        log.info("response from provider: {}", user);
-        return user;
+//        User user = userService2.getUserInfo(id);
+//        log.info("response from provider: {}", user);
+//        return user;
+        return null;
     }
 
 

@@ -11,7 +11,8 @@ dubbo:
     address: zookeeper://127.0.0.1:2181
     timeout: 10000
   protocol:
-    name: hessian
+    name: dubbo
+    serialization: hessian2
 
 #  scan:
 #    base-packages: com.dubbo.service

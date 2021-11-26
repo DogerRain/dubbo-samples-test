@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @Description
  */
 //这里可以配置 version、group、协议、负载均衡、超时、超时 等等。见xml项目
-@DubboService(version = "1.0.0",protocol = {"hessian"})
+@DubboService(version = "1.0.0",protocol = {"dubbo"})
 @Component
 @Slf4j
 public class UserServiceImpl implements UserService {
