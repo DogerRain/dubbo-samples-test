@@ -34,17 +34,13 @@ http://shiyanjun.cn/archives/349.html
 
 
 
+使用的分析工具：
+
+1、gc可视化工具：https://gceasy.io/
+
+2、压测工具：jmeter（需要安装插件）
 
 
-环境：
-
-jdk：1.8
-
-2h4g
-
-宿主机带宽 1G
-
-java -Xmx2048m -Xms2048m  -jar 
 
 
 
@@ -59,4 +55,34 @@ INFO    2021-11-25 14:06:19.490 [kg.apc.p] (): Binding TCP to 4444
 INFO    2021-11-25 14:06:19.497 [kg.apc.p] (): JP@GC Agent v2.2.3 started
 
 ```
+
+
+
+
+
+## 1、压测情况
+
+环境：
+
+```
+jdk：1.8
+
+2h4g
+```
+
+宿主机带宽 ：
+
+```
+1G
+```
+
+jvm参数：
+
+```
+-Xms1024m -Xmx1024m -XX:PermSize=64M -XX:+UseG1GC
+```
+
+
+
+## 1.1、dubbo+默认
 

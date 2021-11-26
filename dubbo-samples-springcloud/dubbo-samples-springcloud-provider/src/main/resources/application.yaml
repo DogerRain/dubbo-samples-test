@@ -22,6 +22,7 @@ dubbo:
   protocol:
     name: dubbo
     port: 20890
+    serialization: hessian2
   scan:
     base-packages: com.dubbo.service
 

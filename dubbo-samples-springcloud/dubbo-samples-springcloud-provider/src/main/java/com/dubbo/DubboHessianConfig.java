@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class DubboHessianConfig {
 
     // 配置rest协议
-    @Bean("hessian")
+//    @Bean("hessian")
     public ProtocolConfig restProtocolConfig() {
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("hessian");
@@ -25,5 +25,6 @@ public class DubboHessianConfig {
         // 可继续增加其它配置
         return protocolConfig;
     }
+
 }
 

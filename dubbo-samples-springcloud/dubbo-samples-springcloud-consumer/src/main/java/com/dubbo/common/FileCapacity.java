@@ -33,10 +33,10 @@ public class FileCapacity {
     }
 
     public static void main(String[] args) throws IOException{
-        int k = 10;
+        int k = 1;
         String s = new FileCapacity().getFileCapacity(k*1024);
 
-        File file2 = new File("/HelloCoder_"+k+"K.txt");
+        File file2 = new File("F:\\HelloCoder_"+k+"K.txt");
         OutputStream os2 = new FileOutputStream(file2,false);
         byte[] bytes = s.getBytes();
         os2.write(bytes);

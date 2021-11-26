@@ -5,6 +5,7 @@ import com.dubbo.api.UserService;
 import com.dubbo.common.FileCapacity;
 import com.dubbo.vo.User;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,18 +25,19 @@ public class StressTestController {
 
 
 
-    @DubboReference(version = "*", protocol = "dubbo", loadbalance = "random",timeout = 3000)
+    @DubboReference(version = "*", protocol = "dubbo", loadbalance = "random",timeout = 3000,retries = 0)
     private StressTestService stressTestService;
 
     private int a = 1;
 
     @RequestMapping("/stressTest/string")
     public Boolean string(){
-        String result = stressTestService.StressString("String"+a);
-        log.info("method:string,result:{}",result);
-        System.out.println(result+":" + a );
+        String s = new FileCapacity().getFileCapacity(1*1024);
+        String result = stressTestService.StressString(s);
+        log.info("stressTest/string:{}",a);
         a++;
         return true;
+
     }
 
     @RequestMapping("/stressTest/pojo")
