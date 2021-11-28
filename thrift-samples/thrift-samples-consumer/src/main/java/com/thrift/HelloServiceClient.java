@@ -8,6 +8,7 @@ import com.shrift.api.Hello;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
@@ -28,6 +29,7 @@ public class HelloServiceClient {
             transport.open();
             // 设置传输协议为 TBinaryProtocol
             TProtocol protocol = new TBinaryProtocol(transport);
+            TProtocol protocol1 = new TTupleProtocol(transport);
             Hello.Client client = new Hello.Client(protocol);
             // 调用服务的 helloVoid 方法
 //            client.helloVoid();

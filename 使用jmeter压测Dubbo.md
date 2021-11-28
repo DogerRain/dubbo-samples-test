@@ -26,6 +26,10 @@ jmeter版本和serverAgent版本问题：
 
 https://www.cnblogs.com/SunshineKimi/p/11361216.html
 
+dubbo压测的官方代码：
+
+https://github.com/apache/dubbo-benchmark
+
 
 
 博客推荐：
