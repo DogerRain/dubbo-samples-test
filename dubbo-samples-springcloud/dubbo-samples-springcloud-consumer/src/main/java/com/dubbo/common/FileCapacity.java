@@ -1,5 +1,8 @@
 package com.dubbo.common;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
 import java.io.*;
 import java.net.URLDecoder;
 
@@ -13,14 +16,17 @@ public class FileCapacity {
     public String getFileCapacity(long capacity) {
         try {
 
-            String fileName = this.getClass().getResource("/Hello.txt").getFile();
-            fileName = URLDecoder.decode(fileName, "UTF-8");
+//            String fileName = this.getClass().getResource("/Hello.txt").getFile();
+            ClassPathResource resource = new ClassPathResource("Hello.txt");
+//            String fileName = resource.getFilename();
 
-            File file = new File(fileName);
+//            String fileName = this.getClass().getClassLoader().getResource("/Hello.txt").getPath();
+//            fileName = URLDecoder.decode(fileName, "UTF-8");
+
+//            File file = new File(fileName);
             Long fileLength = capacity;
             byte[] fileContent = new byte[fileLength.intValue()];
-
-            FileInputStream in = new FileInputStream(file);
+            InputStream in = resource.getInputStream();
             in.read(fileContent);
             in.close();
             return new String(fileContent);
@@ -33,9 +39,9 @@ public class FileCapacity {
     }
 
     public static void main(String[] args) throws IOException{
-        int k = 1;
+        int k = 100;
         String s = new FileCapacity().getFileCapacity(k*1024);
-
+        System.out.println(s.length());
         File file2 = new File("F:\\HelloCoder_"+k+"K.txt");
         OutputStream os2 = new FileOutputStream(file2,false);
         byte[] bytes = s.getBytes();

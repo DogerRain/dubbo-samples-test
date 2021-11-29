@@ -25,7 +25,7 @@ public class StressTestController {
 
 
 
-    @DubboReference(version = "*", protocol = "dubbo", loadbalance = "random",timeout = 3000,retries = 0)
+    @DubboReference(version = "*", protocol = "dubbo,hessian", loadbalance = "random",retries = 0)
     private StressTestService stressTestService;
 
     private int a = 1;
@@ -33,8 +33,17 @@ public class StressTestController {
     @RequestMapping("/stressTest/string")
     public Boolean string(){
         String s = new FileCapacity().getFileCapacity(1*1024);
+//        String s = "2021-11-2910:32:25.362INFO11552---[io-8091-exec-61]c.dubbo.controller.StressTestController:stressTest/string:430469\n" +
+//                "2021-11-2910:32:25.362INFO11552---[io-8091-exec-68]c.dubbo.controller.StressTestController:stressTest/string:430470\n" +
+//                "2021-11-2910:32:25.363INFO11552---[o-8091-exec-102]c.dubbo.controller.StressTestController:stressTest/string:430471\n" +
+//                "2021-11-2910:32:25.363INFO11552---[io-8091-exec-32]c.dubbo.controller.StressTestController:stressTest/string:430472\n" +
+//                "2021-11-2910:32:25.365INFO11552---[o-8091-exec-108]c.dubbo.controller.StressTestController:stressTest/string:430473\n" +
+//                "2021-11-2910:32:25.365INFO11552---[o-8091-exec-110]c.dubbo.controller.StressTestController:stressTest/string:430473\n" +
+//                "2021-11-2910:32:25.365INFO11552---[o-8091-exec-105]c.dubbo.controller.StressTestController:stressTest/string:430475\n" +
+//                "2021-11-2910:32:25.366INFO11552---[io-8091-exec-75]c.dubbo.controller.StressTestController:stressTest/string:430476\n" +
+//                "2021-11-2910:32:25.367INFO11552---[io-8091-exec-81]c.dubbo.controller.StressTestController:st";
         String result = stressTestService.StressString(s);
-        log.info("stressTest/string:{}",a);
+        log.info("stressTest/string:{},num:{}",result.length(),a);
         a++;
         return true;
 
@@ -43,6 +52,7 @@ public class StressTestController {
     @RequestMapping("/stressTest/pojo")
     public Boolean pojo(){
         User user = stressTestService.StressTestPojo(new User(1L,"Stress","压力测试"));
+        log.info("/stressTest/pojo:{}",user);
         return true;
     }
 
@@ -54,20 +64,23 @@ public class StressTestController {
             list.add(user);
         }
         List<User> result = stressTestService.StressListUser(list);
+        log.info("/stressTest/listPojo:{}",result);
         return true;
     }
 
     @RequestMapping("/stressTest/string50k")
     public Boolean string50k(){
         String s = new FileCapacity().getFileCapacity(50*1024);
-        String resuult = stressTestService.StressTest50K(s);
+        String result = stressTestService.StressTest50K(s);
+        log.info("/stressTest/listPojo:{}",result.length());
         return true;
     }
 
     @RequestMapping("/stressTest/string100k")
     public Boolean string100k(){
         String s = new FileCapacity().getFileCapacity(100*1024);
-        String resuult = stressTestService.StressTest100K(s);
+        String result = stressTestService.StressTest100K(s);
+        log.info("/stressTest/listPojo:{}",result.length());
         return true;
     }
 }

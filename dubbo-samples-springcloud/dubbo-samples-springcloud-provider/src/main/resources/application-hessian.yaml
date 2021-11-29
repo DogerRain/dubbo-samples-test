@@ -1,0 +1,30 @@
+server:
+  port: 8090
+
+
+spring:
+  application:
+    name: dubbo-samples-privider-springCloud
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    timeout: 5000
+#    protocol: -1
+#    port: -1
+#  metadata-report:
+#    address: zookeeper://127.0.0.1:2181
+#    protocol: -1
+#    port: -1
+#    default: false
+  protocol:
+    name: hessian
+#    port: 8090
+    serialization: hessian2
+    server: netty4
+    client: netty
+  scan:
+    base-packages: com.dubbo.service
+

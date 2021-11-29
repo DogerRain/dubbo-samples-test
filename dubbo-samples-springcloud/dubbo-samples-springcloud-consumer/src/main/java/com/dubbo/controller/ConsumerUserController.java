@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ConsumerUserController {
 
-    @DubboReference(version = "*", protocol = "dubbo", loadbalance = "random" )
+    @DubboReference(version = "*", protocol = "dubbo,hessian", loadbalance = "random" )
     private UserService userService;
 
 //    @DubboReference(version = "*",protocol = "dubbo")
