@@ -18,6 +18,37 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
+    <build>
+        <plugins>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-resources-plugin</artifactId>-->
+            <!--<configuration>-->
+            <!--<delimiters>-->
+            <!--<delimiter>@</delimiter>-->
+            <!--</delimiters>-->
+            <!--<useDefaultDelimiters>false</useDefaultDelimiters>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.thrift.ThriftProviderApplication</mainClass>
+                    <layout>JAR</layout>
+                    <!--构建完整可执行程序，可以直接运行-->
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -28,8 +28,8 @@ public class HelloServiceImpl implements Hello.Iface{
     }
     @Override
     public String helloString(String para) throws TException {
-        System.out.println("入参：" + para);
-        return "hello  " + para;
+        System.out.println("入参字节大小：" + para.length());
+        return para;
     }
     @Override
     public void helloVoid() throws TException {

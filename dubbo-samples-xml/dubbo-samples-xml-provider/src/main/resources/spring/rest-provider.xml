@@ -32,7 +32,7 @@
     <dubbo:protocol name="rest" port="9999" threads="500" contextpath="services" server="tomcat" accepts="500"/>
     <!--使用外部tomcat-->
     <!--<dubbo:protocol name="rest" port="9999" contextpath="services" server="servlet"/>-->
-    <dubbo:protocol name="dubbo" port="20883" threads="200"/>
+    <dubbo:protocol name="dubbo" port="20883" threads="2000"/>
 
 
     <bean id="orderRESTService" class="com.dubbo.impl.OrderRESTServiceImpl"/>

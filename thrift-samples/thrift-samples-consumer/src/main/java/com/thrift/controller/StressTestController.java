@@ -5,8 +5,11 @@ import com.thrift.common.FileCapacity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @author huangyongwen
@@ -14,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description
  */
 @RestController
-@RequestMapping("/thrift/stress")
+@RequestMapping("/consumer/stress")
 @Slf4j
 public class StressTestController {
 
-    @Autowired
+    @Qualifier("client")
     Hello.Client client;
 
     @RequestMapping("/string1k")
@@ -30,11 +33,11 @@ public class StressTestController {
         log.info("string1k:{}",resp.length());
         return true;
     }
-    @RequestMapping("/string50k")
+    @RequestMapping("/string100k")
     public Boolean string50k() throws TException {
 //        Hello.Client client =  configuration.client();
         FileCapacity fileCapacity = new FileCapacity();
-        String s = fileCapacity.getFileCapacity(50*1024);
+        String s = fileCapacity.getFileCapacity(100*1024);
         String resp = client.helloString(s);
         log.info("string50k:{}",resp.length());
         return true;

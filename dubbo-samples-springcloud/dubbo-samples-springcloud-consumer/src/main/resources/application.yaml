@@ -1,6 +1,11 @@
 server:
   port: 8091
-
+  tomcat:
+    max-threads: 5000
+    max-connections: 20000
+    accept-count: 5000
+    threads:
+      max: 5000
 
 spring:
   application:
@@ -12,6 +17,10 @@ dubbo:
     timeout: 10000
   protocol:
     name: dubbo
+#    threads: 5000
+#    corethreads: 5000
+#  consumer:
+#    actives: 3000
 
 #  scan:
 #    base-packages: com.dubbo.service

@@ -44,7 +44,7 @@ public class StressTestController {
 //                "2021-11-2910:32:25.367INFO11552---[io-8091-exec-81]c.dubbo.controller.StressTestController:st";
         String result = stressTestService.StressString(s);
         log.info("stressTest/string:{},num:{}",result.length(),a);
-        a++;
+//        a++;
         return true;
 
     }

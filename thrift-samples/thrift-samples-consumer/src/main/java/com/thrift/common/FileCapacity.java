@@ -13,7 +13,7 @@ public class FileCapacity {
 
     public String getFileCapacity(long capacity) {
         try {
-
+            //获取resource目录下的文件
             ClassPathResource resource = new ClassPathResource("Hello.txt");
             Long fileLength = capacity;
             byte[] fileContent = new byte[fileLength.intValue()];
