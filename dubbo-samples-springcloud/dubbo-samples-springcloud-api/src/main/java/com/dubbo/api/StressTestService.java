@@ -13,6 +13,10 @@ public interface StressTestService {
 
     String StressString(String string);
 
+    String StressString1k(String string);
+
+    String StressString1kNoFile(String string);
+
     User StressTestPojo(User user);
 
     List<User> StressListUser(List<User> list);

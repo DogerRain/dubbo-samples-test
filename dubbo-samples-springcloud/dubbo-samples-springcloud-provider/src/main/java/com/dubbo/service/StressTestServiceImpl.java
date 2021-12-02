@@ -9,6 +9,7 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author huangyongwen
@@ -25,6 +26,21 @@ public class StressTestServiceImpl implements StressTestService {
     @Override
     public String StressString(String string) {
         log.info("StressString");
+        doWhileAdd();
+        return string;
+    }
+
+    @Override
+    public String StressString1kNoFile(String string) {
+        log.info("StressString1kNoFile");
+        doWhileAdd();
+        return string;
+    }
+
+    @Override
+    public String StressString1k(String string) {
+        log.info("StressString1k");
+        doWhileAdd();
         return string;
     }
 
@@ -49,6 +65,17 @@ public class StressTestServiceImpl implements StressTestService {
     @Override
     public String StressTest100K(String bytes) {
         log.info("StressTest100K");
+        doWhileAdd();
         return bytes;
     }
+
+    void doWhileAdd(){
+        Random random = new Random(1);
+        int result =0;
+        for (int i = 1;i<=10000;i++){
+            int num = random.nextInt(1000);
+            result +=num;
+        }
+    }
+
 }

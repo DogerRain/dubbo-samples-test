@@ -1,11 +1,9 @@
 server:
   port: 8091
   tomcat:
-    max-threads: 5000
-    max-connections: 20000
-    accept-count: 5000
-    threads:
-      max: 5000
+    max-threads: 1000
+    max-connections: 10000
+    accept-count: 2000
 
 spring:
   application:
