@@ -625,13 +625,19 @@ org.apache.thrift.transport.TTransportException: java.net.ConnectException: Conn
 
 单机：（没有压满CPU，provider机器同上，consumer2）
 
+```
+ab -n 100000 -c  10 
+```
+
 |      | TThreadedSelectorServer + 1k | TThreadedSelectorServer+100k |
 | ---- | ---------------------------- | ---------------------------- |
-| TPS  | 3300                         | 700~800                      |
-| RTT  | 95% 4ms                      | 95%  19ms                    |
-| OOM  | 无                           | 无                           |
-| CPU  | 125%+                        | 150%                         |
+| TPS  | 3300                         |                              |
+| RTT  | 95% 4ms                      |                              |
+| OOM  | 无                           |                              |
+| CPU  | 125%+                        |                              |
 
 
 
 Thrift 对并发的支持一般，主要还是要选择合适的Server模型。
+
+超过10w请求，普遍超时。
