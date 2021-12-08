@@ -10,7 +10,7 @@ Dubbo3.0 + SpringBoot 整合例子：
 
 Duboo+Spring（xml形式）整合例子：
 
- [Duboo3.0 + Spring（xml形式）+ zookeeper 整合例子] (dubbo-samples-xml/README.md) 
+ [Duboo3.0 + Spring（xml形式）+ zookeeper 整合例子](dubbo-samples-xml/README.md) 
 
 
 
