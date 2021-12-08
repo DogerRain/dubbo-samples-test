@@ -44,6 +44,32 @@ Thrift实际上是实现了C/S模式，通过代码生成工具将thrift文生�
 
 一般将服务放到一个.thrift文件中，服务的编写语法与C语言语法基本一致，在.thrift文件中有主要有以下几个内容：变量声明（variable）、数据声明（struct）和服务接口声明（service, 可以继承其他接口）。
 
+ Thrif 提供网络模型：单线程、多线程、事件驱动。从另一个角度划分为：阻塞服务模型、非阻塞服务模型。
+
+- 阻塞服务
+
+​    TSimpleServer
+
+​    TThreadPoolServer
+
+- 非阻塞服务模型
+
+   TNonblockingServer
+
+   THsHaServer
+
+   TThreadedSelectorServer
+
+
+
+TNonblockingServer 只能一次处理一个请求
+
+选择 Server的艺术：
+
+https://www.cnblogs.com/cyfonly/p/6059374.html
+
+https://www.cnblogs.com/exceptioneye/p/4945073.html
+
 ## 2、使用
 
 ### 2.1、安装thrift环境
@@ -55,7 +81,7 @@ Thrift实际上是实现了C/S模式，通过代码生成工具将thrift文生�
 需要先定义一个.thrift 作为一个IDL，如：
 
 ```
-namespace java com.shrift.api
+namespace java com.thrift.api
 service Hello{
     string helloString(1:string para)
     i32 helloInt(1:i32 para)
@@ -141,6 +167,11 @@ shift的服务模型：
 shift的使用：
 
 - http://jnb.ociweb.com/jnb/jnbJun2009.html
+
+对Thrift的封装：
+
+- https://vimsky.com/examples/detail/java-class-org.apache.thrift.TMultiplexedProcessor.html
+- https://github.com/sofn/trpc
 
 | 数据传输格式    | 类型   | 优点                                                         | 缺点                                                         |
 | --------------- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |

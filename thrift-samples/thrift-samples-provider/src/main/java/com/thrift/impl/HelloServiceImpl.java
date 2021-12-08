@@ -1,6 +1,7 @@
 package com.thrift.impl;
 
-import com.shrift.api.Hello;
+import com.thrift.api.Hello;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 
 import java.util.Random;
@@ -10,6 +11,7 @@ import java.util.Random;
  * @date 2021/11/24
  * @Description
  */
+@Slf4j
 public class HelloServiceImpl implements Hello.Iface{
     @Override
     public boolean helloBoolean(boolean para) throws TException {
@@ -30,7 +32,12 @@ public class HelloServiceImpl implements Hello.Iface{
     }
     @Override
     public String helloString(String para) throws TException {
-        System.out.println("入参字节大小：" + para.length());
+        log.info("request from consumer, parameterSize:{}",para.length());
+//        try {
+//            Thread.sleep(6000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         doWhileAdd();
         return para;
     }
@@ -42,11 +49,14 @@ public class HelloServiceImpl implements Hello.Iface{
     void doWhileAdd(){
         Random random = new Random(1);
         int result =0;
-        for (int i = 1;i<=100000;i++){
+        int result2=0;
+        for (int i = 1;i<=10000;i++){
             int num = random.nextInt(1000);
             result +=num;
+            result2 -=num;
         }
     }
+
 
     public static void main(String[] args) {
         new HelloServiceImpl().doWhileAdd();

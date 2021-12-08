@@ -1,4 +1,4 @@
-package com.shrift.api;
+package com.thrift.api;
 
 /**
  * @author huangyongwen

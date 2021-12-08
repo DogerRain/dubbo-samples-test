@@ -72,9 +72,11 @@ public class StressTestServiceImpl implements StressTestService {
     void doWhileAdd(){
         Random random = new Random(1);
         int result =0;
+        int result2=0;
         for (int i = 1;i<=10000;i++){
             int num = random.nextInt(1000);
             result +=num;
+            result2 -=num;
         }
     }
 

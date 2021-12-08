@@ -1,4 +1,4 @@
-namespace java com.shrift.api
+namespace java com.thrift.api
 service Hello{
     string helloString(1:string para)
     i32 helloInt(1:i32 para)

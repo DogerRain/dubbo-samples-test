@@ -43,7 +43,7 @@ public class StressTestController {
                 "2021-11-2910:32:25.366INFO11552---[io-8091-exec-75]c.dubbo.controller.StressTestController:stressTest/string:430476\n" +
                 "2021-11-2910:32:25.367INFO11552---[io-8091-exec-81]c.dubbo.controller.StressTestController:st";
         String result = stressTestService.StressString1kNoFile(s);
-        log.info("stressTest/string:{},num:{}",result.length(),a);
+        log.info("stressTest/string1kNoFile:{},num:{}",result.length(),a);
 //        a++;
         return true;
 
@@ -52,7 +52,7 @@ public class StressTestController {
     @RequestMapping("/stressTest/string")
     public Boolean string(){
         String s = "Hello";
-        String result = stressTestService.StressString1k(s);
+        String result = stressTestService.StressString(s);
         log.info("stressTest/string:{},num:{}",result.length(),a);
         return true;
 
@@ -62,7 +62,7 @@ public class StressTestController {
     public Boolean string1k(){
         String s = new FileCapacity().getFileCapacity(1*1024);
         String result = stressTestService.StressString1k(s);
-        log.info("stressTest/string:{},num:{}",result.length(),a);
+        log.info("stressTest/string1k:{},num:{}",result.length(),a);
         return true;
 
     }
@@ -90,7 +90,7 @@ public class StressTestController {
     public Boolean string50k(){
         String s = new FileCapacity().getFileCapacity(50*1024);
         String result = stressTestService.StressTest50K(s);
-        log.info("/stressTest/listPojo:{}",result.length());
+        log.info("/stressTest/string50k:{}",result.length());
         return true;
     }
 
@@ -98,7 +98,7 @@ public class StressTestController {
     public Boolean string100k(){
         String s = new FileCapacity().getFileCapacity(100*1024);
         String result = stressTestService.StressTest100K(s);
-        log.info("/stressTest/listPojo:{}",result.length());
+        log.info("/stressTest/string100k:{}",result.length());
         return true;
     }
 }

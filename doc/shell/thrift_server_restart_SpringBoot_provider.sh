@@ -16,18 +16,23 @@ echo "-------重启--------"
 
 echo "gc配置:$GC_settings"
 
-GC_settings="-Xloggc:/data/dubboStress/logs/dubbo_gc_thrift.log -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/heap.bin"
-#使用g1
-JVM_settings="-server -Xmx2g -Xms2g -Xmn256m -Xss256k -XX:+UseG1GC "
-#1.6 使用CMS，标志整理
+GC_settings="-Xloggc:/data/dubboStress/logs/thrift_gc.log -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/heap.bin"
+#使用g1，不建议设置-Xmn,如 -Xmn256m ，g1会自动分配
+JVM_settings="-server -Xmx2g -Xms2g -XX:+UseG1GC "
+#1.6 使用CMS，标志整理（dubbo官方使用）
 #JVM_settings_1.6="-server -Xmx2g -Xms2g -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
 
-JMX_setings="-Djava.rmi.server.hostname=10.131.32.26 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3214 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
+
+#JMX_setings="-Djava.rmi.server.hostname=10.131.32.26 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3214 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
+JMX_setings=""
 
 cd /data/dubboStress
 
-nohup java -Dfile.encoding=utf-8 $JVM_settings  $GC_settings  -Duser.timezone=Asia/Shanghi $JMX_setings -jar $NAME  >info_thrift.log 2>error_thrift.log & 
+nohup java -Dfile.encoding=utf-8 $JVM_settings  $GC_settings  -Duser.timezone=Asia/Shanghi $JMX_setings -jar $NAME --spring.profiles.active=test >thrift_info.log 2>thrift_error.log & 
 echo "-------重启结束--------"
+> /data/dubboStress/logs/thrift_gc.log
+> /data/dubboStress/thrift_info.log
+> /data/dubboStress/thrift_error.log
 
-tail -f /data/dubboStress/info_thrift.log
 
+tail -f /data/dubboStress/thrift_info.log

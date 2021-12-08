@@ -1,12 +1,16 @@
 package com.thrift.config;
 
-import com.shrift.api.ConfigThrift;
-import com.shrift.api.Hello;
+import com.thrift.api.Hello;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
+import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
+import org.apache.thrift.transport.TTransportException;
+import org.apache.thrift.transport.layered.TFastFramedTransport;
 import org.apache.thrift.transport.layered.TFramedTransport;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Component;
 @Component("thriftConsumerConfiguration")
 @ComponentScan(value = {"com.thrift"})
 @PropertySource("classpath:application-dev.properties")
+@Slf4j
 public class ThriftConsumerConfiguration {
 
     @Value("${thrift.server.host}")
@@ -29,36 +34,81 @@ public class ThriftConsumerConfiguration {
     @Value("${thrift.socket.port}")
     private int port;
 
-    @Bean(name = "client")
-    public Hello.Client client() throws TException {
-        System.out.println("初始化bean。。。。");
-        // 设置调用的服务地址为本地，端口为 7911
-        TTransport transport = new TSocket(host, port);
-        // 设置传输协议为 TBinaryProtocol
-        TProtocol protocol = new TBinaryProtocol(transport);
-        // 协议要和服务端一致
-        // TProtocol protocol = new TCompactProtocol(transport);
-        // TProtocol protocol = new TJSONProtocol(transport);
-        transport.open();
-        Hello.Client client = new Hello.Client(protocol);
+    /**
+     *
+     * TSimpleServer 模型通道
+     *
+     * @param s
+     * @return
+     */
+    public String getRemoteResult(String s) {
+        try {
+            TSocket socket = new TSocket(host, port);
+            socket.setTimeout(5000);
+            TTransport transport = socket;
+            TProtocol protocol = new TCompactProtocol(transport);
+            open(transport);
+            Hello.Client client = new Hello.Client(protocol);
+            String result = client.helloString(s);
+            shutdown(transport);
+            return result;
+        } catch (TTransportException e) {
+            log.error("scoket 建立失败",e);
+        } catch (TException e) {
+            log.error("未知错误",e);
+        }
 
-        return client;
+        return null;
+
     }
 
-//    @Bean
-    public Hello.Client client2() throws TException {
-        System.out.println("初始化bean。。。。");
-        // 设置调用的服务地址为本地，端口为 7911
-        TSocket socket = new TSocket(host, port);
-//        socket.setConnectTimeout(5000);  // 设置连接的超时时间
-//        socket.setSocketTimeout(2000);  // 设置存取数据的超时时间
-        TTransport transport = new TFramedTransport(socket);   // 设置最大的数据帧长度
-        transport.open();
-        //设置协议
-        TProtocol protocol = new TBinaryProtocol(transport);
-        Hello.Client client = new Hello.Client(protocol);
-        return client;
+    /**
+     * 非阻塞服务模型 通道
+     * @param s
+     * @return
+     */
+    public String getRemoteResultTFramedTransport(String s) {
+        try {
+
+            TSocket socket = new TSocket(host, port);
+            socket.setTimeout(5000);
+            TTransport transport = new TFramedTransport(socket);
+            TProtocol protocol = new TCompactProtocol(transport);
+            open(transport);
+            Hello.Client client = new Hello.Client(protocol);
+            String result = client.helloString(s);
+            shutdown(transport);
+            return result;
+        } catch (TTransportException e) {
+            log.error("scoket 建立失败",e);
+        } catch (TException e) {
+            log.error("未知错误",e);
+        }
+
+        return null;
+
     }
+
+    void open(TTransport transport) {
+        if (transport != null && !transport.isOpen()) {
+            try {
+                transport.open();
+            } catch (TTransportException e) {
+                log.error("transport 打开出错",e);
+            }
+        }
+    }
+
+    void shutdown(TTransport transport) {
+        if (transport != null && transport.isOpen()) {
+            try {
+                transport.close();
+            } catch (Exception e) {
+                log.error("transport 关闭出错",e);
+            }
+        }
+    }
+
 
 }
 

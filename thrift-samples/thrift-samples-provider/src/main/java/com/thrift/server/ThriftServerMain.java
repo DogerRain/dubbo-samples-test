@@ -1,13 +1,11 @@
 package com.thrift.server;
 
-import com.shrift.api.ConfigThrift;
-import com.shrift.api.Hello;
+import com.thrift.api.ConfigThrift;
+import com.thrift.api.Hello;
 import com.thrift.impl.HelloServiceImpl;
-import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TCompactProtocol;
-import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.server.TNonblockingServer;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TSimpleServer;
@@ -24,6 +22,9 @@ public class ThriftServerMain {
     public static final int SERVER_PORT = ConfigThrift.SOCKET_PORT;
     public static final int TIMEOUT = ConfigThrift.TIMEOUT;
 
+    /**
+     * 1、单线程服务模型
+     */
     public void startTServer() {
         try {
             /**
@@ -51,7 +52,9 @@ public class ThriftServerMain {
             e.printStackTrace();
         }
     }
-
+    /**
+     * 2、非阻塞 多线程服务模型
+     */
     public void startTNonblockingServer() {
         try {
             /**

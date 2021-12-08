@@ -1,16 +1,11 @@
 package com.thrift.server;
 
-import com.shrift.api.ConfigThrift;
-import com.shrift.api.Hello;
-import com.thrift.impl.HelloServiceImpl;
+import com.thrift.api.ConfigThrift;
+import com.thrift.api.Hello;
 import org.apache.thrift.TException;
-import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.server.TServer;
-import org.apache.thrift.server.TSimpleServer;
-import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
@@ -47,9 +42,9 @@ public class ThriftClientMain {
         } catch (TException e) {
             e.printStackTrace();
         } finally {
-//            if (null != transport) {
-//                transport.close();
-//            }
+            if (null != transport) {
+                transport.close();
+            }
         }
     }
 
