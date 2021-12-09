@@ -1,12 +1,11 @@
 package com.dubbo.controller;
 
 import com.dubbo.api.StressTestService;
-import com.dubbo.api.UserService;
 import com.dubbo.common.FileCapacity;
 import com.dubbo.vo.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/consumer")
 @Slf4j
+@Component("stressTestController")
 public class StressTestController {
 
 

@@ -11,12 +11,16 @@
 
     <artifactId>thrift-samples-provider</artifactId>
     <dependencies>
+
         <dependency>
             <groupId>com.thrift</groupId>
             <artifactId>thrift-samples-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
+
+
     </dependencies>
     <build>
         <plugins>

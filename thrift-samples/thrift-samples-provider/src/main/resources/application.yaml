@@ -6,3 +6,7 @@ spring:
   application:
     name: thrift-samples-consumer
 
+logging:
+  config: classpath:log4j.properties
+#  level:
+#    root: INFO

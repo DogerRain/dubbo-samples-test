@@ -1,6 +1,8 @@
 package com.thrift.runner;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -26,6 +28,8 @@ import javax.servlet.ServletContextEvent;
 @Component
 public class ThriftApplicationRunner extends ContextLoaderListener implements ApplicationRunner {
 
+    Logger logger = LoggerFactory.getLogger(ThriftApplicationRunner.class);
+
     @Value("${thrift.server.host}")
     private String host;
     @Value("${thrift.socket.port}")
@@ -42,17 +46,21 @@ public class ThriftApplicationRunner extends ContextLoaderListener implements Ap
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-            log.info("关键配置信息：");
-            String[] activeProfiles = configurableApplicationContext.getEnvironment().getActiveProfiles();
-            if (ObjectUtils.isEmpty(activeProfiles)) {
-                String[] defaultProfiles = configurableApplicationContext.getEnvironment().getDefaultProfiles();
-                log.info("No active profile set, falling back to default profiles: " + StringUtils.arrayToCommaDelimitedString(defaultProfiles));
-            } else {
-                log.info("The following profiles are active: " + StringUtils.arrayToCommaDelimitedString(activeProfiles));
-            }
+        log.info("测试1");
+        log.error("测试2");
+        log.debug("测试3");
+        log.info("测试4");
+        log.info("关键配置信息：");
+        String[] activeProfiles = configurableApplicationContext.getEnvironment().getActiveProfiles();
+        if (ObjectUtils.isEmpty(activeProfiles)) {
+            String[] defaultProfiles = configurableApplicationContext.getEnvironment().getDefaultProfiles();
+            log.info("No active profile set, falling back to default profiles: " + StringUtils.arrayToCommaDelimitedString(defaultProfiles));
+        } else {
+            log.info("The following profiles are active: " + StringUtils.arrayToCommaDelimitedString(activeProfiles));
+        }
 
-            log.info("  - thrift.server.host：{}", host);
-            log.info("  - thrift.socket.port：{}", port);
+        log.info("  - thrift.server.host：{}", host);
+        log.info("  - thrift.socket.port：{}", port);
 
     }
 }

@@ -41,11 +41,12 @@ public class StressTestController {
     ThriftConsumerConfiguration thriftConsumerConfiguration;
 
     @RequestMapping("/string1k")
-    public Boolean string()  {
+    public Boolean string() {
 
         FileCapacity fileCapacity = new FileCapacity();
         String s = fileCapacity.getFileCapacity(1 * 1024);
-
+        log.error("测试error日志");
+//        最简单的方式
 //        String resp = thriftConsumerConfiguration.getRemoteResult(s);
         String resp = thriftConsumerConfiguration.getRemoteResultTFramedTransport(s);
 
@@ -58,14 +59,16 @@ public class StressTestController {
     }
 
 
-
     @RequestMapping("/string100k")
-    public Boolean string50k() throws TException {
-//        Hello.Client client =  configuration.client();
+    public Boolean string50k() {
         FileCapacity fileCapacity = new FileCapacity();
         String s = fileCapacity.getFileCapacity(100 * 1024);
-//        String resp = client.helloString(s);
-//        log.info("string100k:{}", resp.length());
+        String resp = thriftConsumerConfiguration.getRemoteResultTFramedTransport(s);
+        if (resp == null) {
+            log.info("string100k:{}", "null");
+            return false;
+        }
+        log.info("string100k:{}", resp.length());
         return true;
     }
 }

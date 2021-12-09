@@ -36,7 +36,7 @@ public class ThriftConsumerConfiguration {
 
     /**
      *
-     * TSimpleServer 模型通道
+     * TSimpleServer 阻塞模型通道
      *
      * @param s
      * @return
@@ -89,7 +89,7 @@ public class ThriftConsumerConfiguration {
 
     }
 
-    void open(TTransport transport) {
+    private void open(TTransport transport) {
         if (transport != null && !transport.isOpen()) {
             try {
                 transport.open();
@@ -99,7 +99,7 @@ public class ThriftConsumerConfiguration {
         }
     }
 
-    void shutdown(TTransport transport) {
+    private void shutdown(TTransport transport) {
         if (transport != null && transport.isOpen()) {
             try {
                 transport.close();

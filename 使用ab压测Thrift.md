@@ -615,29 +615,62 @@ Linux打开句柄文件数太小，设置大一些，`ulimit -n`  查看一下�
 
 #### 坑5：
 
+当请求数过多，大概超过5w请求，使用 TThreadedSelectorServer服务模型
+
 ```
-org.apache.thrift.transport.TTransportException: java.net.ConnectException: Connection timed out (Connection timed out)
+   args.selectorThreads(2000);
+   args.workerThreads(5000);
+   //这里的设置没什么太大用处
+```
+
+并发超过了
+
+```
+org.apache.thrift.transport.TTransportException: Cannot write to null outputStream
+
+org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: connect timed out
 ```
 
 
 
-## 4、汇总
+## 4、结果
+
+服务者机器：
+
+```
+2h4g
+CentOS release 6.4 (Final)
+model name      : QEMU Virtual CPU version 2.5+
+stepping        : 3
+cpu MHz         : 2099.998
+cache size      : 4096 KB
+```
+
+JVM：
+
+```
+jdk1.8
+-server -Xmx2g -Xms2g -XX:+UseG1GC 
+```
+
+### 
 
 单机：（没有压满CPU，provider机器同上，consumer2）
 
 ```
-ab -n 100000 -c  10 
+ab -n 1000000 -c  10 
 ```
 
 |      | TThreadedSelectorServer + 1k | TThreadedSelectorServer+100k |
 | ---- | ---------------------------- | ---------------------------- |
-| TPS  | 3300                         |                              |
-| RTT  | 95% 4ms                      |                              |
-| OOM  | 无                           |                              |
-| CPU  | 125%+                        |                              |
+| TPS  | 3700                         | 800                          |
+| RTT  | 95% 4ms                      | 95% 16ms                     |
+| OOM  | 无                           | 无                           |
+| CPU  | 125%+                        | 120%+                        |
 
 
 
 Thrift 对并发的支持一般，主要还是要选择合适的Server模型。
 
 超过10w请求，普遍超时。
+

@@ -763,11 +763,11 @@ Swap:  2097144k total,     5988k used,  2091156k free,  1726716k cached
 
 ## 3、分析
 
+
+
 ### 2.1、dubbo线程 WAITING
 
 试过调大了 dubbo （默认是200）的线程数，发现 效果并没有显著的提升。
-
-
 
 ```java
 "DubboServerHandler-172.16.179.198:20890-thread-15" #54 daemon prio=5 os_prio=0 tid=0x00007f32c0015800 nid=0x4a4 waiting on condition [0x00007f32b5046000]
@@ -785,7 +785,7 @@ Swap:  2097144k total,     5988k used,  2091156k free,  1726716k cached
         at java.lang.Thread.run(Thread.java:748)
 ```
 
-
+暂时无解，网上说法是线程都在同步队列，太多反而出现资源等待的情况。
 
 ### 2.2、调大ab的并发数
 
@@ -794,9 +794,9 @@ Swap:  2097144k total,     5988k used,  2091156k free,  1726716k cached
 - 线程的上下文切换严重
 - 线程等待CPU调度（ab发出请求）
 
+随后TPS会达到瓶颈，并不是十分显著。
 
-
-### 2.3、结果汇总
+## 4、结果汇总
 
 服务者机器：
 
@@ -816,15 +816,21 @@ jdk1.8
 -server -Xmx2g -Xms2g -XX:+UseG1GC 
 ```
 
-ab并发：10
+### 1、多机，以压满CPU为目的：
 
-汇总：
+```
+ab -n 1000000 -c  10 
+```
+
+详情见上。
 
 |      | 1k dubbo+hessian2 | 100k dubbo+hessian2 |
 | ---- | ----------------- | ------------------- |
 | TPS  | 8500~9000         | 1000~1100           |
 | RTT  | 95% 5ms           | 95%   41ms          |
 | OOM  | 无                | 无                  |
+
+### 2、单机，不压满CPU
 
 单机：（没有压满CPU，provider机器同上，consumer2）
 
@@ -839,5 +845,5 @@ ab -n 1000000 -c  10
 | OOM  | 无                | 无                  |
 | CPU  | 125%+             | 150%                |
 
-
+过程省略。
 
