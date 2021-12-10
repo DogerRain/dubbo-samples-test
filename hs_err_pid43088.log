@@ -1,0 +1,121 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for Failed to commit area from 0x0000000016d80000 to 0x0000000016d90000 of length 65536.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3331), pid=43088, tid=0x0000000000009e98
+#
+# JRE version:  (8.0_131-b11) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000000022c2000):  JavaThread "Unknown thread" [_thread_in_vm, id=40600, stack(0x0000000002510000,0x0000000002610000)]
+
+Stack: [0x0000000002510000,0x0000000002610000]
+[error occurred during error reporting (printing stack bounds), id 0xc0000005]
+
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x00000000022c2000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=40600, stack(0x0000000002510000,0x0000000002610000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00000000022ba300] Heap_lock - owner thread: 0x00000000022c2000
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x000000013f4a0000 - 0x000000013f4d7000 	E:\JDK1.8\bin\java.exe
+0x0000000077650000 - 0x00000000777ef000 	C:\windows\SYSTEM32\ntdll.dll
+0x00000000773f0000 - 0x000000007750f000 	C:\windows\system32\kernel32.dll
+0x000007fefd2e0000 - 0x000007fefd34a000 	C:\windows\system32\KERNELBASE.dll
+0x000007fefdae0000 - 0x000007fefdbbb000 	C:\windows\system32\ADVAPI32.dll
+0x000007fefd690000 - 0x000007fefd72f000 	C:\windows\system32\msvcrt.dll
+0x000007fefdbc0000 - 0x000007fefdbdf000 	C:\windows\SYSTEM32\sechost.dll
+0x000007fefe130000 - 0x000007fefe25c000 	C:\windows\system32\RPCRT4.dll
+0x00000000772f0000 - 0x00000000773ea000 	C:\windows\system32\USER32.dll
+0x000007fefd730000 - 0x000007fefd797000 	C:\windows\system32\GDI32.dll
+0x000007fefe260000 - 0x000007fefe26e000 	C:\windows\system32\LPK.dll
+0x000007fefd7f0000 - 0x000007fefd8bb000 	C:\windows\system32\USP10.dll
+0x000007fefbdc0000 - 0x000007fefbfb5000 	C:\windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.24440_none_e36f1bbf30ff0606\COMCTL32.dll
+0x000007fefda60000 - 0x000007fefdad1000 	C:\windows\system32\SHLWAPI.dll
+0x000007fefd8c0000 - 0x000007fefd8ee000 	C:\windows\system32\IMM32.DLL
+0x000007fefdde0000 - 0x000007fefdee9000 	C:\windows\system32\MSCTF.dll
+0x0000000079050000 - 0x0000000079122000 	E:\JDK1.8\jre\bin\msvcr100.dll
+0x0000000070130000 - 0x00000000709cc000 	E:\JDK1.8\jre\bin\server\jvm.dll
+0x000007fefb9e0000 - 0x000007fefb9e9000 	C:\windows\system32\WSOCK32.dll
+0x000007fefd7a0000 - 0x000007fefd7ed000 	C:\windows\system32\WS2_32.dll
+0x000007fefe2f0000 - 0x000007fefe2f8000 	C:\windows\system32\NSI.dll
+0x000007fefd270000 - 0x000007fefd2ab000 	C:\windows\system32\WINMM.dll
+0x000007fefc300000 - 0x000007fefc30c000 	C:\windows\system32\VERSION.dll
+0x0000000077800000 - 0x0000000077807000 	C:\windows\system32\PSAPI.DLL
+0x0000000000330000 - 0x000000000033f000 	E:\JDK1.8\jre\bin\verify.dll
+0x000000006d690000 - 0x000000006d6b9000 	E:\JDK1.8\jre\bin\java.dll
+0x000000006c2a0000 - 0x000000006c2d5000 	E:\JDK1.8\jre\bin\jdwp.dll
+0x000000006d110000 - 0x000000006d118000 	E:\JDK1.8\jre\bin\npt.dll
+0x000000006d0a0000 - 0x000000006d0c3000 	E:\JDK1.8\jre\bin\instrument.dll
+0x0000000054680000 - 0x0000000054696000 	E:\JDK1.8\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:5018,suspend=y,server=n -Xms5g -Xmx5g -XX:PermSize=256M -XX:+UseG1GC -XX:TieredStopAtLevel=1 -Xverify:none -Dspring.output.ansi.enabled=always -Dcom.sun.management.jmxremote -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -javaagent:C:\Users\huangyongwen\.IntelliJIdea2018.3\system\captureAgent\debugger-agent.jar -Dfile.encoding=UTF-8 
+java_command: com.dubbo.ProviderApplication
+java_class_path (initial): E:\JDK1.8\jre\lib\charsets.jar;E:\JDK1.8\jre\lib\deploy.jar;E:\JDK1.8\jre\lib\ext\access-bridge-64.jar;E:\JDK1.8\jre\lib\ext\cldrdata.jar;E:\JDK1.8\jre\lib\ext\dnsns.jar;E:\JDK1.8\jre\lib\ext\jaccess.jar;E:\JDK1.8\jre\lib\ext\jfxrt.jar;E:\JDK1.8\jre\lib\ext\localedata.jar;E:\JDK1.8\jre\lib\ext\nashorn.jar;E:\JDK1.8\jre\lib\ext\sunec.jar;E:\JDK1.8\jre\lib\ext\sunjce_provider.jar;E:\JDK1.8\jre\lib\ext\sunmscapi.jar;E:\JDK1.8\jre\lib\ext\sunpkcs11.jar;E:\JDK1.8\jre\lib\ext\zipfs.jar;E:\JDK1.8\jre\lib\javaws.jar;E:\JDK1.8\jre\lib\jce.jar;E:\JDK1.8\jre\lib\jfr.jar;E:\JDK1.8\jre\lib\jfxswt.jar;E:\JDK1.8\jre\lib\jsse.jar;E:\JDK1.8\jre\lib\management-agent.jar;E:\JDK1.8\jre\lib\plugin.jar;E:\JDK1.8\jre\lib\resources.jar;E:\JDK1.8\jre\lib\rt.jar;F:\开发任务\Dubbo\dubbo-samples-test\dubbo-samples-springcloud\dubbo-samples-springcloud-provider\target\classes;F:\开发任务\Dubbo\dubbo-samples-test\dubbo-samples-springcloud\dubbo-samples-springcloud-api\target\classes;E:\apache-maven-3.0.5\repositories\org\projectlombok\lombok\1.18.16\lombok-1.18.16.jar;E:\apache-maven-3.0.5\repositories\com\caucho\hessian\4.0.51\hessian-4.0.51.jar;E:\apache-maven-3.0.5\repositories\org\apache\dubbo\dubbo-serialization-hessian2\2.7.13\dubbo-serialization-hessian2-2.7.13.jar;E:\apache-maven-3.0.5\repositories\org\apache\dubbo\dubbo-serialization-api\2.7.13\dubbo-serialization-api-2.7.13.jar;E:\apache-maven-3.0.5\repositories\com\alibaba\hessian-lite\3.2.8\hessian-lite-3.2.8.jar;E:\apache-maven-3.0.5\repositories\io\netty\netty-all\4.1.55.Final\netty-all-4.1.55.Final.jar;E:\apache-maven-3.0.5\repositories\org\apache\dubbo\dubbo-spring-boot-starter\2.7.13\dubbo-spring-boot-starter-2.7.13.jar;E:\apache-maven-3.0.5\repositories\org\apache\dubbo\dubbo-spring-boot-autoconfigure\2.7.13\dubbo-spring-boot-autoconfigure-2.7.13.jar;E:\apache-maven-3.0.5\repositories\org\apache\dubbo\dubbo-spring-boot-autoconfigure-compatible\2.7.13\dubbo-spring-boot-autoconfigure-compatible-2.7.13
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=E:\JDK1.8
+CLASSPATH=.;E:\JDK1.8\lib\dt.jar;E:\JDK1.8\lib\tools.jar; CLASSPATH=E:\apache-jmeter-5.2.1\apache-jmeter-5.2.1\lib\ext\ApacheJMeter_core.jar; E:\apache-jmeter-5.2.1\apache-jmeter-5.2.1\lib\jorphan.jar;
+PATH=E:\Python\Scripts\;E:\Python\;C:\ProgramData\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static.;E:\JDK1.8\bin;E:\JDK1.8\jre\bin;E:\apache-maven-3.5.4-bin\apache-maven-3.5.4\bin;E:\TortoiseSVN\bin;E:\gradle-6.2.1-bin\gradle-6.2.1\bin;E:\nodejs\download\npm-global;F:\Python27\Scripts;F:\Python27\;E:\node\;E:\AndroidStudio2-component\platform-tools;E:\AndroidStudio2-component\tools;E:\AndroidStudio2-component\build-tools\26.0.2;E:\Git\cmd;C:\Program Files\SourceGear\Common\DiffMerge\;E:\Microsoft VS Code\bin;C:\Users\huangyongwen\AppData\Roaming\npm;D:\Bandizip\
+USERNAME=huangyongwen
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 60 Stepping 3, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 (6.1.7601.24441)
+
+CPU:total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 60 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2
+
+Memory: 4k page, physical 16683060k(2437564k free), swap 39823188k(5180584k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.131-b11) for windows-amd64 JRE (1.8.0_131-b11), built on Mar 15 2017 01:23:53 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Fri Dec 10 15:40:47 2021
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

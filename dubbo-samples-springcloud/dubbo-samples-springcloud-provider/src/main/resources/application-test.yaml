@@ -1,17 +1,25 @@
 server:
   port: 8090
+#  tomcat:
+#    max-connections: 20000
+#    accept-count: 5000
+#    threads:
+#      max: 5000
 
 
 spring:
   application:
     name: dubbo-samples-privider-springCloud
 
+#默认指定为test环境，如果要dev，请在 启动类设置
+  profiles: test
+
 dubbo:
   application:
     name: ${spring.application.name}
   registry:
     address: ${dubbo.zookeeper.host}
-    timeout: 5000
+    timeout: 2000
 #    protocol: -1
 #    port: -1
 #  metadata-report:
@@ -23,6 +31,11 @@ dubbo:
     name: dubbo
     port: 20890
     serialization: hessian2
+#    threads: 500
+    dispatcher: message
   scan:
     base-packages: com.dubbo.service
+#  provider:
+#    executes: 6000
+#    actives: 6000
 

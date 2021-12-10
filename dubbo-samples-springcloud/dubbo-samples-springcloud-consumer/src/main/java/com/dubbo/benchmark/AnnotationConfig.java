@@ -1,9 +1,7 @@
 package com.dubbo.benchmark;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 
 /**
  * @author huangyongwen
@@ -17,6 +15,16 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.properties")
 public class AnnotationConfig {
 
+    @Bean
+    @Profile("dev")
+    void dev(){
+        System.out.println(" i am dev");
+    }
+
+    @Bean
+    void test(){
+        System.out.println(" i am test");
+    }
 
 }
 

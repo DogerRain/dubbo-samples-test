@@ -7,33 +7,9 @@ server:
 #      max: 5000
 
 
-
 spring:
   application:
     name: dubbo-samples-privider-springCloud
 
-dubbo:
-  application:
-    name: ${spring.application.name}
-  registry:
-    address: zookeeper://10.131.32.26:2181
-    timeout: 2000
-#    protocol: -1
-#    port: -1
-#  metadata-report:
-#    address: zookeeper://127.0.0.1:2181
-#    protocol: -1
-#    port: -1
-#    default: false
-  protocol:
-    name: dubbo
-    port: 20890
-    serialization: hessian2
-#    threads: 500
-    dispatcher: message
-  scan:
-    base-packages: com.dubbo.service
-#  provider:
-#    executes: 6000
-#    actives: 6000
-
+#默认指定为test环境，如果要dev，请在 启动类设置
+  profiles: test

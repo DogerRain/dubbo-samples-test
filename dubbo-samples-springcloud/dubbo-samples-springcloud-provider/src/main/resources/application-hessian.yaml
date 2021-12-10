@@ -10,7 +10,7 @@ dubbo:
   application:
     name: ${spring.application.name}
   registry:
-    address: zookeeper://127.0.0.1:2181
+    address: ${dubbo.zookeeper.host}
     timeout: 5000
 #    protocol: -1
 #    port: -1

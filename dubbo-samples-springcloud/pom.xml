@@ -7,10 +7,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <!--<parent>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
-        <!--<version>2.1.4.RELEASE</version>-->
-        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+    <!--<version>2.1.4.RELEASE</version>-->
+    <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     <!--</parent>-->
     <modelVersion>4.0.0</modelVersion>
 
@@ -50,11 +50,11 @@
             </dependency>
             <!-- 统一spring-cloud jar版本管理 -->
             <!--<dependency>-->
-                <!--<groupId>org.springframework.cloud</groupId>-->
-                <!--<artifactId>spring-cloud-dependencies</artifactId>-->
-                <!--<version>${spring-cloud-dependencies.version}</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-dependencies</artifactId>-->
+            <!--<version>${spring-cloud-dependencies.version}</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>import</scope>-->
             <!--</dependency>-->
             <!-- 统一dubbo jar版本管理，这个很重要，防止jar不同版本冲突 -->
             <dependency>
@@ -72,9 +72,9 @@
             </dependency>
             <!--用来 dubbo-bom 就不需要 这个了-->
             <!--<dependency>-->
-                <!--<groupId>org.apache.zookeeper</groupId>-->
-                <!--<artifactId>zookeeper</artifactId>-->
-                <!--<version>3.6.1</version>-->
+            <!--<groupId>org.apache.zookeeper</groupId>-->
+            <!--<artifactId>zookeeper</artifactId>-->
+            <!--<version>3.6.1</version>-->
             <!--</dependency>-->
             <dependency>
                 <groupId>junit</groupId>
@@ -87,18 +87,66 @@
     </dependencyManagement>
 
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>${source.level}</source>
-                    <target>${target.level}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <!--<build>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>org.apache.maven.plugins</groupId>-->
+    <!--<artifactId>maven-compiler-plugin</artifactId>-->
+    <!--<version>3.7.0</version>-->
+    <!--<configuration>-->
+    <!--<source>${source.level}</source>-->
+    <!--<target>${target.level}</target>-->
+    <!--</configuration>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
+    <!--</build>-->
+
+    <profiles>
+        <profile>
+            <id>devEnv</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.7.0</version>
+                        <configuration>
+                            <source>${source.level}</source>
+                            <target>${target.level}</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+                <!--<finalName>test</finalName>-->
+            </build>
+        </profile>
+    </profiles>
+
+    <!--<build>-->
+        <!--&lt;!&ndash;<finalName>${artifactId}-${project.version}-test</finalName>&ndash;&gt;-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+                <!--<version>2.4.1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>repackage</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash;<mainClass>com.dubbo.ProviderApplication</mainClass>&ndash;&gt;-->
+                    <!--<layout>JAR</layout>-->
+                    <!--&lt;!&ndash;构建完整可执行程序，可以直接运行&ndash;&gt;-->
+                    <!--<executable>true</executable>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
+
 
 </project>

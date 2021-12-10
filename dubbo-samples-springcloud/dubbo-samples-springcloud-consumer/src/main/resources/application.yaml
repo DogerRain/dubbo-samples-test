@@ -11,7 +11,7 @@ spring:
 
 dubbo:
   registry:
-    address: zookeeper://10.131.32.26:2181
+    address: ${dubbo.server.host}
     timeout: 10000
   protocol:
     name: dubbo

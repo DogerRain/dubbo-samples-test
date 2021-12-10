@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
  * @date 2021/12/9
  * @Description
  */
-@BenchmarkMode({Mode.All})
-@Warmup(iterations = 3, time = 1)
+@BenchmarkMode({Mode.Throughput, Mode.All})
+@Warmup(iterations = 3, time = 5, timeUnit = TimeUnit.SECONDS)
 //测量次数,每次测量的持续时间
-@Measurement(iterations = 2, time = 20 , timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 5, timeUnit = TimeUnit.SECONDS)
 @Threads(10)
 @Fork(1)
 @State(value = Scope.Benchmark)
@@ -28,16 +28,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class StressTestProvider {
 
-//    @DubboReference(version = "*", protocol = "dubbo,hessian", loadbalance = "random", retries = 0)
-//    private StressTestService stressTestService;
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AnnotationConfig.class);
-
+//    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AnnotationConfig.class);
+    AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
 
     @Benchmark
     public void string1k() {
-
-        context.start();
-        StressTestController annotationAction = context.getBean(StressTestController.class);
+        annotationConfigApplicationContext.register(AnnotationConfig.class);
+        annotationConfigApplicationContext.refresh();
+        StressTestController annotationAction = annotationConfigApplicationContext.getBean("stressTestController",StressTestController.class);
         annotationAction.string1k();
 
     }

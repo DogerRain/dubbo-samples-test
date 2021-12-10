@@ -4,18 +4,25 @@ import com.thrift.api.Hello;
 import com.thrift.handler.MyTServerEventHandler;
 import com.thrift.impl.HelloServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.thrift.TMultiplexedProcessor;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.TProcessorFactory;
-import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.server.*;
-import org.apache.thrift.transport.*;
+import org.apache.thrift.transport.TNonblockingServerSocket;
+import org.apache.thrift.transport.TNonblockingServerTransport;
+import org.apache.thrift.transport.TServerSocket;
+import org.apache.thrift.transport.TTransportException;
 import org.apache.thrift.transport.layered.TFramedTransport;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author huangyongwen
@@ -176,12 +183,16 @@ public class ThriftProviderConfiguration {
             // 目前Thrift提供的最高级的模式，可并发处理客户端请求,多线程半同步半异步的服务模型
             TThreadedSelectorServer.Args args = new TThreadedSelectorServer.Args(socket);
 
-            args.selectorThreads(2000);
-            args.workerThreads(5000);
+            args.selectorThreads(10);
+            args.workerThreads(50);
+            /**
+             * 生产出现 并发数量多了之后，开始阻塞，tps下降
+             * 为验证线程池，设置线程池的解决策略。
+             */
             // 工作线程池
-//            ExecutorService executorService =  new ThreadPoolExecutor(500, 1000,
-//                    60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-//            args.executorService(executorService);
+            ExecutorService executorService =  new ThreadPoolExecutor(10, 50,
+                    60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+            args.executorService(executorService);
 
             // 设置协议工厂，高效率的、密集的二进制编码格式进行数据传输协议
             args.protocolFactory(new TCompactProtocol.Factory());

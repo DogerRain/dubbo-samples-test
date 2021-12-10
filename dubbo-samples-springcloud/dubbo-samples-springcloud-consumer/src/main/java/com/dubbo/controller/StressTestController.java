@@ -23,8 +23,6 @@ import java.util.List;
 @Component("stressTestController")
 public class StressTestController {
 
-
-
     @DubboReference(version = "*", protocol = "dubbo,hessian", loadbalance = "random",retries = 0)
     private StressTestService stressTestService;
 
@@ -60,11 +58,11 @@ public class StressTestController {
 
     @RequestMapping("/stressTest/string1k")
     public Boolean string1k(){
+        // IO操作读取1k数据
         String s = new FileCapacity().getFileCapacity(1*1024);
         String result = stressTestService.StressString1k(s);
         log.info("stressTest/string1k:{},num:{}",result.length(),a);
         return true;
-
     }
 
     @RequestMapping("/stressTest/pojo")
