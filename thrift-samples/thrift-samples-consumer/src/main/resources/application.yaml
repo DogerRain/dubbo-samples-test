@@ -5,9 +5,7 @@ server:
 spring:
   application:
     name: thrift-samples-provider
-
-# 这里配置的权限大于log4j.properties的root设置
-#logging:
-#  level:
-#    root: DEBUG
-#    org.springframework: DEBUG
+logging:
+  config: classpath:log4j.xml
+  level:
+    root: INFO

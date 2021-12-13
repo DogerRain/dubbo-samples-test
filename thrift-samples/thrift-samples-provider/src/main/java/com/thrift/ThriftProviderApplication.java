@@ -3,6 +3,7 @@ package com.thrift;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * @author huangyongwen
@@ -14,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ThriftProviderApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ThriftProviderApplication.class, args);
+        ConfigurableApplicationContext ac = SpringApplication.run(ThriftProviderApplication.class, args);
         System.out.println("thrift service started..........");
     }
 

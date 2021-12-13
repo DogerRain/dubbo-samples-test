@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>thrift-samples-provider</artifactId>
+    <properties>
+        <log.path>/data/dubboStress</log.path>
+        <log.name>thrift1</log.name>
+    </properties>
     <dependencies>
 
         <dependency>

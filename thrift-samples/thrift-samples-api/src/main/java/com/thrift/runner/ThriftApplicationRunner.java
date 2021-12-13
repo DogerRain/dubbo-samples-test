@@ -42,6 +42,8 @@ public class ThriftApplicationRunner extends ContextLoaderListener implements Ap
     @Override
     public void run(ApplicationArguments applicationArguments) {
         log.info("thrift server 启动完成");
+        log.debug("debug 日志");
+        log.error("error 日志");
     }
 
     @Override

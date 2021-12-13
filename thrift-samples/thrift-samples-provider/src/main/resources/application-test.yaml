@@ -4,7 +4,9 @@ spring:
     include: [test]
 
 
-# 这里配置的权限大于log4j.properties的root设置
-#logging:
-#  level:
-#    root: debug
+# 这里配置的权限大于log4j.xml的root设置
+logging:
+  level:
+    root: DEBUG
+
+
