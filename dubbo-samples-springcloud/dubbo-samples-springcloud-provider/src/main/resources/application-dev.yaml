@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: dubbo-samples-privider-springCloud
+  profiles:
+    include: [dev]
 
 dubbo:
   application:

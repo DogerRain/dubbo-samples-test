@@ -12,7 +12,7 @@ import org.springframework.context.annotation.*;
 @ComponentScan(value = {"com.dubbo"})
 @EnableDubbo(scanBasePackages="com.dubbo")
 //不支持yml文件扫描
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:/benchmark/application-benchmark.properties")
 public class AnnotationConfig {
 
     @Bean
@@ -22,6 +22,7 @@ public class AnnotationConfig {
     }
 
     @Bean
+    @Profile("test")
     void test(){
         System.out.println(" i am test");
     }

@@ -26,9 +26,9 @@ import javax.servlet.ServletContextEvent;
  */
 @Slf4j
 @Component
-public class ThriftApplicationRunner extends ContextLoaderListener implements ApplicationRunner {
+public class DubboApplicationRunner extends ContextLoaderListener implements ApplicationRunner {
 
-    Logger logger = LoggerFactory.getLogger(ThriftApplicationRunner.class);
+    Logger logger = LoggerFactory.getLogger(DubboApplicationRunner.class);
 
     @Value("${dubbo.zookeeper.host}")
     private String host;

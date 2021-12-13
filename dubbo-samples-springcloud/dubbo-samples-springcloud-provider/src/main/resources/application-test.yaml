@@ -10,9 +10,8 @@ server:
 spring:
   application:
     name: dubbo-samples-privider-springCloud
-
-#默认指定为test环境，如果要dev，请在 启动类设置
-  profiles: test
+  profiles:
+    include: [test]
 
 dubbo:
   application:
@@ -38,4 +37,3 @@ dubbo:
 #  provider:
 #    executes: 6000
 #    actives: 6000
-

@@ -8,10 +8,13 @@ server:
 spring:
   application:
     name: dubbo-samples-consumer-springCloud
+  profiles:
+    include: [test]
+
 
 dubbo:
   registry:
-    address: ${dubbo.server.host}
+    address: ${dubbo.zookeeper.host}
     timeout: 10000
   protocol:
     name: dubbo
