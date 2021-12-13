@@ -51,7 +51,7 @@ public class StressTestProvider {
 
 ### @Warmup
 
-预热，预热可以避免首次因为一些其他因素，如CPU波动、类加载耗时这些情况。
+预热，预热可以避免首次因为一些其他因素，如CPU波动、类加载耗时这些情况的影响。
 
 ```java
 @Warmup(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS)
@@ -61,7 +61,7 @@ public class StressTestProvider {
 
 ### @Fork
 
-`@Fork`用于指定`fork`出多少个子进程来执行同一基准测试方法。
+`@Fork`用于指定`fork`出多少个`子进程`来执行同一基准测试方法。
 
 ### @Threads
 
@@ -73,7 +73,7 @@ public class StressTestProvider {
 
 坑1：
 
-```
+```java
 ERROR: transport error 202: connect failed: Connection refused ERROR
 ```
 
@@ -83,7 +83,9 @@ ERROR: transport error 202: connect failed: Connection refused ERROR
 
 ---
 
+推荐大家学习一下以下两个规范的压测代码：
+
 参考：
 
-- dubbo压测的官方代码：https://github.com/apache/dubbo-benchmark
-- RPC框架压测代码：https://github.com/hank-whu/rpc-benchmark
+- dubbo压测的官方代码：[https://github.com/apache/dubbo-benchmark](https://github.com/apache/dubbo-benchmark)
+- RPC框架压测代码：[https://github.com/hank-whu/rpc-benchmark](https://github.com/hank-whu/rpc-benchmark)

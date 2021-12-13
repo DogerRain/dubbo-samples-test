@@ -42,6 +42,8 @@ provider做1w次循环，生成随机数做累加。
 
 #### 情况一：
 
+三台同机房的机器，利用两台consumer请求同一台provider
+
 机器：
 
 ```
@@ -52,7 +54,7 @@ provider   2h4g	  -server -Xmx2g -Xms2g -XX:+UseG1GC
 
 > 因为单机无法让provider机器cpu压满
 
-取10并发，consumer2 进行100w次请求，consumer1 进行 80w次请求 。
+取10并发，consumer2 进行100w次请求，consumer1 进行 80w次（为了和consumer2 在同一时间完成）请求 。
 
 ```shell
  ab -n 1000000 -c  10 http://127.0.0.1:8091/consumer/stressTest/string1k
@@ -134,7 +136,7 @@ Percentage of the requests served within a certain time (ms)
 
 #### 情况二：
 
-我再加一台机器测试一下：
+我再加一台跨机房的机器测试一下。
 
 ```
 consumer1  2h4g   -server -Xmx4g -Xms4g -XX:+UseG1GC
@@ -237,6 +239,8 @@ Percentage of the requests served within a certain time (ms)
 
 #### 情况三：
 
+换成都是同机房的机器。
+
 ```
 consumer1  2h4g   -server -Xmx4g -Xms4g -XX:+UseG1GC
 consumer2  4h8g   -server -Xmx4g -Xms4g -XX:+UseG1GC
@@ -308,7 +312,7 @@ Percentage of the requests served within a certain time (ms)
 
 TPS差不多近9000，RTT响应时间差不多。
 
-provider 服务器情况：
+provider 服务器情况（CPU爆高）：
 
 ```shell
 top - 17:53:54 up 1141 days,  2:07,  2 users,  load average: 7.14, 5.33, 4.19
@@ -332,7 +336,7 @@ consumer2  8h8g   -server -Xmx4g -Xms4g -XX:+UseG1GC
 provider   2h4g	  -server -Xmx2g -Xms2g -XX:+UseG1GC 
 ```
 
-10w请求，20并发
+10w请求，20并发（100k请求太慢了。。）
 
 ```
 ab -n 100000 -c 20 http://127.0.0.1:8091/consumer/stressTest/string100k
@@ -686,5 +690,4 @@ ab -n 1000000 -c  10
 | OOM  | 无                | 无                  |
 | CPU  | 125%+             | 150%                |
 
-
-
+可以看到dubbo对 100k 的文件并不是很友好。

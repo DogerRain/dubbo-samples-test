@@ -28,11 +28,19 @@ JMX_setings=""
 
 cd /data/dubboStress
 
-nohup java -Dfile.encoding=utf-8 $JVM_settings  $GC_settings  -Duser.timezone=Asia/Shanghi $JMX_setings -jar $NAME --spring.profiles.active=test >thrift_info.log 2>thrift_error.log & 
+# 控制台日志文件
+CONSOLE_LOG=thrift_console.log
+CONSOLE_ERROR_LOG=thrift_error_console.log
+
+
+nohup java -Dfile.encoding=utf-8 $JVM_settings  $GC_settings  -Duser.timezone=Asia/Shanghi $JMX_setings -jar $NAME --spring.profiles.active=test >$CONSOLE_LOG 2>$CONSOLE_ERROR_LOG & 
 echo "-------重启结束--------"
-> /data/dubboStress/logs/thrift_gc.log
-> /data/dubboStress/thrift_info.log
-> /data/dubboStress/thrift_error.log
+
+# 清空日志，并且打印控制台日志
+> $CONSOLE_LOG
+> /data/dubboStress/logs/dubbo_gc.log
+> /data/dubboStress/dubbo_debug.log
+> /data/dubboStress/dubbo_error.log
 
 
-tail -f /data/dubboStress/thrift_info.log
+tail -f /data/dubboStress/$CONSOLE_LOG

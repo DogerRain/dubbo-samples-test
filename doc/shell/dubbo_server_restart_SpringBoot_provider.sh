@@ -27,12 +27,19 @@ JVM_settings="-server -Xmx4g -Xms4g -XX:+UseG1GC "
 JMX_setings=""
 
 cd /data/dubboStress
+# 控制台日志文件
+CONSOLE_LOG=dubbo_console.log
+CONSOLE_ERROR_LOG=dubbo_error_console.log
 
-nohup java -Dfile.encoding=utf-8 $JVM_settings  $GC_settings  -Duser.timezone=Asia/Shanghi $JMX_setings -jar $NAME  >info.log 2>error.log & 
+
+nohup java -Dfile.encoding=utf-8 $JVM_settings  $GC_settings  -Duser.timezone=Asia/Shanghi $JMX_setings -jar $NAME --spring.profiles.active=test >$CONSOLE_LOG 2>$CONSOLE_ERROR_LOG & 
 echo "-------重启结束--------"
+
+# 清空日志，并且打印控制台日志
+> $CONSOLE_LOG
 > /data/dubboStress/logs/dubbo_gc.log
-> /data/dubboStress/info.log
-> /data/dubboStress/error.log
+> /data/dubboStress/dubbo_debug.log
+> /data/dubboStress/dubbo_error.log
 
 
-tail -f /data/dubboStress/info.log
+tail -f /data/dubboStress/$CONSOLE_LOG
