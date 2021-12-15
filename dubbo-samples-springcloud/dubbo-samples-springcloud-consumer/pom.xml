@@ -72,12 +72,14 @@
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <version>1.29</version>
+            <version>1.19</version>
+            <!--<version>1.29</version>-->
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
-            <version>1.29</version>
+            <version>1.19</version>
+            <!--<version>1.29</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -93,7 +95,7 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <!--jmh打包专属，请不要顺便使用-->
+            <!--jmh打包专属 方法1，打包需要指定使用-->
             <id>jmh</id>
             <build>
                 <plugins>
@@ -124,10 +126,80 @@
                     </plugin>
                 </plugins>
             </build>
+
+        </profile>
+        <!--<profile>-->
+            <!--<id>jhm2</id>-->
+            <!--&lt;!&ndash;jmh打包专属 方法2，打包需要指定使用，不推荐这种&ndash;&gt;-->
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.apache.maven.plugins</groupId>-->
+                        <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                        <!--<version>3.1.0</version>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<id>copy-dependencies</id>-->
+                                <!--<phase>prepare-package</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>copy-dependencies</goal>-->
+                                <!--</goals>-->
+                                <!--<configuration>-->
+                                    <!--<outputDirectory>-->
+                                        <!--${project.build.directory}/libs-->
+                                    <!--</outputDirectory>-->
+                                <!--</configuration>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
+
+                    <!--<plugin>-->
+                        <!--<groupId>org.apache.maven.plugins</groupId>-->
+                        <!--<artifactId>maven-jar-plugin</artifactId>-->
+                        <!--<version>3.1.0</version>-->
+                        <!--<configuration>-->
+                            <!--<finalName>jmh-demo2</finalName>-->
+                            <!--<archive>-->
+                                <!--<manifest>-->
+                                    <!--<addClasspath>true</addClasspath>-->
+                                    <!--<classpathPrefix>libs/</classpathPrefix>-->
+                                    <!--<mainClass>com.dubbo.benchmark.StressTestProvider</mainClass>-->
+                                <!--</manifest>-->
+                            <!--</archive>-->
+                        <!--</configuration>-->
+                    <!--</plugin>-->
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
+        <profile>
+            <id>consumer</id>
+            <!--默认打包-->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>2.4.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <mainClass>com.dubbo.ConsumerApplication</mainClass>
+                            <layout>JAR</layout>
+                            <!--构建完整可执行程序，可以直接运行-->
+                            <executable>true</executable>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
-    <!--默认打包-->
     <build>
+        <!--<finalName>${artifactId}-${project.version}-test</finalName>-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -149,4 +221,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

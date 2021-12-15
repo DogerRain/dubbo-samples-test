@@ -44,10 +44,9 @@ public class DubboApplicationRunner extends ContextLoaderListener implements App
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        log.info("测试1");
-        log.error("测试2");
-        log.debug("测试3");
-        log.info("测试4");
+        log.info("我是info日志");
+        log.error("我是error日志");
+        log.debug("我是debug日志");
         log.info("关键配置信息：");
         String[] activeProfiles = configurableApplicationContext.getEnvironment().getActiveProfiles();
         if (ObjectUtils.isEmpty(activeProfiles)) {

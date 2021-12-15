@@ -1,6 +1,6 @@
-## 1、压测思路
+## 1、准备
 
-压测consumer的Controller，触发调用，调用provider暴露的接口。
+使用ab（Apache-BenchMark）压测consumer的Controller，触发调用，调用provider暴露的接口。
 
 provider做1w次循环，生成随机数做累加。
 
@@ -15,7 +15,7 @@ provider再把consumer的入参无处理返回给consumer。
 目前只有一台provider，consumer视情况而定（见下面）
 
 ```shell
-consumer1  2h4g   -server -Xmx4g -Xms4g -XX:+UseG1GC
+consumer1  8h8g   -server -Xmx4g -Xms4g -XX:+UseG1GC
 consumer2  4h8g   -server -Xmx4g -Xms4g -XX:+UseG1GC
 provider   2h4g	  -server -Xmx2g -Xms2g -XX:+UseG1GC 
 ```
@@ -180,11 +180,96 @@ Percentage of the requests served within a certain time (ms)
 
 请求开始，provider CPU 逐渐升高（CPU在171%左右），数量到了4w后，provider CPU 开始下降，降为 17%，provider开始阻塞，consumer1、consumer2 开始等待，并抛出 `connection time out` 原因应该是 provider 无法处理过多的线程，开始阻塞，拒绝请求。
 
+```
+org.apache.thrift.transport.TTransportException: Cannot write to null outputStream
+```
+
 provider 处理完毕，开始接收请求，CPU再次升高，再下降，反复。
 
-这里我再切换线程模型试一下：
 
 
+这里我再切换参数试一下：
+
+```java
+args.selectorThreads(1000);
+args.workerThreads(5000);
+LinkedBlockingDeque queue = new LinkedBlockingDeque<>(1024);
+ExecutorService executorService = new ThreadPoolExecutor(100, 500,
+	60, TimeUnit.SECONDS, queue,
+     r -> {
+          hread thread = new Thread(r);
+          //设置线程异常处理器
+          log.error("线程池捕捉错误：", e);
+          });
+ 	return thread;
+		}		
+);
+args.executorService(executorService);
+```
+
+并没有什么用，该阻塞还是阻塞。
+
+这样很难测试单机情况下Thrift的性能，决定使用单机 consumer1 500个并发测试一下：
+
+```
+ab -n 100000 -c  500 http://127.0.0.1:7998/consumer/stress/string1k
+```
+
+consumer1的情况：
+
+```shell
+Concurrency Level:      500
+Time taken for tests:   21.589 seconds
+Complete requests:      100000
+Failed requests:        0
+Write errors:           0
+Total transferred:      10900000 bytes
+HTML transferred:       400000 bytes
+Requests per second:    4631.91 [#/sec] (mean)
+Time per request:       107.947 [ms] (mean)
+Time per request:       0.216 [ms] (mean, across all concurrent requests)
+Transfer rate:          493.04 [Kbytes/sec] received
+
+Percentage of the requests served within a certain time (ms)
+  50%     71
+  66%     76
+  75%     81
+  80%     84
+  90%     91
+  95%    103
+  98%   1059
+  99%   1084
+```
+
+tps可以去到 4600，但是RTT 变得很高。
+
+provider的cpu差不多满了：
+
+```
+top - 09:57:09 up 1148 days, 18:10,  3 users,  load average: 5.55, 3.43, 1.71
+Tasks: 114 total,   1 running, 112 sleeping,   0 stopped,   1 zombie
+Cpu0  : 51.1%us, 19.3%sy,  0.0%ni,  6.9%id,  0.0%wa,  0.0%hi, 22.6%si,  0.0%st
+Cpu1  : 75.1%us, 17.4%sy,  0.0%ni,  7.5%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
+Mem:   3924680k total,  2571440k used,  1353240k free,    84636k buffers
+Swap:  2097144k total,    64100k used,  2033044k free,   377692k cached
+
+  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                                                                                                       
+25203 root      20   0 5813m 1.6g  13m S 177.8 43.6  10:20.23 java  
+```
+
+分别再测试50、 100、200、300、1000、2000 并发
+
+|          | TPS  | RTT        | provider CPU |
+| -------- | ---- | ---------- | ------------ |
+| 50并发   | 4600 | 95%     16 | 150%~170%    |
+| 100并发  | 4600 | 95%     25 | 160%+        |
+| 200并发  | 4600 | 95%     42 | 170%+        |
+| 300并发  | 4700 | 95%     62 | 160%~180%    |
+| 500并发  | 4800 | 95%    103 | 160%~190%    |
+| 1000并发 | 4800 | 95%    336 | 170%~190%    |
+| 2000并发 | 4800 | 95%    608 | 180%~190%    |
+
+（使用默认的args参数，tps会高一点）
 
 ### 2.2、100k数据
 
@@ -253,6 +338,8 @@ Swap:  2097144k total,     5940k used,  2091204k free,   838876k cached
 
 provider 运行一段时间后拒绝请求，consumer开始阻塞。
 
+情况和 1k 一样。
+
 
 
 ## 3、分析
@@ -307,7 +394,7 @@ Linux打开句柄文件数太小，设置大一些，`ulimit -n`  查看一下�
    //这里的设置也没什么太大用处
 ```
 
-并发超过了
+超过了4w左右
 
 ```
 org.apache.thrift.transport.TTransportException: Cannot write to null outputStream
@@ -358,17 +445,20 @@ ab -n 1000000 -c  10
 
 |      | TThreadedSelectorServer + 1k              | TThreadedSelectorServer+100k |
 | ---- | ----------------------------------------- | ---------------------------- |
-| TPS  | 1200                                      | 800左右                      |
-| RTT  | Consume1：95% 20ms （consumer2 可能超时） | 95% 16ms                     |
-| OOM  | 无                                        | 无                           |
-| CPU  | 179% —> 3%                                | 120%+                        |
+| TPS  | 1200                                      |                              |
+| RTT  | Consume1：95% 20ms （consumer2 可能超时） |                              |
+| OOM  | 无                                        |                              |
+| CPU  | 179% —> 3%                                |                              |
 
 
 
-Thrift 对并发的支持一般，主要还是要选择合适的Server模型。
+Thrift 对并发的支持一般，主要还是要选择合适的Server模型，阻塞和非阻塞模型的tps区别很大，非阻塞模型 TThreadedSelectorServer  的线程设置参数对tps、RT影响也不大。
 
 
 
 ### Q1:为什么多机请求普遍超时，单机100w请求不会？
 
 猜测是provider的线程模型不支持同时处理这么多的请求（线程），而单机发出的请求全部进入队列
+
+
+

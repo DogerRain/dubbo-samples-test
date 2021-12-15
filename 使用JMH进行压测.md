@@ -67,6 +67,18 @@ public class StressTestProvider {
 
 `@Threads`注解用于指定使用多少个线程来执行基准测试方法，如果使用`@Threads`指定线程数为`2`，那么每次测量都会创建两个线程来执行基准测试方法。
 
+### pom注解
+
+## 3、运行
+
+
+
+### 打成jar
+
+```
+java -jar target/jmh-demo.jar  -rf json -rff /data/result2.json
+```
+
 
 
 ## 报错信息：

@@ -18,7 +18,7 @@ echo "gc配置:$GC_settings"
 
 GC_settings="-Xloggc:/data/dubboStress/logs/dubbo_gc.log -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/heap.bin"
 #使用g1，不建议设置-Xmn,如 -Xmn256m ，g1会自动分配
-JVM_settings="-server -Xmx4g -Xms4g -XX:+UseG1GC "
+JVM_settings="-server -Xmx2g -Xms2g -XX:+UseG1GC "
 #1.6 使用CMS，标志整理（dubbo官方使用）
 #JVM_settings_1.6="-server -Xmx2g -Xms2g -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.*;
  * @Description
  */
 @Configuration
-@ComponentScan(value = {"com.dubbo"})
+@ComponentScan(value = {"com.dubbo.benchmark","com.dubbo.controller"})
 @EnableDubbo(scanBasePackages="com.dubbo")
 //不支持yml文件扫描
 @PropertySource("classpath:/benchmark/application-benchmark.properties")

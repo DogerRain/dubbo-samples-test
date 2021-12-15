@@ -20,21 +20,22 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode({Mode.Throughput, Mode.All})
 @Warmup(iterations = 3, time = 5, timeUnit = TimeUnit.SECONDS)
 //测量次数,每次测量的持续时间
-@Measurement(iterations = 5, time = 5, timeUnit = TimeUnit.SECONDS)
-@Threads(10)
+@Measurement(iterations = 1, time = 1, timeUnit = TimeUnit.SECONDS)
+@Threads(1)
 @Fork(1)
 @State(value = Scope.Benchmark)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Slf4j
 public class StressTestProvider {
 
-//    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AnnotationConfig.class);
-    AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
+    AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(AnnotationConfig.class);
+//    AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
 
     @Benchmark
     public void string1k() {
-        annotationConfigApplicationContext.register(AnnotationConfig.class);
-        annotationConfigApplicationContext.refresh();
+//        annotationConfigApplicationContext.register(AnnotationConfig.class);
+//        annotationConfigApplicationContext.refresh();
+        annotationConfigApplicationContext.start();
         StressTestController annotationAction = annotationConfigApplicationContext.getBean("stressTestController",StressTestController.class);
         annotationAction.string1k();
 

@@ -1,6 +1,6 @@
-Dubbo官方文档：[https://dubbo.apache.org/zh](https://dubbo.apache.org/zh)
-
 ## 1、介绍
+
+Dubbo官方文档：[https://dubbo.apache.org/zh](https://dubbo.apache.org/zh)
 
 目前Dubbo最新的是Dubbo3。
 
@@ -466,16 +466,11 @@ RpcContext.getContext().setAttachment("token","123456");
 
 |          | dubbo                                                        | rmi                                                          | hessian                                                      | http                                                         | webservice                         | thrift                 |
 | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------------- | ---------------------- |
-| 传输协议 | TCP                                                          | TCP                                                          | HTTP                                                         | HTTP                                                         | HTTP                               |                        |
-| 传输方式 | NIO异步传输                                                  | 同步                                                         | 同步                                                         | 同步                                                         | 同步                               |                        |
-| 序列化   | Hessian二进制序列化                                          | Java标准二进制序列化                                         | Hessian二进制序列化                                          | 表单序列化                                                   | SOAP文本序列化                     |                        |
-| 适用范围 | 传入传出参数数据包较小（建议小于100K），消费者比提供者个数多，单一消费者无法压满提供者，尽量不要使用dubbo协议传输大文件或超大字符串 | 传入传出参数数据包大小混合，消费者与提供者个数差不多，可传文件。 | 传入传出参数数据包较大，提供者比消费者个数多，提供者压力较大，可传文件。 | 传入传出参数数据包大小混合，提供者比消费者个数多，可用浏览器查看，可用表单或URL传入参数，暂不支持传文件。 | 系统集成，跨语言调用。             |                        |
+| 传输协议 | TCP                                                          | TCP                                                          | HTTP                                                         | HTTP                                                         | HTTP                               | thrif                  |
+| 传输方式 | NIO异步传输                                                  | 同步                                                         | 同步                                                         | 同步                                                         | 同步                               | 同步、异步             |
+| 序列化   | Hessian二进制序列化                                          | Java标准二进制序列化                                         | Hessian二进制序列化                                          | 表单序列化                                                   | SOAP文本序列化                     | Thrift                 |
+| 适用范围 | 传入传出参数数据包较小（建议小于100K），消费者比提供者个数多，单一消费者无法压满提供者，尽量不要使用dubbo协议传输大文件或超大字符串 | 传入传出参数数据包大小混合，消费者与提供者个数差不多，可传文件。 | 传入传出参数数据包较大，提供者比消费者个数多，提供者压力较大，可传文件。 | 传入传出参数数据包大小混合，提供者比消费者个数多，可用浏览器查看，可用表单或URL传入参数，暂不支持传文件。 | 系统集成，跨语言调用。             | 跨语言                 |
 | 约束     |                                                              | 参数及返回值需实现Serializable接口                           | 参数及返回值需实现Serializable接口                           |                                                              | 参数及返回值需实现Serializable接口 | 不能在协议中传递null值 |
-
-
-
-> 当前 dubbo 支持的 thrift 协议是对 thrift 原生协议 的扩展，与原生Thrift不兼容 
-> 但我试了一下dubbo3.0，
 
 dubbo 有多种协议，不同的协议默认使用不同的序列化框架。比如：
 
@@ -493,6 +488,12 @@ webservice 协议，默认是 soap 文本序列化 。
 ## 6、注意事项（TODO ）
 
 1、使用了dubbo2.7.13 版本，thrift 协议 的name 是native-thrift，而且 `RpcContext.getContext().getAttachments` 无法获取参数
+
+> 当前 dubbo 支持的 thrift 协议是对 thrift 原生协议 的扩展，与原生Thrift不兼容 ，使用的是 `protocol="tri"`
+>
+> 吐槽一下，dubbo3官方的更新进度也太慢了，本人在使用dubbo 3.0.2.1 的时候，并没有 triple 协议，官方文档也没有找到demo，最后是在dubbo-benchmark项目才知道如何使用。
+
+
 
 2、协议的支持
 
@@ -539,4 +540,14 @@ No such extension org.apache.dubbo.rpc.Protocol by name hessian, no related exce
 
 - 使用直连模式：https://blog.csdn.net/hcz666/article/details/115058048
 - dubbo官方文档：[https://dubbo.apache.org/zh](https://dubbo.apache.org/zh)
+
+```
+java -server -Xmx1g -Xms1g -XX:MaxDirectMemorySize=1g -XX:+UseG1GC -Dserver.host=127.0.0.1 -Dserver.port=9980 -jar dubbbo-triple-server-1.0-SNAPSHOT.jar
+```
+
+
+
+```
+java -server -Xmx1g -Xms1g -XX:MaxDirectMemorySize=1g -XX:+UseG1GC -Dserver.host=127.0.0.1 -Dserver.port=9980 -jar dubbo-triple-client-1.0-SNAPSHOT.jar
+```
 

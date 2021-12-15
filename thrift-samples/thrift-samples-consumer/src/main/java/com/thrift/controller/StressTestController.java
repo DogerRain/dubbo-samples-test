@@ -1,17 +1,8 @@
 package com.thrift.controller;
 
-import com.thrift.api.Hello;
 import com.thrift.common.FileCapacity;
 import com.thrift.config.ThriftConsumerConfiguration;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TCompactProtocol;
-import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
-import org.apache.thrift.transport.layered.TFramedTransport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +36,6 @@ public class StressTestController {
 
         FileCapacity fileCapacity = new FileCapacity();
         String s = fileCapacity.getFileCapacity(1 * 1024);
-        log.error("测试error日志");
 //        最简单的方式
 //        String resp = thriftConsumerConfiguration.getRemoteResult(s);
         String resp = thriftConsumerConfiguration.getRemoteResultTFramedTransport(s);

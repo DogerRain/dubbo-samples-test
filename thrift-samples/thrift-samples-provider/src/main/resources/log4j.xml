@@ -32,15 +32,16 @@
 
         <!-- 这个会打印出所有的debug及以上级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
         <RollingFile name="RollingFileDebug" fileName="${FILE_PATH}/${FILE_NAME}_debug.log"
-                     filePattern="${FILE_PATH}/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log.gz">
+        >
             <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN}"/>
 
             <Policies>
                 <!--interval属性用来指定多久滚动一次，默认是1 hour-->
-                <TimeBasedTriggeringPolicy interval="24"/>
-                <SizeBasedTriggeringPolicy size="50MB"/>
+                <TimeBasedTriggeringPolicy interval="24"
+                                           filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz"/>
+                <!--<SizeBasedTriggeringPolicy size="50MB" filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log.gz"/>-->
             </Policies>
             <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
             <DefaultRolloverStrategy max="15"/>

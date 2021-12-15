@@ -6,6 +6,7 @@ spring:
   application:
     name: dubbo-samples-privider-springCloud
   profiles:
+#    带入 api 项目的 application-dev.properties
     include: [dev]
 
 dubbo:

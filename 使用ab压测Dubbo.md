@@ -1,44 +1,14 @@
-参考：
+## 1、准备
 
-- 压测dubbo：https://blog.csdn.net/u013815546/article/details/101385888
-
-- 压测dubbo：（有点不一样）https://blog.csdn.net/cyjs1988/article/details/84258046
-
-- https://blog.51cto.com/ydhome/1861956
-
-- 官网：https://jmeter-plugins.org/wiki/Start/
-
-- jmeter使用：https://blog.csdn.net/github_27109687/article/details/71968662
-
-使用 rest 协议：
-
-https://dangdangdotcom.github.io/dubbox/rest.html
-
-
-
-
-
-
-
-博客推荐：
-
-http://shiyanjun.cn/archives/349.html
-
-
-
-## 2、ab压测情况
-
-
-
-### 1k 数据
-
-准备：
-
-压测consumer的Controller，触发调用。
+使用ab（Apache-BenchMark）压测consumer的Controller，触发调用。
 
 dubbo的consumer发起调用，调用provider暴露的接口。
 
 provider做1w次循环，生成随机数做累加。
+
+## 2、ab压测情况
+
+### 1k 数据
 
 #### 情况一：
 
@@ -691,3 +661,15 @@ ab -n 1000000 -c  10
 | CPU  | 125%+             | 150%                |
 
 可以看到dubbo对 100k 的文件并不是很友好。
+
+---
+
+参考：
+
+- 压测dubbo：https://blog.csdn.net/u013815546/article/details/101385888
+- 压测dubbo：（有点不一样）https://blog.csdn.net/cyjs1988/article/details/84258046
+- https://blog.51cto.com/ydhome/1861956
+- 官网：https://jmeter-plugins.org/wiki/Start/
+- jmeter使用：https://blog.csdn.net/github_27109687/article/details/71968662
+- 使用 rest 协议：https://dangdangdotcom.github.io/dubbox/rest.html
+- 基于Dubbo的Hessian协议实现远程调用:http://shiyanjun.cn/archives/349.html

@@ -19,10 +19,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author huangyongwen
@@ -182,17 +179,27 @@ public class ThriftProviderConfiguration {
             TProcessor processor = new Hello.Processor<Hello.Iface>(new HelloServiceImpl());
             // 目前Thrift提供的最高级的模式，可并发处理客户端请求,多线程半同步半异步的服务模型
             TThreadedSelectorServer.Args args = new TThreadedSelectorServer.Args(socket);
-
-            args.selectorThreads(10);
-            args.workerThreads(50);
+//            args.selectorThreads(1000);
+//            args.workerThreads(5000);
+//            LinkedBlockingDeque queue = new LinkedBlockingDeque<>(1024);
+            SynchronousQueue queue = new SynchronousQueue<Runnable>();
             /**
              * 生产出现 并发数量多了之后，开始阻塞，tps下降
              * 为验证线程池，设置线程池的解决策略。
              */
             // 工作线程池
-            ExecutorService executorService =  new ThreadPoolExecutor(10, 50,
-                    60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-            args.executorService(executorService);
+            ExecutorService executorService = new ThreadPoolExecutor(100, 500,
+                    60, TimeUnit.SECONDS, queue,
+                    r -> {
+                        Thread thread = new Thread(r);
+                        //设置线程异常处理器
+                        thread.setUncaughtExceptionHandler((Thread thread1, Throwable e) -> {
+                            log.error("线程池捕捉错误：", e);
+                        });
+                        return thread;
+                    }
+            );
+//            args.executorService(executorService);
 
             // 设置协议工厂，高效率的、密集的二进制编码格式进行数据传输协议
             args.protocolFactory(new TCompactProtocol.Factory());
