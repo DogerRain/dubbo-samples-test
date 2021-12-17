@@ -9,6 +9,7 @@ spring:
 #    带入 api 项目的 application-dev.properties
     include: [dev]
 
+
 dubbo:
   application:
     name: ${spring.application.name}
@@ -29,3 +30,8 @@ dubbo:
   scan:
     base-packages: com.dubbo.service
 
+
+logging:
+  level:
+    root: INFO
+  log-path: /data/dubboStress/provider

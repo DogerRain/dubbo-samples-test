@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserInfo(long userId) {
-
+        log.debug("我是service下的debug");
         log.info("request from consumer: {}", RpcContext.getContext().getRemoteAddress());
         log.info("response from provider: {}" , RpcContext.getContext().getLocalAddress());
         return new User(userId, "userName" + userId , " --->>>>response from remote RPC provider:" + RpcContext.getContext().getLocalAddress());

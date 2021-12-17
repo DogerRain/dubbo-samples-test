@@ -8,15 +8,15 @@ Dubbo3 格式的 Provider 地址不能被 Dubbo2 的 Consumer 识别到，反之
 
 >  这里的架构和使用都是基于Dubbo2.7 版本，Dubbo2（2.7以下）和Dubbo3两个版本的注解有区别。
 
+
+
 ![](https://dubbo.apache.org/imgs/architecture.png)
 
+Registry是注册中心，用于发现服务者和消费者。
 
+注册中心可以选择 zookeeper、consul、nacos，推荐使用zookeeper。
 
-注册中心可以选择 zookeeper、consul、nacos
-
-推荐使用zookeeper。
-
-原理：
+dubboRPC通信的原理：
 
 ![img](https://upload-images.jianshu.io/upload_images/4202472-9d81b0d43259092d.png)
 
@@ -74,6 +74,7 @@ springboot与dubbo集成：
 <dependency>
     <groupId>org.apache.dubbo</groupId>
     <artifactId>dubbo-registry-zookeeper</artifactId>
+    <version>2.7.13</version>
 </dependency>
 ```
 
@@ -97,7 +98,7 @@ spring-provider.xml ：
 
 
 <dubbo:provider token="true" />
-
+<!-- beanId -->
 <bean id="demoService" class="org.apache.dubbo.samples.basic.impl.DemoServiceImpl"/>
 
 <!--用 Spring 配置声明暴露服务，ref="demoService" 是 beanId，必填 -->
@@ -107,9 +108,17 @@ spring-provider.xml ：
 
 ```
 
-#### 2、客户端
 
-也叫消费端
+
+一般来说，我们会把 beanId 交给 spring 去管理只需要在 xml 里面声明扫描包，然后使用 `@Service` 声明实现类 即可： 
+
+```xml
+<context:component-scan base-package="org.apache.dubbo.samples.basic.impl"/>
+```
+
+
+
+#### 2、客户端
 
 spring-consumer.xml：
 
@@ -119,34 +128,6 @@ spring-consumer.xml：
 <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:2181"/>
 <!-- 服务方引用的beanId -->
 <dubbo:reference id="demoService" check="true" interface="org.apache.dubbo.samples.basic.api.DemoService"/>
-```
-
-
-
-一般来说，我们会把 bean 交给 spring 去管理只需要在 xml 里面声明扫描包，然后使用 `@Service` 声明实现类 即可：
-
-```xml
-<!--用 Spring 配置声明暴露服务 -->
-<!-- 具体的实现bean  一般实际项目中 不会把bean写在dubbo配置中,例如采用注解开发时,通过扫描的方式把bean交给spring管理,这里不需要写,直接在dubbo-service引用就好-->
-<dubbo:service interface="org.apache.dubbo.samples.basic.api.DemoService" ref="demoService" loadbalance="roundrobin" timeout="5000"/>
-<!--使用dubbo协议-->
-<dubbo:protocol name="dubbo" />
-<!-- bean扫描路径 -->
-<context:component-scan base-package="org.apache.dubbo.samples.basic.impl"/>
-```
-
-对应的实现类：
-
-```java
-@Service("demoService")
-public class DemoServiceImpl implements DemoService {
-
-```
-
-暴露接口：
-
-```java
-public interface DemoService {
 ```
 
 
@@ -193,6 +174,55 @@ dubbo.application.name=demo-consumer
 # 注册中心地址
 dubbo.registry.address=zookeeper://localhost:2181
 dubbo.consumer.timeout=1000
+```
+
+
+
+#### 使用例子1：
+
+dubbo和spring可以完美结合，只需要在spring配置文件声明即可。
+
+provider：
+
+```java
+    public static void main(String[] args) throws Exception {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-demo-provider.xml");
+        context.start();
+        new CountDownLatch(1).await();
+    }
+```
+
+consumer：
+
+```java
+public static void main(String[] args) throws IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-demo-consumer.xml");
+        context.start();
+        DemoService demoService = (DemoService) context.getBean("demoService");
+        String hello = demoService.sayHello("world");
+}
+```
+
+
+
+#### 使用例子2：
+
+这里展示注解的方式，需要声明`@EnableDubbo`
+
+provider：
+
+```java
+@DubboService(version = "1.0.0")
+public class UserServiceImpl implements UserService{
+    
+}
+```
+
+consumer：
+
+```java
+@DubboReference(version = "*", protocol = "dubbo,hessian", loadbalance = "random" )
+private UserService userService;
 ```
 
 
@@ -532,8 +562,6 @@ No such extension org.apache.dubbo.rpc.Protocol by name hessian, no related exce
 
 
 
-
-
 ---
 
 参考：
@@ -541,13 +569,5 @@ No such extension org.apache.dubbo.rpc.Protocol by name hessian, no related exce
 - 使用直连模式：https://blog.csdn.net/hcz666/article/details/115058048
 - dubbo官方文档：[https://dubbo.apache.org/zh](https://dubbo.apache.org/zh)
 
-```
-java -server -Xmx1g -Xms1g -XX:MaxDirectMemorySize=1g -XX:+UseG1GC -Dserver.host=127.0.0.1 -Dserver.port=9980 -jar dubbbo-triple-server-1.0-SNAPSHOT.jar
-```
 
-
-
-```
-java -server -Xmx1g -Xms1g -XX:MaxDirectMemorySize=1g -XX:+UseG1GC -Dserver.host=127.0.0.1 -Dserver.port=9980 -jar dubbo-triple-client-1.0-SNAPSHOT.jar
-```
 

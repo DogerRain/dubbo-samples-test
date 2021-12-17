@@ -8,7 +8,7 @@ provider做1w次循环，生成随机数做累加。
 
 ## 2、ab压测情况
 
-### 1k 数据
+### 2.1、1k 数据
 
 #### 情况一：
 
@@ -296,7 +296,7 @@ Swap:  2097144k total,     5988k used,  2091156k free,  1784112k cached
  1089 root      20   0 4908m 1.5g  13m S 198.1 39.4 114:41.32 java -Dfile.encoding=utf-8 -server -Xmx2g -Xms2g -XX:+UseG1GC -Xloggc:/data/dubboStress/logs/dubbo_gc.log
 ```
 
-### 2、100k数据
+### 2.2、100k数据
 
 #### 情况一：
 
@@ -660,7 +660,7 @@ ab -n 1000000 -c  10
 | OOM  | 无                | 无                  |
 | CPU  | 125%+             | 150%                |
 
-可以看到dubbo对 100k 的文件并不是很友好。
+ 
 
 ---
 

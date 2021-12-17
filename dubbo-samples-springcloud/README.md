@@ -1,8 +1,6 @@
-# dubbo3.0整合SpringBoot例子
+# dubbo整合SpringBoot例子
 
 dubbo新版本（3.0以上）在相对于 dubbo 旧版本（2.5、2.6、2.7），有很多的不相同的地方。
-
-
 
 官方文档也说了新版本的特性：
 
@@ -295,7 +293,7 @@ public class ProviderUserController {
 ```java
 @SpringBootApplication
 @EnableDubbo
-public class ConsumerApplication {
+public class ProviderApplication {
     public static void main(String[] args) {
         SpringApplication.run(ConsumerApplication.class, args);
         System.out.println("dubbo client started..........");
@@ -429,7 +427,7 @@ dubboAdmin 是一个后台可视化项目，可以看到 关于dubbo服务方、
 
 这里就不阐述怎么搭建了，可以参考其他文章。
 
-
+> 这里提一下，新版的dubboAdmin不如旧版的dubboAdmin好用，GitHub一堆人在吐槽~
 
 ### 4.4、调用 consumer 的接口
 
@@ -501,5 +499,8 @@ consumer日志：
 
 接下来还有两个TODO：
 
-- 整合SpringCloud
-- 使用jmeter压测dubbo、rest、hessian协议 传输大包的性能
+- [x] 使用xml 
+
+- [x] 使用jmeter压测dubbo、rest、hessian协议 传输大包的性能
+
+> 2021年12月17日17:43:38 已完成，参考专栏其他系列文章和GitHub

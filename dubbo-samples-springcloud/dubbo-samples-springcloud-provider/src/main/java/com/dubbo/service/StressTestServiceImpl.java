@@ -1,11 +1,9 @@
 package com.dubbo.service;
 
 import com.dubbo.api.StressTestService;
-import com.dubbo.api.UserService;
 import com.dubbo.vo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

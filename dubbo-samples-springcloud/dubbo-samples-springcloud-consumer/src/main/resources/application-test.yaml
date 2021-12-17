@@ -27,3 +27,8 @@ dubbo:
 
 #  scan:
 #    base-packages: com.dubbo.service
+
+logging:
+  level:
+    root: INFO
+  log-path: /data/dubboStress

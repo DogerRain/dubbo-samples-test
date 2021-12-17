@@ -1,16 +1,32 @@
-dubbo3.0整合springboot、spring 的例子。
+## 1、介绍
 
-目前看到网上的大多数例子都是基于dubbo 2.7 的例子，很多注解还停留在 @Service 的基础上
+本项目是比较 RPC框架 Dubbo 和 Thrift 的差别。
 
-遂作者我整合两个Dubbo3.0 + SpringBoot （注解形式）、Duboo+Spring（xml形式）例子。
+学习本项目你可以得到：
 
-Dubbo3.0 + SpringBoot 整合例子：
+- dubbo的使用
+- Thrift的使用
+- 压测工具jmeter、ab（Apache-BenchMark）、jmh 的使用
+- dubbo、thrift的性能
+- log4j2（漏洞已升级）、logback的使用
+
+
+
+## 2、指引
+
+### 1、Dubbo  整合 SpringBoot（注解形式）
 
  [Dubbo3.0 + SpringBoot 整合例子 + zookeeper](dubbo-samples-springcloud/README.md)
 
-Duboo+Spring（xml形式）整合例子：
+### 2、Duboo整合Spring（xml形式）
 
  [Duboo3.0 + Spring（xml形式）+ zookeeper 整合例子](dubbo-samples-xml/README.md) 
+
+### 3、thrift的使用
+
+
+
+### 4、压测结果
 
 
 

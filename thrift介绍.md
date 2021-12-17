@@ -61,19 +61,17 @@ Thrift实际上是实现了C/S模式，通过代码生成工具将thrift文生�
 
    TThreadedSelectorServer
 
-TNonblockingServer 只能一次处理一个请求
+TNonblockingServer 只能一次处理一个请求。
 
-选择 Server的艺术：
 
-https://www.cnblogs.com/cyfonly/p/6059374.html
-
-https://www.cnblogs.com/exceptioneye/p/4945073.html
 
 ## 2、使用
 
 ### 2.1、安装thrift环境
 
 需要先安装thrift环境。
+
+官网可以
 
 ### 2.2、定义  .thrift IDL 接口文件
 
@@ -139,7 +137,7 @@ struct Course {
 }
 ```
 
-
+## 3、thrift的性能
 
 | 数据传输格式    | 类型   | 优点                                                         | 缺点                                                         |
 | --------------- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -165,6 +163,8 @@ thrift和dubbo的对比：
 |                |                        |        |
 
 
+
+---
 
 参考资料：
 
@@ -196,3 +196,9 @@ shift的使用：
 
 - https://vimsky.com/examples/detail/java-class-org.apache.thrift.TMultiplexedProcessor.html
 - https://github.com/sofn/trpc
+
+选择 Server的艺术：
+
+- https://www.cnblogs.com/cyfonly/p/6059374.html
+
+- https://www.cnblogs.com/exceptioneye/p/4945073.html

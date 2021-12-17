@@ -37,3 +37,9 @@ dubbo:
 #  provider:
 #    executes: 6000
 #    actives: 6000
+
+
+logging:
+  level:
+    root: INFO
+  log-path: /data/dubboStress

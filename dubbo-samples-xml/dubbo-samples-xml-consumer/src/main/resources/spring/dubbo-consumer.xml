@@ -31,8 +31,8 @@
     <dubbo:reference id="orderService2" check="false"
                      interface="com.dubbo.api.OrderService" version="2" protocol="dubbo"/>
 
-    <!--<dubbo:reference id="orderService3" check="false"-->
-                     <!--interface="com.dubbo.api.OrderRESTService" version="3"  protocol="rest"/>-->
+    <dubbo:reference id="orderService3" check="false"
+                     interface="com.dubbo.api.OrderRESTService" version="3"  protocol="rest"/>
 
 
 </beans>

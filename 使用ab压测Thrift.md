@@ -384,7 +384,7 @@ java.io.IOException: Too many open files
 
 Linux打开句柄文件数太小，设置大一些，`ulimit -n`  查看一下，`ulimit -n 80000 `  临时设置成 80000
 
-#### 坑5：
+### 坑5：
 
 当多机器（两台）请求数过多，大概超过4w请求，使用 TThreadedSelectorServer服务模型：
 

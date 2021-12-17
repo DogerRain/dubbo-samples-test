@@ -18,7 +18,7 @@ public class Consumer {
 
         OrderService orderService1 = context.getBean("orderService1",OrderService.class);
         OrderService orderService2 = context.getBean("orderService2",OrderService.class);
-//        OrderRESTService orderService3 = context.getBean("orderService3",OrderRESTService.class);
+        OrderRESTService orderService3 = context.getBean("orderService3",OrderRESTService.class);
 
         while (true) {
             System.in.read();
@@ -27,7 +27,7 @@ public class Consumer {
             rpcContext.setAttachment("clientImpl", "dubbo");
             System.out.println("SUCCESS: got order " + orderService1.getOrderInfo(1L));
             System.out.println("SUCCESS: got order " + orderService2.getOrderInfo(1L));
-//            System.out.println("SUCCESS: got order " + orderService3.getOrderInfo(1L));
+            System.out.println("SUCCESS: got order " + orderService3.getOrderInfo(1L));
         }
 
     }

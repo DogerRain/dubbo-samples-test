@@ -4,7 +4,9 @@
 
 1、gc可视化工具：https://gceasy.io/
 
-2、压测工具：jmeter（需要安装几个插件，在）
+2、压测工具：jmeter
+
+3、jmeter 插件，在jmeter官网可以找到
 
 
 
@@ -121,7 +123,7 @@ provider 在 1k 和 100k 的top：
 
 - 1k
 
-```
+```java
 Tasks: 118 total,   1 running, 117 sleeping,   0 stopped,   0 zombie
 Cpu0  : 23.6%us, 16.7%sy,  0.0%ni, 57.6%id,  0.3%wa,  0.0%hi,  1.7%si,  0.0%st
 Cpu1  :  5.0%us,  7.7%sy,  0.0%ni, 87.3%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st
@@ -134,7 +136,7 @@ Swap:  2097144k total,       64k used,  2097080k free,  1186712k cached
 
 - 100k
 
-```
+```java
 top - 09:49:23 up 528 days, 17:07,  4 users,  load average: 0.16, 0.29, 0.21
 Tasks:   1 total,   0 running,   1 sleeping,   0 stopped,   0 zombie
 Cpu0  : 16.1%us,  2.1%sy,  0.0%ni, 80.7%id,  0.0%wa,  0.0%hi,  1.1%si,  0.0%st
