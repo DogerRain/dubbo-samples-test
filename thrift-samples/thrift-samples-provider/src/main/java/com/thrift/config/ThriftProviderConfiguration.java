@@ -19,7 +19,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import java.util.concurrent.*;
+import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author huangyongwen
@@ -175,7 +179,8 @@ public class ThriftProviderConfiguration {
     @Bean
     void TThreadedSelectorServerModel() {
         try {
-            TNonblockingServerSocket socket = new TNonblockingServerSocket(port);
+            InetSocketAddress serverAddress = new InetSocketAddress("127.0.0.1", port);
+            TNonblockingServerSocket socket = new TNonblockingServerSocket(serverAddress);
             TProcessor processor = new Hello.Processor<Hello.Iface>(new HelloServiceImpl());
             // 目前Thrift提供的最高级的模式，可并发处理客户端请求,多线程半同步半异步的服务模型
             TThreadedSelectorServer.Args args = new TThreadedSelectorServer.Args(socket);

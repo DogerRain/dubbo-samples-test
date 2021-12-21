@@ -4,7 +4,7 @@ import com.thrift.common.FileCapacity;
 import com.thrift.config.ThriftConsumerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,23 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/consumer/stress")
 @Slf4j
+@Component("stressTestController")
 public class StressTestController {
-
-//    @Qualifier("client")
-//    @Resource
-//    Hello.Client client;
-
-    @Value("${thrift.server.host}")
-    private String host;
-    @Value("${thrift.socket.port}")
-    private int port;
-
 
     @Autowired
     ThriftConsumerConfiguration thriftConsumerConfiguration;
 
     @RequestMapping("/string1k")
-    public Boolean string() {
+    public Boolean string1k() {
 
         FileCapacity fileCapacity = new FileCapacity();
         String s = fileCapacity.getFileCapacity(1 * 1024);

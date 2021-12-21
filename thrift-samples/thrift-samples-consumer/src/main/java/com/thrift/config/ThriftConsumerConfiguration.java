@@ -65,7 +65,6 @@ public class ThriftConsumerConfiguration {
      */
     public String getRemoteResultTFramedTransport(String s) {
         try {
-
             TSocket socket = new TSocket(host, port);
             socket.setTimeout(5000);
             TTransport transport = new TFramedTransport(socket);

@@ -32,7 +32,8 @@ public class HelloServiceImpl implements Hello.Iface{
     }
     @Override
     public String helloString(String para) throws TException {
-        log.info("request from consumer, parameterSize:{}",para.length());
+//        log.info("request from consumer, parameterSize:{}",para.length());
+        System.out.println("request from consumer, parameterSize:"+para.length());
 //        try {
 //            Thread.sleep(6000);
 //        } catch (InterruptedException e) {

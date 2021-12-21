@@ -6,19 +6,29 @@ package com.thrift;
  * @Description
  */
 
-import com.thrift.config.ThriftProviderConfiguration;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import com.thrift.api.Hello;
+import com.thrift.impl.HelloServiceImpl;
+import org.apache.thrift.protocol.TCompactProtocol;
+import org.apache.thrift.server.TServer;
+import org.apache.thrift.server.TThreadedSelectorServer;
+import org.apache.thrift.transport.TNonblockingServerSocket;
+import org.apache.thrift.transport.TNonblockingServerTransport;
+import org.apache.thrift.transport.TTransportException;
 
-import java.util.concurrent.CountDownLatch;
+import java.net.InetSocketAddress;
 
 public class HelloServiceServer {
     /**
      * 启动 Thrift 服务器
      * @param args
      */
-    public static void main(String[] args) throws InterruptedException {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ThriftProviderConfiguration.class);
-        context.start();
-        new CountDownLatch(1).await();
+    public static void main(String[] args) throws InterruptedException, TTransportException {
+        InetSocketAddress serverAddress = new InetSocketAddress("127.0.0.1", 7911);
+        TNonblockingServerTransport serverSocket = new TNonblockingServerSocket(serverAddress);
+        TThreadedSelectorServer.Args serverParams = new TThreadedSelectorServer.Args(serverSocket);
+        serverParams.protocolFactory(new TCompactProtocol.Factory());
+        serverParams.processor( new Hello.Processor<Hello.Iface>(new HelloServiceImpl()));
+        TServer server = new TThreadedSelectorServer(serverParams);
+        server.serve();
     }
 }

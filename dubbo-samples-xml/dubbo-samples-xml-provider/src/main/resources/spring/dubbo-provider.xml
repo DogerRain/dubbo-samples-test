@@ -29,18 +29,23 @@
 
     <dubbo:protocol name="dubbo" port="20883"/>
 
+    <!--hessian需要借助servlet容器，这里使用内部tomcat-->
     <dubbo:protocol name="hessian" port="8888" server="tomcat"/>
 
+    <!--使用外部tomcat，端口需要和外部tomcat一致-->
+    <!--<dubbo:protocol name="rest" port="9999" contextpath="services" server="servlet"/>-->
+
+    <!--使用内部tomcat-->
     <dubbo:protocol name="rest" port="9999" threads="500" contextpath="services" server="tomcat" accepts="500"/>
 
     <bean id="orderService" class="com.dubbo.impl.OrderServiceImpl"/>
     <bean id="orderRESTServiceImpl" class="com.dubbo.impl.OrderRESTServiceImpl"/>
 
     <dubbo:service interface="com.dubbo.api.OrderService"
-                   ref="orderService" protocol="hessian" version="1"/>
+                   ref="orderService" protocol="hessian,dubbo" />
 
-    <dubbo:service interface="com.dubbo.api.OrderService"
-                   ref="orderService" protocol="dubbo" version="2"/>
+    <!--<dubbo:service interface="com.dubbo.api.OrderService"-->
+                   <!--ref="orderService" protocol="dubbo" version="2"/>-->
 
     <dubbo:service interface="com.dubbo.api.OrderRESTService"
                    ref="orderRESTServiceImpl" protocol="rest" version="3"/>

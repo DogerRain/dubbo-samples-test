@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 public class NonDubboRestConsumer {
 
     public static void main(String[] args) {
-        String port = "8888";
+        String port = "9999";
 
         getUser("http://localhost:" + port + "/services/consumer/2");
     }

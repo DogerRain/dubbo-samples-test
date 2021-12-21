@@ -16,9 +16,9 @@ public class Consumer {
         context.start();
         System.out.println("consumer start.....");
 
-        OrderService orderService1 = context.getBean("orderService1",OrderService.class);
-        OrderService orderService2 = context.getBean("orderService2",OrderService.class);
-        OrderRESTService orderService3 = context.getBean("orderService3",OrderRESTService.class);
+        OrderService orderService1 = context.getBean("orderService1", OrderService.class);
+        OrderService orderService2 = context.getBean("orderService2", OrderService.class);
+        OrderRESTService orderService3 = context.getBean("orderService3", OrderRESTService.class);
 
         while (true) {
             System.in.read();
