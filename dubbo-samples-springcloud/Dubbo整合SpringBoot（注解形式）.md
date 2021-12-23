@@ -499,7 +499,7 @@ consumer日志：
 
 接下来还有两个TODO：
 
-- [x] ~~使用xml~~
+- [x] ~~整合xml~~
 
 - [x] ~~使用jmeter、ab压测dubbo、rest、hessian协议 传输大包的性能~~
 

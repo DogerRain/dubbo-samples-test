@@ -15,7 +15,6 @@
         <module>dubbo-samples-xml</module>
         <module>dubbo-samples-springcloud</module>
         <module>thrift-samples</module>
-        <!--<module>kiev-samples</module>-->
     </modules>
 
 
