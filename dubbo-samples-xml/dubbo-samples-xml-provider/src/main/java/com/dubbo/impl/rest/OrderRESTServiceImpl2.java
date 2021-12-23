@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
  * @site
  * @date 2021/12/21
- * @Description
+ * @Description OrderRESTService2 接口使用 JAX-RS  注解
  */
 @Service("orderRESTServiceImpl2")
 @Slf4j

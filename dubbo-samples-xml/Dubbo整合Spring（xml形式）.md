@@ -235,12 +235,3 @@ Dubbo是支持多种协议的，以上我演示的是 dubbo（默认）协议。
 
 相对SpringBoot的yml、properties配置，xml的配置更清晰明了，个人也推荐使用xml的方式配置。
 
-
-
-
-
----
-
-参考：
-
-- 使用 rest 协议：https://dangdangdotcom.github.io/dubbox/rest.html

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
  * @site
  * @date 2021/11/17
- * @Description
+ * @Description Order 对象类
  */
 @Data
 @NoArgsConstructor

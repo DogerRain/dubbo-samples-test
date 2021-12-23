@@ -349,7 +349,7 @@ ss：除去冷启动，一共执行了多少轮
 - https://jmh.morethan.io/
 - http://deepoove.com/jmh-visual-chart/
 
-![](picture/image-20211217162204231.png)
+![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202109/image-20211217162204231.png)
 
 ###  汇总：
 

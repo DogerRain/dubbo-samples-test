@@ -43,17 +43,16 @@
     <dubbo:service interface="com.dubbo.api.OrderService"
                    ref="orderServiceImpl" protocol="dubbo" group="one"/>
 
-    <!--&lt;!&ndash;这个接口仅支持hessian协议&ndash;&gt;-->
-    <!--<dubbo:service interface="com.dubbo.api.OrderService"-->
-                   <!--ref="orderServiceImpl2" protocol="hessian" group="two"/>-->
+    <!--这个接口仅支持hessian协议-->
+    <dubbo:service interface="com.dubbo.api.OrderService"
+                   ref="orderServiceImpl2" protocol="hessian" group="two"/>
 
-    <!--&lt;!&ndash;这个是rest协议&ndash;&gt;-->
-    <!--<dubbo:service interface="com.dubbo.api.OrderRESTService"-->
-                   <!--ref="orderRESTServiceImpl" protocol="rest"/>-->
+    <!--这个是rest协议，实现类使用 JAX-RS-->
+    <dubbo:service interface="com.dubbo.api.OrderRESTService"
+                   ref="orderRESTServiceImpl" protocol="rest"/>
 
-    <!--&lt;!&ndash;这个是rest协议&ndash;&gt;-->
-    <!--<dubbo:service interface="com.dubbo.api.OrderRESTService2"-->
-                   <!--ref="orderRESTServiceImpl2" protocol="rest" />-->
-
+    <!--这个是rest协议，接口使用 JAX-RS-->
+    <dubbo:service interface="com.dubbo.api.OrderRESTService2"
+                   ref="orderRESTServiceImpl2" protocol="rest" />
 
 </beans>

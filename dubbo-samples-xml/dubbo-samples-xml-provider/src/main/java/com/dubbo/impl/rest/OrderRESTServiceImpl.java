@@ -27,7 +27,7 @@ public class OrderRESTServiceImpl implements OrderRESTService {
     @Override
     @GET
     @Path("{id : \\d+}")
-    public Order getOrderInfo(@PathParam("id") Long id ) {
+    public Order getOrderInfo(@PathParam("id") Long id /*@Context HttpServletRequest request 这种方法也可以获取到上下文*/) {
 //        System.out.println((String.format("request from consumer: {%s}", RpcContext.getContext().getRemoteAddress())));
 //        System.out.println((String.format("protocol:{%s}", RpcContext.getContext().getProtocol())));
 //        System.out.println((String.format("response from provider: {%s}", RpcContext.getContext().getLocalAddress())));

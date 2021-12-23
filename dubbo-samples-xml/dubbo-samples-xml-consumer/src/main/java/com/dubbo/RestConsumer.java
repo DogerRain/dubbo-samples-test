@@ -85,7 +85,7 @@ public class RestConsumer {
             if (response.getStatus() != 200) {
                 throw new RuntimeException("Failed with HTTP error code : " + response.getStatus());
             }
-            System.out.println("SUCCESS got result: " + response.readEntity(Order.class));
+            System.out.println("SUCCESS: got result: " + response.readEntity(Order.class));
         } finally {
             response.close();
             client.close();
