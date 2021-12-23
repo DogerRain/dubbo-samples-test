@@ -419,7 +419,7 @@ public class ConsumerApplication {
 
 端口是 8091
 
-### 4.3 登入 dubboAdmin看看
+### 4.3、 登入 dubboAdmin看看
 
 dubboAdmin 是一个后台可视化项目，可以看到 关于dubbo服务方、消费者相关的信息。
 
@@ -499,8 +499,8 @@ consumer日志：
 
 接下来还有两个TODO：
 
-- [x] 使用xml 
+- [x] ~~使用xml~~
 
-- [x] 使用jmeter压测dubbo、rest、hessian协议 传输大包的性能
+- [x] ~~使用jmeter、ab压测dubbo、rest、hessian协议 传输大包的性能~~
 
 > 2021年12月17日17:43:38 已完成，参考专栏其他系列文章和GitHub

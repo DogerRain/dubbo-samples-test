@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @site
  * @date 2021/11/24
  * @Description
  */

@@ -11,10 +11,6 @@
     <artifactId>dubbo-samples-xml-api</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
         <!--dubbo支持rest-->
         <dependency>
             <groupId>org.apache.dubbo</groupId>

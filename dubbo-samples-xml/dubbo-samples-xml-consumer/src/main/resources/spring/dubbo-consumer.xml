@@ -21,18 +21,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-<dubbo:application name="dubbo-samples-consumer-xml"/>
+    <dubbo:application name="dubbo-samples-consumer-xml"/>
 
     <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
 
-    <dubbo:reference id="orderService1" check="false"
-                     interface="com.dubbo.api.OrderService" version="1" protocol="hessian"/>
+    <dubbo:reference id="orderServiceImpl" check="false"
+                     interface="com.dubbo.api.OrderService"  protocol="dubbo" group="one"/>
 
-    <dubbo:reference id="orderService2" check="false"
-                     interface="com.dubbo.api.OrderService" version="2" protocol="dubbo"/>
+    <dubbo:reference id="orderServiceImpl2" check="false"
+                     interface="com.dubbo.api.OrderService"  protocol="hessian" group="two"/>
 
-    <dubbo:reference id="orderService3" check="false"
-                     interface="com.dubbo.api.OrderRESTService" version="3"  protocol="rest"/>
+    <!--rest，接口使用jax-->
+    <dubbo:reference id="orderRESTService2" check="false"
+                     interface="com.dubbo.api.OrderRESTService2"  protocol="rest"/>
 
 
 </beans>

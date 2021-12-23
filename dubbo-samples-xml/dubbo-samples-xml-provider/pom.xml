@@ -22,13 +22,17 @@
             <groupId>com.dubbo</groupId>
             <artifactId>dubbo-samples-xml-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
@@ -37,10 +41,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
         </dependency>
         <!--Tomcat内嵌包-->
         <dependency>
@@ -70,15 +70,12 @@
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-rpc-hessian</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.caucho</groupId>
-            <artifactId>hessian</artifactId>
-            <version>4.0.38</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.caucho</groupId>-->
+            <!--<artifactId>hessian</artifactId>-->
+            <!--<version>4.0.38</version>-->
+        <!--</dependency>-->
+
 
     </dependencies>
 

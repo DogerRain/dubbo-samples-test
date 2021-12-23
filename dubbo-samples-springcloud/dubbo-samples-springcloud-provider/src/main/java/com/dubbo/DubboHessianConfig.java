@@ -1,11 +1,11 @@
 package com.dubbo;
 
 import org.apache.dubbo.config.ProtocolConfig;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @site
  * @date 2021/11/25
  * @Description
  */

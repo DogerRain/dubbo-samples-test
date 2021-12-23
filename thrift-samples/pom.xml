@@ -19,7 +19,7 @@
     </modules>
 
     <properties>
-        <!--2021年12月13日15:39:19 前几天爆发了 log4j-core 2.x 版本漏洞，现使用官方最新的版本-->
+        <!-- log4j-core 2.x 版本漏洞，现使用官方最新的版本-->
         <log4j2.version>2.15.0</log4j2.version>
     </properties>
 

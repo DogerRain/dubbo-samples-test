@@ -6,7 +6,8 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @site
  * @date 2021/12/8
  * @Description
  *

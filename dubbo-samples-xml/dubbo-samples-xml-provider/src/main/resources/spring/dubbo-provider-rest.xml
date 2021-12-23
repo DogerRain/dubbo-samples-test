@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder/>
+    <context:component-scan base-package="com.dubbo.impl"/>
+    <dubbo:application name="dubbo-samples-provider-xml"/>
+
+    <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
+
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!--###############################################################-->
+
+    <!--请使用tomcat启动该项目，然后再启动 RestConsumer -->
+
+    <!--###############################################################-->
+
+    <!--使用外部tomcat，端口需要和外部tomcat一致-->
+    <dubbo:protocol name="rest" port="7777" contextpath="services" server="servlet"/>
+
+
+    <!--这个接口仅支持dubbo协议-->
+    <dubbo:service interface="com.dubbo.api.OrderService"
+                   ref="orderServiceImpl" protocol="dubbo" group="one"/>
+
+
+    <!--这个是rest协议，实现类声明-->
+    <dubbo:service interface="com.dubbo.api.OrderRESTService"
+                   ref="orderRESTServiceImpl" protocol="rest"/>
+
+    <!--这个是rest协议，接口声明-->
+    <dubbo:service interface="com.dubbo.api.OrderRESTService2"
+                   ref="orderRESTServiceImpl2" protocol="rest" />
+
+
+</beans>

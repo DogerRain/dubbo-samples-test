@@ -19,17 +19,24 @@
 package com.dubbo;
 
 
+import com.dubbo.vo.Order;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-
+/**
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @date 2021/11/22
+ * @Description consumer启动类，直接使用http请求rest协议的
+ */
 public class NonDubboRestConsumer {
 
     public static void main(String[] args) {
-        String port = "9999";
+        String port = "7777";
 
-        getUser("http://localhost:" + port + "/services/consumer/2");
+        getUser("http://localhost:" + port + "/services/order2/2");
+        getUser("http://localhost:" + port + "/services/order/2");
     }
 
 
@@ -42,7 +49,7 @@ public class NonDubboRestConsumer {
             if (response.getStatus() != 200) {
                 throw new RuntimeException("Failed with HTTP error code : " + response.getStatus());
             }
-            System.out.println("Successfully got result: " + response.readEntity(String.class));
+            System.out.println("Successfully got result: " + response.readEntity(Order.class));
         } finally {
             response.close();
             client.close();

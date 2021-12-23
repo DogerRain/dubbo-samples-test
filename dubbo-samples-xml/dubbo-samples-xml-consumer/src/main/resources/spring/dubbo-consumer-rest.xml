@@ -25,10 +25,17 @@
 
     <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
 
-    <dubbo:reference id="orderRESTService" check="false" protocol="rest"
-                     interface="com.dubbo.api.OrderRESTService"/>
+    <!--rest，这个是实现类声明JAX，没有必要在这里声明，可以直接使用http调用-->
+    <!--<dubbo:reference id="orderRESTService" check="true" protocol="rest"-->
+                     <!--interface="com.dubbo.api.OrderRESTService"/>-->
 
-    <dubbo:reference id="orderService" check="false" protocol="dubbo"
+    <!--rest，这个是接口声明JAX-->
+    <dubbo:reference id="orderRESTService2" check="true" protocol="rest"
+                     interface="com.dubbo.api.OrderRESTService2"/>
+
+
+    <!--dubbo协议-->
+    <dubbo:reference id="orderService" check="false" protocol="dubbo" group="one"
                      interface="com.dubbo.api.OrderService"/>
 
 </beans>

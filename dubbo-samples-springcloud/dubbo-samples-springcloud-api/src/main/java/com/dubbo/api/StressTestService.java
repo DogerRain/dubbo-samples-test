@@ -5,7 +5,8 @@ import com.dubbo.vo.User;
 import java.util.List;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @site
  * @date 2021/11/18
  * @Description 压测接口
  */

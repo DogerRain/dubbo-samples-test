@@ -8,7 +8,8 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Component;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @site
  * @date 2021/11/17
  * @Description
  */

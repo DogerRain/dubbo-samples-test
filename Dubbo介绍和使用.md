@@ -443,7 +443,7 @@ consumer.xml
 <dubbo:service interface="com.foo.BarService" version="1.0.0" />
 ```
 
->  version="*" 可以实现轮询，这是和group的最大区别
+>  consumer 设置 version="*" 可以 轮询 调用provider，而group不能，这是和group的最大区别
 
 ### 4.6、直连模式
 

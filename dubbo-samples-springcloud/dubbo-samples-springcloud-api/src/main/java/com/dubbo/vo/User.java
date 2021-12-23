@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ <a>https://rain.baimuxym.cn</a>
  * @date 2021/11/17
  * @Description
  */

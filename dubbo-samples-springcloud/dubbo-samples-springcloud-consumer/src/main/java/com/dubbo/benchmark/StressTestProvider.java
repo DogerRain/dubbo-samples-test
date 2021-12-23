@@ -1,6 +1,5 @@
 package com.dubbo.benchmark;
 
-import com.dubbo.api.StressTestService;
 import com.dubbo.controller.StressTestController;
 import lombok.extern.slf4j.Slf4j;
 import org.openjdk.jmh.annotations.*;
@@ -15,7 +14,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+    <a>https://rain.baimuxym.cn</a>
  * @date 2021/12/9
  * @Description
  */

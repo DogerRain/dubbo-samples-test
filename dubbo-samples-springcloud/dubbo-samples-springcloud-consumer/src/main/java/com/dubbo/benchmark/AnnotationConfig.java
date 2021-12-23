@@ -4,7 +4,8 @@ import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.context.annotation.*;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ <a>https://rain.baimuxym.cn</a>
  * @date 2021/12/9
  * @Description
  */

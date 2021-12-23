@@ -13,7 +13,8 @@ import org.apache.thrift.transport.*;
 import org.apache.thrift.transport.layered.TFramedTransport;
 
 /**
- * @author huangyongwen
+ * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @site
  * @date 2021/11/30
  * @Description
  */

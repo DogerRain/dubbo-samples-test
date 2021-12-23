@@ -22,7 +22,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder/>
-
+    <context:component-scan base-package="com.dubbo.impl"/>
     <dubbo:application name="dubbo-samples-provider-xml"/>
 
     <dubbo:registry address="zookeeper://${zookeeper.address:127.0.0.1}:${zookeeper.port:2181}"/>
@@ -30,24 +30,30 @@
     <dubbo:protocol name="dubbo" port="20883"/>
 
     <!--hessian需要借助servlet容器，这里使用内部tomcat-->
-    <dubbo:protocol name="hessian" port="8888" server="tomcat"/>
+    <dubbo:protocol name="hessian" port="8888" server="tomcat" />
 
-    <!--使用外部tomcat，端口需要和外部tomcat一致-->
-    <!--<dubbo:protocol name="rest" port="9999" contextpath="services" server="servlet"/>-->
+    <!--rest使用外部tomcat，端口需要和外部tomcat一致-->
+    <!--<dubbo:protocol name="rest" port="7777" contextpath="services" server="servlet"/>-->
 
-    <!--使用内部tomcat-->
-    <dubbo:protocol name="rest" port="9999" threads="500" contextpath="services" server="tomcat" accepts="500"/>
+    <!--rest使用内部tomcat-->
+    <dubbo:protocol name="rest" port="7777" threads="500" contextpath="services" server="tomcat" accepts="500"/>
 
-    <bean id="orderService" class="com.dubbo.impl.OrderServiceImpl"/>
-    <bean id="orderRESTServiceImpl" class="com.dubbo.impl.OrderRESTServiceImpl"/>
 
+    <!--这个接口仅支持dubbo协议-->
     <dubbo:service interface="com.dubbo.api.OrderService"
-                   ref="orderService" protocol="hessian,dubbo" />
+                   ref="orderServiceImpl" protocol="dubbo" group="one"/>
 
+    <!--&lt;!&ndash;这个接口仅支持hessian协议&ndash;&gt;-->
     <!--<dubbo:service interface="com.dubbo.api.OrderService"-->
-                   <!--ref="orderService" protocol="dubbo" version="2"/>-->
+                   <!--ref="orderServiceImpl2" protocol="hessian" group="two"/>-->
 
-    <dubbo:service interface="com.dubbo.api.OrderRESTService"
-                   ref="orderRESTServiceImpl" protocol="rest" version="3"/>
+    <!--&lt;!&ndash;这个是rest协议&ndash;&gt;-->
+    <!--<dubbo:service interface="com.dubbo.api.OrderRESTService"-->
+                   <!--ref="orderRESTServiceImpl" protocol="rest"/>-->
+
+    <!--&lt;!&ndash;这个是rest协议&ndash;&gt;-->
+    <!--<dubbo:service interface="com.dubbo.api.OrderRESTService2"-->
+                   <!--ref="orderRESTServiceImpl2" protocol="rest" />-->
+
 
 </beans>

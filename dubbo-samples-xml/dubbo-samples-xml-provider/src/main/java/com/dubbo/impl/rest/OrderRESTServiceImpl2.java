@@ -1,45 +1,29 @@
-package com.dubbo.impl;
+package com.dubbo.impl.rest;
 
-import com.dubbo.api.OrderService;
+import com.dubbo.api.OrderRESTService2;
 import com.dubbo.vo.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
  * @site
- * @date 2021/11/17
+ * @date 2021/12/21
  * @Description
  */
-@Service("orderServiceImpl")
+@Service("orderRESTServiceImpl2")
 @Slf4j
-public class OrderServiceImpl implements OrderService {
-
+public class OrderRESTServiceImpl2 implements OrderRESTService2 {
     @Override
-    public List<Order> getOrderInfo(long orderId) {
+    public Order getOrderInfo(Long id) {
 //        System.out.println((String.format("request from consumer: {%s}", RpcContext.getContext().getRemoteAddress())));
 //        System.out.println((String.format("protocol:{%s}", RpcContext.getContext().getProtocol())));
 //        System.out.println((String.format("response from provider: {%s}", RpcContext.getContext().getLocalAddress())));
-        log.info("OrderServiceImpl方法");
+        log.info("这是在接口上声明的rest");
         log.info("request from consumer: {}", RpcContext.getContext().getRemoteAddress());
         log.info("protocol: {}",RpcContext.getContext().getProtocol());
         log.info("response from provider: {}",RpcContext.getContext().getLocalAddress());
-        List<Order> list = new ArrayList<>();
-        Order order1 = new Order();
-        order1.setOrderId(199L);
-        order1.setOrderName("MacBook Pro 13");
-
-        Order order2 = new Order();
-        order2.setOrderId(200L);
-        order2.setOrderName("RTX 2060");
-
-        list.add(order1);
-        list.add(order2);
-
-        return list;
+        return new Order(id, "MacBook Pro");
     }
 }

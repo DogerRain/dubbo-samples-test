@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({ContentType.APPLICATION_JSON_UTF_8, ContentType.TEXT_XML_UTF_8})
-@Path("order")
+@Path("order2")
 public interface OrderRESTService2 {
 
     @GET
