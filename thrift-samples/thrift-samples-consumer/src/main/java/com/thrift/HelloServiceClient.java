@@ -29,9 +29,9 @@ public class HelloServiceClient implements Closeable {
     public final Hello.Client client;
 
 
-    public HelloServiceClient() {
+    public HelloServiceClient(String host,int port) {
         try {
-            transport = new TFramedTransport(new TSocket("127.0.0.1", 7911));
+            transport = new TFramedTransport(new TSocket(host, port));
             protocol = new TCompactProtocol(transport);
             client = new Hello.Client(protocol);
             transport.open();
@@ -51,7 +51,7 @@ public class HelloServiceClient implements Closeable {
     }
 
     public static void main(String[] args) throws TException {
-        HelloServiceClient helloServiceClient = new HelloServiceClient();
+        HelloServiceClient helloServiceClient = new HelloServiceClient("127.0.0.1",7911);
         String result = helloServiceClient.getClient().helloString("hello");
         System.out.println("result :" + result);
     }

@@ -2,7 +2,7 @@
 
 thrift官方文档：[https://thrift.apache.org](https://thrift.apache.org)
 
-thrift使用demo：[https://github.com/apache/thrift](https://github.com/apache/thrift)
+thrift官方使用demo：[https://github.com/apache/thrift](https://github.com/apache/thrift)
 
 Thrift 是一个跨语言的服务部署框架，最初由 Facebook 于2007年开发，2008 年进入 Apache 开源项目。Thrift 通过 IDL（Interface Definition Language，接口定义语言）来定义RPC（Remote Procedure Call，远程过程调用）的接口和数据类型，然后通过thrift编译器生成不同语言的代码（目前支持C++,Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#, Cocoa, Smalltalk和OCaml），并由生成的代码负责RPC协议层和传输层的实现。
 
@@ -69,9 +69,9 @@ TNonblockingServer 只能一次处理一个请求。
 
 ### 2.1、安装thrift环境
 
-需要先安装thrift环境。
+需要下载thrift工具包。
 
-官网可以
+
 
 ### 2.2、定义  .thrift IDL 接口文件
 
@@ -136,6 +136,14 @@ struct Course {
   6: list<Person> students
 }
 ```
+
+生成Java文件：
+
+```
+thrift --gen java Hello.thrift
+```
+
+
 
 ## 3、thrift的性能
 

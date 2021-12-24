@@ -402,7 +402,12 @@ org.apache.thrift.transport.TTransportException: Cannot write to null outputStre
 org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: connect timed out
 ```
 
+这个问题找了很久，原因是 client 是非线程安全的，解决方法是：
 
+- 对每一个线程请求都new 一个 socket
+- 请求的时候使用锁（推荐）
+
+所以多机请求的时候，可能就因为并发的问题，但是单机并发为什么没有出现呢，应该是每一次请求Controller 都是一个单独的线程（spring默认是Singleton），也就不存在并发问题。
 
 ## 4、结果
 
