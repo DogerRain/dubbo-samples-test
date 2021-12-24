@@ -2,7 +2,6 @@ package com.thrift.benchmark;
 
 import com.thrift.api.User;
 import com.thrift.common.FileCapacity;
-import com.thrift.service.HelloServiceThriftClientImpl;
 import com.thrift.service.UserServiceThriftClientImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.openjdk.jmh.annotations.*;
@@ -29,7 +28,7 @@ public class BenchMarkTestUserService {
 //    7911 端口
     private final UserServiceThriftClientImpl userService = new UserServiceThriftClientImpl();
 //    7912 端口
-    private final HelloServiceThriftClientImpl helloService = new HelloServiceThriftClientImpl();
+//    private final HelloServiceThriftClientImpl helloService = new HelloServiceThriftClientImpl();
 
     @Benchmark
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime, Mode.SampleTime})
@@ -46,8 +45,8 @@ public class BenchMarkTestUserService {
         log.info("UserService benchmark sendString......");
         FileCapacity fileCapacity = new FileCapacity();
         String s = fileCapacity.getFileCapacity(1 * 1024);
-//        userService.sendString(s);
-        helloService.helloString(s);
+        userService.sendString(s);
+//        helloService.helloString(s);
     }
 
 
@@ -59,16 +58,16 @@ public class BenchMarkTestUserService {
 
     public static void main(String[] args) throws Exception {
         System.out.println("UserService测试开始");
-        BenchMarkTestUserService client = new BenchMarkTestUserService();
-        for (int i = 0; i < 60; i++) {
-            try {
-                System.out.println(client.getUser());
-                break;
-            } catch (Exception e) {
-                Thread.sleep(1000);
-            }
-        }
-        client.close();
+//        BenchMarkTestUserService client = new BenchMarkTestUserService();
+//        for (int i = 0; i < 60; i++) {
+//            try {
+//                System.out.println(client.getUser());
+//                break;
+//            } catch (Exception e) {
+//                Thread.sleep(1000);
+//            }
+//        }
+//        client.close();
 
         Options opt = new OptionsBuilder()//
                 .include(BenchMarkTestUserService.class.getSimpleName())//
