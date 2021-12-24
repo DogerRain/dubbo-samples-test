@@ -409,6 +409,7 @@ org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException
 
 所以多机请求的时候，可能就因为并发的问题，但是单机并发为什么没有出现呢，应该是每一次请求Controller 都是一个单独的线程（spring默认是Singleton），也就不存在并发问题。
 
+加锁后，1k数据 tps达到了1.5w（同服务器同kvm）
 ## 4、结果
 
 ### 汇总
