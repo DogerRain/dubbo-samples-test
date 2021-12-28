@@ -666,10 +666,16 @@ ab -n 1000000 -c  10
 
 参考：
 
-- 压测dubbo：https://blog.csdn.net/u013815546/article/details/101385888
-- 压测dubbo：（有点不一样）https://blog.csdn.net/cyjs1988/article/details/84258046
-- https://blog.51cto.com/ydhome/1861956
-- 官网：https://jmeter-plugins.org/wiki/Start/
-- jmeter使用：https://blog.csdn.net/github_27109687/article/details/71968662
-- 使用 rest 协议：https://dangdangdotcom.github.io/dubbox/rest.html
-- 基于Dubbo的Hessian协议实现远程调用:http://shiyanjun.cn/archives/349.html
+- 压测dubbo：[https://blog.csdn.net/u013815546/article/details/101385888](https://blog.csdn.net/u013815546/article/details/101385888)
+- 压测dubbo：（有点不一样）[https://blog.csdn.net/cyjs1988/article/details/84258046](https://blog.csdn.net/cyjs1988/article/details/84258046)
+- [https://blog.51cto.com/ydhome/1861956](https://blog.51cto.com/ydhome/1861956)
+- 官网：[https://jmeter-plugins.org/wiki/Start](https://jmeter-plugins.org/wiki/Start)
+- jmeter使用：[https://blog.csdn.net/github_27109687/article/details/71968662](https://blog.csdn.net/github_27109687/article/details/71968662)
+- 使用 rest 协议：[https://dangdangdotcom.github.io/dubbox/rest.html](https://dangdangdotcom.github.io/dubbox/rest.html)
+- 基于Dubbo的Hessian协议实现远程调用:[http://shiyanjun.cn/archives/349.html](http://shiyanjun.cn/archives/349.html)
+
+\---
+
+Java资源分享：
+
+[Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://rain.baimuxym.cn/article/5#menu_5)
