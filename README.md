@@ -30,7 +30,7 @@ dubbo-admin 搭建：
 
  [dubbo-admin（3.0新版本）搭建](doc/dubbo-admin（3.0新版本）搭建.md) 
 
- [dubbo-admin（旧版本）搭建](doc/dubbo-admin（旧版本）搭建 .md) 
+ [dubbo-admin（旧版本）搭建](doc/dubbo-admin（旧版本）搭建.md) 
 
 错误集合：
 
