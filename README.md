@@ -24,11 +24,11 @@
 
 dubbo使用多协议（rest、dubbo、hessian）：
 
- [Dubbo使用多协议](doc\Dubbo使用多协议.md) 
+ [Dubbo使用多协议](doc/Dubbo使用多协议.md) 
 
 dubbo-admin 搭建：
 
- [dubbo-admin（3.0新版本）搭建](doc\dubbo-admin（3.0新版本）搭建.md) 
+ [dubbo-admin（3.0新版本）搭建](doc/dubbo-admin（3.0新版本）搭建.md) 
 
  [dubbo-admin（旧版本）搭建 ](doc\dubbo-admin（旧版本）搭建 .md) 
 
@@ -64,7 +64,7 @@ JMH介绍、使用、压测：
 
 看到这里的筒子们相信你们都是热爱学习的，感谢你们的阅读。
 
-如果你们可以给我点个 star，就像
+希望可以点个 star，就像
 
 > 清泉流入干涸的稻田
 >
