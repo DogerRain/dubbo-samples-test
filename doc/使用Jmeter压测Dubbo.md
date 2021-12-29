@@ -1,16 +1,32 @@
 
 
-使用的分析工具：
+压测思路：
 
-1、gc可视化工具：https://gceasy.io/
+压测consumer的Controller，调用provider暴露的接口。
 
-2、压测工具：jmeter
+provider做1w次循环，生成随机数做累加。
 
-3、jmeter 插件，在jmeter官网可以找到
+provider再把consumer的入参无处理返回给consumer。
+
+## 1、准备
+
+使用的工具：
+
+1、gc可视化工具：[https://gceasy.io](https://gceasy.io)
+
+2、压测工具：jmeter5.1（其他版本不兼容dubbo）
+
+3、jmeter 插件，在jmeter官网可以找到，主要用来获取响应时间、TPS 参数
+
+4、ServerAgent插件，jmeter的官方监测工具，用于收集服务器的CPU、磁盘、带宽、内存 参数。
+
+5、jmeter集成dubbo插件，可以直接使用`dubbo://` 协议调用 provider
 
 
 
-序列化：dubbo协议缺省为hessian2，rmi协议缺省为java，http协议缺省为json
+序列化：
+
+dubbo协议缺省为hessian2，rmi协议缺省为java，http协议缺省为json
 
 
 
@@ -23,15 +39,7 @@ INFO    2021-11-25 14:06:19.490 [kg.apc.p] (): Binding TCP to 4444
 INFO    2021-11-25 14:06:19.497 [kg.apc.p] (): JP@GC Agent v2.2.3 started
 ```
 
-## 准备
 
-压测思路：
-
-压测consumer的Controller，调用provider暴露的接口。
-
-provider做1w次循环，生成随机数做累加。
-
-provider再把consumer的入参无处理返回给consumer。
 
 consumer代码：
 
@@ -51,13 +59,13 @@ consumer代码：
 
 
 
-## 1、Jmeter压测情况
+## 2、Jmeter压测情况
 
 环境：
 
 provider:
 
-```
+```shell
 jdk：1.8
 
 2h4g
@@ -77,8 +85,10 @@ cache size      : 4096 KB
 
 jvm参数：
 
-```
--server -Xmx2g -Xms2g -Xmn256m -Xss256k -XX:+UseG1GC
+```shell
+-server -Xmx2g -Xms2g -Xmn256m -Xss256k -XX:+UseG1GC 
+-Xloggc:/data/dubboStress/logs/dubbo_gc_thrift.log -XX:+PrintGC -XX
+:+PrintGCDetails
 ```
 
 jmeter参数：
@@ -87,7 +97,11 @@ jmeter参数：
 20个并发线程1s内发出，持续 10分钟
 ```
 
-cpu、内存、io、networkIO需通过 servergent 进行收集。
+需要提前设置一些收集的参数：
+
+![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211229162123038.png)
+
+cpu、内存、磁盘IO、networkIO需通过 servergent 进行收集。
 
  
 
@@ -109,7 +123,7 @@ cpu、内存、io、networkIO需通过 servergent 进行收集。
 |                | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129183915989.png) | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130100435608.png) |
 |                | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130092624053.png) |                                                              |
 
-
+> windows执行可能会遇到 Adress bind already use ，因为windows的端口回收比较慢，样本大的时候无法及时提供端口，因为jmeter每一个线程都需要开启一个socket端口和consumer通讯，需要自行修改注册表修改。
 
 可以看到 100k 数据的时候，dubbo的响应时间很慢、tps也低。
 
@@ -147,6 +161,16 @@ Swap:  2097144k total,       64k used,  2097080k free,  1185236k cached
   PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                                                                                                       
 29635 root      20   0 4713m 632m  12m S 26.0 16.5   3:49.77 java
 ```
+
+## 3、总结
+
+以上仅仅对consumer调用，而再发起对provider的调用，而非直接使用dubbo协议直接调用provider。测试了一下，两者区别较大，毕竟前者多了一层consumer，如图：
+
+（上述用的是思路一，思路二需要自行安装dubbo插件）
+
+![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211229160923094.png)
+
+但思路一和使用 ab 测试结果差别不大，而且jmeter还可以生成很多图表，各位可以尝试一下。
 
 
 
