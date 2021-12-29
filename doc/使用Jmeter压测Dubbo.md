@@ -98,16 +98,16 @@ cpu、内存、io、networkIO需通过 servergent 进行收集。
 |                | 1K                                                           | 100K                                                         |
 | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 样本（请求数） | 1298522                                                      | 79450                                                        |
-| TPS            | 2164.2  ，1min到瓶颈<br />![](picture/image-20211129182941303.png) | 132.4 ；<br />![](picture/image-20211130095928574.png)       |
-| 响应时间比例   | 90% 10ms；95% 11ms 99% 18ms，avg 8ms<br />![image-20211129182500367](picture/image-20211129182500367.png) | 90% 213ms；95% 227ms ；99% 288ms<br />![](picture/image-20211130095420414.png) |
-|                | ![](picture/image-20211129182730558.png)                     | ![](picture/image-20211130095913354.png)                     |
-| CPU            | 服务器 CPU：32%，内存 ： 21.6 %<br />![](picture/image-20211129182545191.png) | %CPU 26.0 ; %MEM 16.5<br />![](picture/image-20211130100005057.png) |
-| IO             | ![image-20211129183100390](picture/image-20211129183100390.png) | ![](picture/image-20211130095948793.png)                     |
-| NetWork        | 2 800 000![](picture/image-20211129183054623.png)            | 1 200 000![](picture/image-20211130095630222.png)            |
-| 吞吐量         | ![](picture/image-20211129183200284.png)                     | ![](picture/image-20211130095827620.png)                     |
+| TPS            | 2164.2  ，1min到瓶颈<br />![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129182941303.png) | 132.4 ；<br />![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130095928574.png) |
+| 响应时间比例   | 90% 10ms；95% 11ms 99% 18ms，avg 8ms<br />![image-20211129182500367](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129182500367.png) | 90% 213ms；95% 227ms ；99% 288ms<br />![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130095420414.png) |
+|                | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129182730558.png) | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130095913354.png) |
+| CPU            | 服务器 CPU：32%，内存 ： 21.6 %<br />![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129182545191.png) | %CPU 26.0 ; %MEM 16.5<br />![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130100005057.png) |
+| IO             | ![image-20211129183100390](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129183100390.png) | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130095948793.png) |
+| NetWork        | 2 800 000![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129183054623.png) | 1 200 000![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130095630222.png) |
+| 吞吐量         | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129183200284.png) | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130095827620.png) |
 | gc             | 1 sec 62 ms                                                  | 490 ms                                                       |
-|                | ![](picture/image-20211129183915989.png)                     | ![](picture/image-20211130100435608.png)                     |
-|                | ![](picture/image-20211130092624053.png)                     |                                                              |
+|                | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211129183915989.png) | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130100435608.png) |
+|                | ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202112/image-20211130092624053.png) |                                                              |
 
 
 
@@ -156,3 +156,4 @@ Swap:  2097144k total,       64k used,  2097080k free,  1185236k cached
 
 - 服务端的cpu、内存监测，下载：[https://www.cnblogs.com/imyalost/p/7751981.html](https://www.cnblogs.com/imyalost/p/7751981.html)
 - jmeter版本和serverAgent版本问题：[https://www.cnblogs.com/SunshineKimi/p/11361216.html](https://www.cnblogs.com/SunshineKimi/p/11361216.html)
+
