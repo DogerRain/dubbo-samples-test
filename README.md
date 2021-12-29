@@ -30,15 +30,15 @@ dubbo-admin 搭建：
 
  [dubbo-admin（3.0新版本）搭建](doc/dubbo-admin（3.0新版本）搭建.md) 
 
- [dubbo-admin（旧版本）搭建 ](doc\dubbo-admin（旧版本）搭建 .md) 
+ [dubbo-admin（旧版本）搭建 ](doc/dubbo-admin（旧版本）搭建 .md) 
 
 错误集合：
 
- [Dubbo常见的错误](doc\Dubbo常见的错误.md) 
+ [Dubbo常见的错误](doc/Dubbo常见的错误.md) 
 
 ### 3、thrift的使用
 
- [Thrift介绍](doc\thrift介绍.md) 
+ [Thrift介绍](doc/thrift介绍.md) 
 
 
 
@@ -46,17 +46,17 @@ dubbo-admin 搭建：
 
 Apache-Benchmark压测：
 
- [使用ab压测Dubbo](doc\使用ab压测Dubbo.md) 
+ [使用ab压测Dubbo](doc/使用ab压测Dubbo.md) 
 
- [使用ab压测Thrift](doc\使用ab压测Thrift.md) 
+ [使用ab压测Thrift](doc/使用ab压测Thrift.md) 
 
 Jmeter压测：
 
- [使用Jmeter压测Dubbo](doc\使用Jmeter压测Dubbo.md) 
+ [使用Jmeter压测Dubbo](doc/使用Jmeter压测Dubbo.md) 
 
 JMH介绍、使用、压测：
 
- [使用JMH进行压测](doc\使用JMH进行压测.md) 
+ [使用JMH进行压测](doc/使用JMH进行压测.md) 
 
 
 
