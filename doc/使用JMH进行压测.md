@@ -93,6 +93,8 @@ public class StressTestProvider {
 
 ## 3、运行
 
+> 我这里的例子是压测dubbo，源码链接在文末
+
 完整例子：
 
 ```java
@@ -149,7 +151,7 @@ public class StressTestProvider {
 }
 ```
 
-
+有两种运行的方式，一般采用打成jar这种。
 
 ### 3.1、main方法运行
 
@@ -168,34 +170,34 @@ transport error 202: connect failed: Connection refused ERROR
 有时候需要放在服务器上运行，就需要打成一个jar，需要使用单独的jar打包插件：
 
 ```xml
-			<build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-shade-plugin</artifactId>
-                        <version>2.2</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>shade</goal>
-                                </goals>
-                                <configuration>
-                                    <finalName>jmh-demo</finalName>
-                                    <transformers>
-                                        <transformer
-                                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                            <mainClass>org.openjdk.jmh.Main</mainClass>
-                                        </transformer>
-                                        <transformer
-                                                implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                    </transformers>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>2.2</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <finalName>jmh-demo</finalName>
+                        <transformers>
+                            <transformer
+                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <mainClass>org.openjdk.jmh.Main</mainClass>
+                            </transformer>
+                            <transformer
+                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                        </transformers>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ```
 
 > 如果不想要这种打包方式，打成jar的时候一定要声明main方法入口对应的类，也就是上面StressTestProvider
@@ -208,7 +210,7 @@ transport error 202: connect failed: Connection refused ERROR
 
 打完包后，通过以下命令即可运行：
 
-```
+```shell
 java -jar jmh-demo.jar  -rf json -rff result.json
 ```
 
@@ -346,8 +348,8 @@ ss：除去冷启动，一共执行了多少轮
 
 如果你配置了输出文件，比如我上面的 resul.json ，但是你打开是看不懂的，可以借助两个网站把文件上传进行分析：
 
-- https://jmh.morethan.io/
-- http://deepoove.com/jmh-visual-chart/
+- [https://jmh.morethan.io](https://jmh.morethan.io)
+- [http://deepoove.com/jmh-visual-chart](http://deepoove.com/jmh-visual-chart)
 
 ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202109/image-20211217162204231.png)
 
@@ -395,6 +397,12 @@ dubbo：
 
 
 
+对比了 jmeter、Apache-Benmark（ab）、jmh 这三个压测工具，个人比较推荐使用jmh，原因有：
+
+- jmh压测简单，只需要引入依赖，声明注解
+- 准确性高，目前大多数性能压测都是使用jmh
+- 缺点就是代码入侵
+
 ---
 
 
@@ -403,4 +411,10 @@ dubbo：
 
 - dubbo压测的官方代码：[https://github.com/apache/dubbo-benchmark](https://github.com/apache/dubbo-benchmark)
 - 主流RPC框架压测代码：[https://github.com/hank-whu/rpc-benchmark](https://github.com/hank-whu/rpc-benchmark)
+
+---
+
+- 压测dubbo的源码已上传到github：[https://github.com/DogerRain/dubbo-samples-test](https://github.com/DogerRain/dubbo-samples-test)
+
+- Java资源分享：[Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://rain.baimuxym.cn/article/5#menu_5)
 

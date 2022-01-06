@@ -674,8 +674,9 @@ ab -n 1000000 -c  10
 - 使用 rest 协议：[https://dangdangdotcom.github.io/dubbox/rest.html](https://dangdangdotcom.github.io/dubbox/rest.html)
 - 基于Dubbo的Hessian协议实现远程调用:[http://shiyanjun.cn/archives/349.html](http://shiyanjun.cn/archives/349.html)
 
-\---
+---
 
 Java资源分享：
 
 [Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://rain.baimuxym.cn/article/5#menu_5)
+

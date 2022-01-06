@@ -15,6 +15,7 @@
         <module>dubbo-samples-xml</module>
         <module>dubbo-samples-springcloud</module>
         <module>thrift-samples</module>
+        <module>log-test</module>
     </modules>
 
 

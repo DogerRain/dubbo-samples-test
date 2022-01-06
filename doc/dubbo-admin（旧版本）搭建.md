@@ -42,3 +42,7 @@ java -jar -Dserver.port=8849  dubbo-admin-0.0.1-SNAPSHOT.jar -Dspring.profiles.a
 
 
 启动无报错，打开 http://127.0.0.1:8849 即可访问。
+
+
+
+附上dubbo-admin 下载地址：[https://github.com/DogerRain/dubbo-samples-test/tree/master/doc/software](https://github.com/DogerRain/dubbo-samples-test/tree/master/doc/software)
