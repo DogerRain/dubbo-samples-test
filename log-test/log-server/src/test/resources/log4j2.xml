@@ -8,7 +8,7 @@
     <Properties>
         <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
         <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
-        <property name="LOG_PATTERN">log4j2Impl [%d{dd/MM/yy HH:mm:ss:SSS z}] %t --- [%5p] %C-[%L] : %m%n</property>
+        <property name="LOG_PATTERN">log4j2Impl--Test [%d{dd/MM/yy HH:mm:ss:SSS z}] %t --- [%5p] %C-[%L] : %m%n</property>
 
     </Properties>
 

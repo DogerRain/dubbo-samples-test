@@ -3,21 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>dubbo-samples-test</artifactId>
+        <artifactId>log-test</artifactId>
         <groupId>com.dubbo</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>log-test</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>log-api</module>
-        <module>log-server</module>
-        <module>log-jcl</module>
-        <module>log4j</module>
-        <module>log4j2</module>
-    </modules>
+    <artifactId>log4j</artifactId>
 
+    <dependencies>
+        <!--log4j日志框架-->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+    </dependencies>
 
 </project>

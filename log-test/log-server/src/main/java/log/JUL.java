@@ -19,6 +19,11 @@ public class JUL {
 
         log.info("JUL" + "info");
 
+//        Log4jAPI log4jAPI = new Log4jAPI();
+//        log4jAPI.main(null);
+//
+//        Log4j2API log4j2API = new Log4j2API();
+//        log4j2API.main(null);
 
     }
 }

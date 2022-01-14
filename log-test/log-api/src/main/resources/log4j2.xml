@@ -6,7 +6,7 @@
 
     <!--高版本只能这么用了，变量配置-->
     <Properties>
-        <property name="LOG_PATTERN">log4j2API--->>>[%d{dd/MM/yy HH:mm:ss:SSS z}] %t --- [%5p] %C-[%L] : %m%n</property>
+        <property name="LOG_PATTERN">SL4j-API2 --->>>[%d{dd/MM/yy HH:mm:ss:SSS z}] %t --- [%5p] %C-[%L] : %m%n</property>
     </Properties>
 
     <appenders>
@@ -22,7 +22,6 @@
     </appenders>
 
     <loggers>
-
 
         <root level="info">
             <appender-ref ref="Console"/>
