@@ -168,3 +168,31 @@ java.lang.NoClassDefFoundError: org/apache/curator/framework/recipes/cache/TreeC
 </dependency>
 ```
 
+
+
+### 4、未知错误
+
+```
+There's no ApplicationConfig specified
+```
+
+spring版本和dubbo版本兼容问题 
+
+参考：
+
+- [https://blog.csdn.net/qq_21187515/article/details/107590592](https://blog.csdn.net/qq_21187515/article/details/107590592)
+- [https://cloud.tencent.com/developer/article/1596584](https://cloud.tencent.com/developer/article/1596584)
+
+
+
+### 5、
+
+```
+Invalid name="org.apache.dubbo.config.ApplicationConfig#0" contains illegal character,
+only digit, letter, '-', '_' or '.' is legal.
+
+```
+
+1、 application.yml 、application.properties 配置文件缺失
+
+2、配置文件属性有非法字符

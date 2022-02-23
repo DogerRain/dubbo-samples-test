@@ -18,7 +18,7 @@ Registry是注册中心，用于发现服务者和消费者。
 
 dubboRPC通信的原理：
 
-![img](https://upload-images.jianshu.io/upload_images/4202472-9d81b0d43259092d.png)
+![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202202/4202472-9d81b0d43259092d.png)
 
 
 
@@ -44,9 +44,9 @@ Dubbo三大组件：
 
 ## 3、使用
 
-依赖：（推荐使用2.7.13版本）
+依赖：（推荐使用2.7.13版本）。
 
-普通项目集成：
+spring集成dubbo：
 
 ```xml
 <dependency>
@@ -56,7 +56,7 @@ Dubbo三大组件：
 </dependency>
 <dependency>
     <groupId>org.apache.dubbo</groupId>
-    <artifactId>dubbo-dependencies-zookeeper</artifactId>
+    <artifactId>dubbo-registry-zookeeper</artifactId>
     <version>2.7.13</version>
 </dependency>
 ```
@@ -261,7 +261,7 @@ xml:
 </dubbo:reference>
 ```
 
-当多个provider注册到zk，consumer会选择指定的负载均衡算法自动请求，遇到上线或者下线会重新计算。
+**当多个provider注册到zk**，consumer会选择指定的负载均衡算法自动请求，遇到上线或者下线会重新计算。
 
 常见有四种负载均衡：
 
@@ -381,7 +381,7 @@ dubbo支持多种协议：
 
 ### 4.4、超时、重试
 
-超时默认重试 1000ms 
+> 超时默认重试 值： 1000ms 
 
 重试默认重试2次，不算第一个调用，一共会调用三次
 
@@ -393,12 +393,14 @@ dubbo支持多种协议：
 
 > 注意，本人测试了一下，虽然服务方设置重试次数为1，消费者默认，最终结果还是会重试2次（消费者默认值），所以服务方提供的重试次数无效，建议在消费者设置，但是超时时间是生效的。
 
-超时、重试建议在消费者设置：
+**超时、重试建议在消费者设置：**
 
 ```xml
 <dubbo:reference id="demoService01" check="true" interface="org.apache.dubbo.samples.basic.api.DemoService"
         retries="1" timeout="3000"/>
 ```
+
+
 
 ### 4.5、分组
 
@@ -560,7 +562,13 @@ No such extension org.apache.dubbo.rpc.Protocol by name hessian, no related exce
 - dubbo3.0官方并没有详细的使用文档，本人测试了一下，与2.7的兼容性还有很大问题，所以建议还是使用2.7版本
 - dubbo更新太慢（3年都没有更新3.0版本，捐赠给Apache后基本无维护），网上找到的资料不如springcloud多
 
+4、springboot配置文件
 
+建议springboot接入dubbo不要使用 注解的方式 配置dubbo，统一使用xml文件更友好。
+
+5、关于 dubbo-registry-zookeeper 和 dubbo-dependencies-zookeeper
+
+测试了一下，两个使用其中一个即可，推荐使用 dubbo-registry-zookeeper 
 
 ---
 

@@ -82,18 +82,11 @@
         <!--<groupId>org.springframework.cloud</groupId>-->
         <!--<artifactId>spring-cloud-starter-ribbon</artifactId>-->
         <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.dubbo</groupId>-->
-            <!--<artifactId>dubbo</artifactId>-->
-        <!--</dependency>-->
+
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-registry-zookeeper</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.zookeeper</groupId>-->
-            <!--<artifactId>zookeeper</artifactId>-->
-        <!--</dependency>-->
 
     </dependencies>
 

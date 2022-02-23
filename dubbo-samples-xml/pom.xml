@@ -47,13 +47,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-dependencies-zookeeper</artifactId>
-                <version>${dubbo.version}</version>
-                <type>pom</type>
-            </dependency>
-
 
             <dependency>
                 <groupId>junit</groupId>

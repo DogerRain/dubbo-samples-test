@@ -31,6 +31,7 @@ public class Consumer {
         while (true) {
             System.in.read();
             RpcContext rpcContext = RpcContext.getContext();
+            System.out.println("OrderService接口第一个实现类");
             System.out.println("SUCCESS: got order list " + orderService1.getOrderInfo(1L));
 
             System.out.println("SUCCESS: got order list" + orderService2.getOrderInfo(1L));

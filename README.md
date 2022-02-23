@@ -14,11 +14,11 @@
 
 ## 2、指引
 
-### 1、Dubbo  整合 SpringBoot（注解形式）
+### 1、Dubbo  整合 SpringBoot（注解形式） + logback
 
  [Dubbo + SpringBoot 整合例子 + zookeeper](dubbo-samples-springcloud/Dubbo整合SpringBoot（注解形式）.md)
 
-### 2、Duboo整合Spring（xml形式）
+### 2、Duboo整合Spring（xml形式）+ log4j
 
 [Duboo+ Spring（xml形式）+ zookeeper 整合例子](dubbo-samples-xml/Dubbo整合Spring（xml形式）.md) 
 
