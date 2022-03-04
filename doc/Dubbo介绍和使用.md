@@ -2,7 +2,7 @@
 
 Dubbo官方文档：[https://dubbo.apache.org/zh](https://dubbo.apache.org/zh)
 
-目前Dubbo最新的是Dubbo3。
+目前Dubbo最新的是Dubbo3。本文使用的是 2.7.3 （推荐）
 
 Dubbo3 格式的 Provider 地址不能被 Dubbo2 的 Consumer 识别到，反之 Dubbo2 的消费者也不能订阅到 Dubbo3 Provider。
 
@@ -20,7 +20,9 @@ dubboRPC通信的原理：
 
 ![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202202/4202472-9d81b0d43259092d.png)
 
+dubbo和springCloud的区别：
 
+![](https://cdn.jsdelivr.net/gh/DogerRain/image@main/img-202202/image-20220304170147949.png)
 
 ## 2、架构
 
