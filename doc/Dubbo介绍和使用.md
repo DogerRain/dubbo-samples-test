@@ -149,7 +149,7 @@ dubbo.registry.address=zookeeper://localhost:2181
 dubbo.protocol.name=dubbo
 dubbo.protocol.port=28080
 #开启包扫描，可替代 @EnableDubbo 注解
-#dubbo.scan.base-packages=com.meizu.quickgame
+#dubbo.scan.base-packages=com.meizui.quickgame
 ```
 
 开启基于注解的dubbo功能（主要是包扫描`@DubboComponentScan`）：
@@ -157,7 +157,7 @@ dubbo.protocol.port=28080
 ```java
 // 开启基于注解的dubbo功能（主要是包扫描@DubboComponentScan）
 // 也可以在配置文件中使用dubbo.scan.base-package来替代@EnableDubbo
-@EnableDubbo(scanBasePackages = {"com.meizu.quickgame"})
+@EnableDubbo(scanBasePackages = {"com.meizui.quickgame"})
 @SpringBootApplication
 public class UserServiceProviderApplication {
     public static void main(String[] args) {
