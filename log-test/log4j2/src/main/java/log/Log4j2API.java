@@ -11,11 +11,11 @@ import org.apache.logging.log4j.Logger;
 
 public class Log4j2API {
 
-    private static Logger log = LogManager.getLogger(Log4j2API.class.getName());
+    private static Logger log2 = LogManager.getLogger(Log4j2API.class.getName());
 
     public static void main(String[] args) {
 
-        log.info("直接使用log4j2");
+        log2.info("直接使用log4j2");
 
     }
 

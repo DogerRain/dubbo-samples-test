@@ -9,22 +9,33 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.hac</groupId>
+    <artifactId>log4j-log4j2</artifactId>
 
-    <artifactId>log4j2</artifactId>
-
-    <packaging>war</packaging>
 
     <dependencies>
-        <!-- log4j2，单独使用这个可以没有 -->
         <!--<dependency>-->
-            <!--<groupId>org.apache.logging.log4j</groupId>-->
-            <!--<artifactId>log4j-api</artifactId>-->
-            <!--<version>2.6.2</version>-->
+            <!--<groupId>log4j</groupId>-->
+            <!--<artifactId>log4j</artifactId>-->
         <!--</dependency>-->
-        <!--这个必不可少-->
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
+            <artifactId>log4j-core</artifactId>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-1.2-api -->
+        <!--log4j 升级到 log4j2 -->
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+
+
+
     </dependencies>
+
 </project>

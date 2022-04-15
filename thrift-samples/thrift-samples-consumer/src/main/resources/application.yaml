@@ -6,6 +6,6 @@ spring:
   application:
     name: thrift-samples-provider
 logging:
-  config: classpath:log4j.xml
+  config: classpath:log4j2.xml
   level:
     root: INFO

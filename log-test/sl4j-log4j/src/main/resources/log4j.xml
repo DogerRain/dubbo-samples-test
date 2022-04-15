@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+<log4j:configuration>
+    <!--输出到控制台-->
+    <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <param name="Threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="SL4j-API  --->>> [%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+        </layout>
+    </appender>
+
+    <root>
+        <level value="ALL"/>
+        <appender-ref ref="consoleAppender" />
+
+    </root>
+</log4j:configuration>

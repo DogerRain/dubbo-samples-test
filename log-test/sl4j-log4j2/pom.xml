@@ -9,22 +9,35 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>sl4j-log4j2</groupId>
+    <artifactId>sl4j-log4j2</artifactId>
 
-    <artifactId>log4j2</artifactId>
 
-    <packaging>war</packaging>
 
     <dependencies>
-        <!-- log4j2，单独使用这个可以没有 -->
+
+        <!--=================Sl4j门面=================-->
         <!--<dependency>-->
-            <!--<groupId>org.apache.logging.log4j</groupId>-->
-            <!--<artifactId>log4j-api</artifactId>-->
-            <!--<version>2.6.2</version>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-api</artifactId>-->
         <!--</dependency>-->
-        <!--这个必不可少-->
+        <!--=================Sl4j门面=================-->
+
+        <!--log4j-->
+        <!--log4j日志框架-->
+        <!--<dependency>-->
+            <!--<groupId>log4j</groupId>-->
+            <!--<artifactId>log4j</artifactId>-->
+        <!--</dependency>-->
+
+        <!--Slf4j桥接log4j2-->
         <dependency>
+            <!-- 可以点击查看这个包的内容，已经包含了sl4j、log4j-core、api  -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.vesion}</version>
         </dependency>
+
     </dependencies>
+
 </project>

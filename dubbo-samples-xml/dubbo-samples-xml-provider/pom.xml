@@ -12,8 +12,9 @@
 
     <version>0.0.1-SNAPSHOT</version>
     <name>dubbo-samples-xml-provider</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Demo project for Spring xml</description>
 
+    <packaging>war</packaging>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dubbo-samples-xml-provider</artifactId>

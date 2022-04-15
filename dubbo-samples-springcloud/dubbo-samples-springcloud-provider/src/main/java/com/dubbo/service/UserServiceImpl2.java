@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 @DubboService(version = "1.0.0")
 @Component
 @Slf4j
-@Service
-public class UserServiceImpl implements UserService {
+@Service("UserServiceImpl2")
+public class UserServiceImpl2 implements UserService {
 
     /**
      *

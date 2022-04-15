@@ -9,22 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-
-    <artifactId>log4j2</artifactId>
-
-    <packaging>war</packaging>
+    <groupId>com.hac</groupId>
+    <artifactId>log-sl4j</artifactId>
 
     <dependencies>
-        <!-- log4j2，单独使用这个可以没有 -->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.logging.log4j</groupId>-->
-            <!--<artifactId>log4j-api</artifactId>-->
-            <!--<version>2.6.2</version>-->
-        <!--</dependency>-->
-        <!--这个必不可少-->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.21</version>
         </dependency>
     </dependencies>
+
 </project>
