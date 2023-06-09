@@ -70,7 +70,7 @@ JMH介绍、使用、压测：
 >
 > 清风吹入炎热的山谷
 
-无以为报，在这里给各位分享一些Java的资源：（白嫖）
+欢迎来我的博客玩耍：
 
-[Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://rain.baimuxym.cn/article/5#menu_5)
+[https://learnjava.baimuxym.cn/]([url](https://learnjava.baimuxym.cn))
 
