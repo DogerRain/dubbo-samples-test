@@ -420,5 +420,5 @@ dubbo：
 
 - 压测dubbo的源码已上传到github：[https://github.com/DogerRain/dubbo-samples-test](https://github.com/DogerRain/dubbo-samples-test)
 
-- Java资源分享：[Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://rain.baimuxym.cn/article/5#menu_5)
+- Java资源分享：[Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://learnjava.baimuxym.cn/)
 

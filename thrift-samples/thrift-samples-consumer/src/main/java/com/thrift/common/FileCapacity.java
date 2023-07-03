@@ -5,7 +5,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.*;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @site
  * @date 2021/11/24
  * @Description

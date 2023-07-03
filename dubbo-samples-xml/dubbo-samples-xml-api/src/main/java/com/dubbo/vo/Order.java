@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @site
  * @date 2021/11/17
  * @Description Order 对象类

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @site
  * @date 2021/11/22
  * @Description

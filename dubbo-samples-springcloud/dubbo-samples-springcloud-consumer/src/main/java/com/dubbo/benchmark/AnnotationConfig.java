@@ -4,7 +4,7 @@ import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.context.annotation.*;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @date 2021/12/9
  * @Description
  */

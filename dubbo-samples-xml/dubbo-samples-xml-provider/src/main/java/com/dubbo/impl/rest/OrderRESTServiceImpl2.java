@@ -7,7 +7,7 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Service;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @site
  * @date 2021/12/21
  * @Description OrderRESTService2 接口使用 JAX-RS  注解

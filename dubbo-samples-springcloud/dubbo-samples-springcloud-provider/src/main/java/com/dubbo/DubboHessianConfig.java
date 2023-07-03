@@ -4,7 +4,7 @@ import org.apache.dubbo.config.ProtocolConfig;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @site
  * @date 2021/11/25
  * @Description

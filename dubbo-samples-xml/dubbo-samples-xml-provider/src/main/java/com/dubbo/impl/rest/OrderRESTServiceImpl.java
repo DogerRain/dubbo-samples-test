@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
   * @site
  * @date 2021/11/17
  * @Description  这里在实现类加上 JAX-RS 的注解，表示提供REST服务，类似于 springMVC 的 @RestController、@RequestMapping

@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
-    <a>https://rain.baimuxym.cn</a>
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
+    <a>https://learnjava.baimuxym.cn/</a>
  * @date 2021/12/9
  * @Description
  */
