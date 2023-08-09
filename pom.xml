@@ -12,12 +12,16 @@
 
 
     <modules>
-        <module>dubbo-samples-xml</module>
-        <module>dubbo-samples-springcloud</module>
-        <module>thrift-samples</module>
-        <module>log-test</module>
+        <module>dubbo-samples-3.x-xml</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+    </dependencies>
 
 
     <build>

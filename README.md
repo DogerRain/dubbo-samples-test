@@ -16,7 +16,7 @@
 
 ### 1、Dubbo  整合 SpringBoot（注解形式） + logback
 
- [Dubbo + SpringBoot 整合例子 + zookeeper](dubbo-samples-springcloud/Dubbo整合SpringBoot（注解形式）.md)
+ [Dubbo + SpringBoot 整合例子 + zookeeper](dubbo-samples-3.x-xml/Dubbo整合SpringBoot（注解形式）.md)
 
 ### 2、Duboo整合Spring（xml形式）+ log4j
 
