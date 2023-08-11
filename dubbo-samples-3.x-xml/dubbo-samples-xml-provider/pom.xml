@@ -3,9 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.dubbo</groupId>
-        <artifactId>dubbo-samples-springcloud</artifactId>
+        <artifactId>dubbo-samples-3.x-xml</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,85 +13,35 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!--dubbo-samples-springcloud-api 项目 依赖-->
+
+        <!--dubbo-sample-api 项目 依赖-->
         <dependency>
             <groupId>com.dubbo</groupId>
-            <artifactId>dubbo-samples-springcloud-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>dubbo-samples-xml-api</artifactId>
         </dependency>
-        <!--dubbo 与 spring-boot 整合包-->
+
         <dependency>
             <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <artifactId>dubbo</artifactId>
         </dependency>
-        <!--springboot 启动核心包-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <!--springboot rest -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <!-- Exclude the Tomcat dependency -->
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Use Jetty instead 使用jetty -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-        <!--先不整合springCloud了-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-context</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-starter-feign</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-starter-ribbon</artifactId>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-registry-zookeeper</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
     </dependencies>
 
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.4.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.dubbo.ProviderApplication</mainClass>
-                    <layout>JAR</layout>
-                    <!--构建完整可执行程序，可以直接运行-->
-                    <executable>true</executable>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

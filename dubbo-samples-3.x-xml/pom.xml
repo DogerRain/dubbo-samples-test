@@ -9,11 +9,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dubbo</groupId>
     <artifactId>dubbo-samples-3.x-xml</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>dubbo-samples-3.x-xml</name>
-    <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
 
     <modules>
@@ -29,8 +27,7 @@
         <spring-boot-dependencies.version>2.4.1</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Dalston.SR4</spring-cloud-dependencies.version>
         <junit.version>4.12</junit.version>
-        <!--<dubbo.version>3.0.2.1</dubbo.version>-->
-        <dubbo.version>2.7.13</dubbo.version>
+        <dubbo.version>3.0.10</dubbo.version>
     </properties>
 
     <dependencyManagement>
@@ -43,15 +40,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- 统一spring-cloud jar版本管理，先不做整合 -->
-            <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-dependencies</artifactId>-->
-            <!--<version>${spring-cloud-dependencies.version}</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>import</scope>-->
-            <!--</dependency>-->
-            <!-- 统一dubbo jar版本管理，这个很重要，防止jar不同版本冲突 -->
+
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-bom</artifactId>
@@ -60,11 +49,21 @@
                 <scope>import</scope>
             </dependency>
 
-            <!--dubbo 和  springboot 整合的包-->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dubbo</groupId>
+                <artifactId>dubbo-samples-xml-api</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -77,67 +76,6 @@
         </dependencies>
     </dependencyManagement>
 
-
-    <!--<build>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.apache.maven.plugins</groupId>-->
-    <!--<artifactId>maven-compiler-plugin</artifactId>-->
-    <!--<version>3.7.0</version>-->
-    <!--<configuration>-->
-    <!--<source>${source.level}</source>-->
-    <!--<target>${target.level}</target>-->
-    <!--</configuration>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
-
-    <profiles>
-        <profile>
-            <id>devEnv</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.7.0</version>
-                        <configuration>
-                            <source>${source.level}</source>
-                            <target>${target.level}</target>
-                        </configuration>
-                    </plugin>
-                </plugins>
-                <!--<finalName>test</finalName>-->
-            </build>
-        </profile>
-    </profiles>
-
-    <build>
-        <!--<finalName>${artifactId}-${project.version}-test</finalName>-->
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.4.1</version>
-                <!--<executions>-->
-                <!--<execution>-->
-                <!--<goals>-->
-                <!--<goal>repackage</goal>-->
-                <!--</goals>-->
-                <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                <!--&lt;!&ndash;<mainClass>com.dubbo.ProviderApplication</mainClass>&ndash;&gt;-->
-                <!--<layout>JAR</layout>-->
-                <!--&lt;!&ndash;构建完整可执行程序，可以直接运行&ndash;&gt;-->
-                <!--<executable>true</executable>-->
-                <!--</configuration>-->
-            </plugin>
-        </plugins>
-    </build>
 
 
 </project>

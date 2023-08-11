@@ -5,9 +5,9 @@
 
     <groupId>com.dubbo</groupId>
     <artifactId>dubbo-samples-test</artifactId>
+    <name>dubbo-samples-test</name>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>dubbo-samples-test</name>
     <description>dubbo stress test</description>
 
 
