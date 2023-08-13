@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2021/11/25
  * @Description
  */
-@Configuration
+//@Configuration
 public class DubboHessianConfig {
 
     // 配置rest协议

@@ -1,34 +1,5 @@
-server:
-  port: 8090
 
 
-spring:
-  application:
-    name: dubbo-samples-privider-springCloud
-  profiles:
-#    带入 api 项目的 application-dev.properties
-    include: [dev]
-
-
-dubbo:
-  application:
-    name: ${spring.application.name}
-  registry:
-    address: ${dubbo.zookeeper.host}
-    timeout: 5000
-#    protocol: -1
-#    port: -1
-#  metadata-report:
-#    address: zookeeper://127.0.0.1:2181
-#    protocol: -1
-#    port: -1
-#    default: false
-  protocol:
-    name: dubbo
-    port: 20890
-    serialization: hessian2
-  scan:
-    base-packages: com.dubbo.service
 
 
 logging:

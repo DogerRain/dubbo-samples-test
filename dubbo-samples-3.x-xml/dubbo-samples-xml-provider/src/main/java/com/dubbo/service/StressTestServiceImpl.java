@@ -5,6 +5,7 @@ import com.dubbo.vo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
@@ -15,9 +16,7 @@ import java.util.Random;
  * @date 2021/11/17
  * @Description
  */
-//这里可以配置 version、group、协议、负载均衡、超时、超时 等等。见xml项目
-@DubboService(version = "1.0.0")
-@Component
+@Service("stressTestServiceImpl")
 @Slf4j
 public class StressTestServiceImpl implements StressTestService {
 

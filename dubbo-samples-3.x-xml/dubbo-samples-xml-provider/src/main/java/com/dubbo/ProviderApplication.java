@@ -16,22 +16,29 @@
  */
 package com.dubbo;
 
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+
+import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
-@EnableDubbo
 public class ProviderApplication {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws InterruptedException {
+
+        new SpringApplicationBuilder()
+                .sources(ProviderApplication.class)
+                .web(WebApplicationType.NONE)
+                .headless(false)
+                .logStartupInfo(false)
+                .run(args);
 
 
-        SpringApplication.run(ProviderApplication.class, args);
-//        ApplicationContext context = new SpringApplicationBuilder(ProviderApplication.class).run(args);
-        System.out.println("dubbo service started..........");
 
+//        System.out.println("dubbo service started..........");
 
-//        new CountDownLatch(1).await();
-
+        new CountDownLatch(1).await();
     }
+
+
 }
