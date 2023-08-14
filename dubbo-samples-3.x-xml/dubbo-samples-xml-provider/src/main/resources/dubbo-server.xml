@@ -17,8 +17,10 @@
 
     <!-- 定义服务信息，引用定义好的 bean -->
     <dubbo:service interface="com.dubbo.api.StressTestService" ref="stressTestServiceImpl"/>
-    <dubbo:service interface="com.dubbo.api.UserService" id="UserService" group="1.2" ref="userServiceImpl"/>
-    <dubbo:service interface="com.dubbo.api.UserService"  id="UserService2"  ref="userServiceImpl2"/>
+
+    <!--同一个接口，不能通过id区分，只能通过 group + version 区分-->
+    <dubbo:service interface="com.dubbo.api.UserService" id="UserService" version="1.0.0" ref="userServiceImpl"/>
+    <dubbo:service interface="com.dubbo.api.UserService" id="UserService2" version="2.0.0" ref="userServiceImpl2"/>
 
 
 </beans>
