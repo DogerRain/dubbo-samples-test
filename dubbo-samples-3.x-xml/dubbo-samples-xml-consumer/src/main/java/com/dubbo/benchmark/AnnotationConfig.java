@@ -1,6 +1,5 @@
 package com.dubbo.benchmark;
 
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.context.annotation.*;
 
 /**
@@ -10,7 +9,6 @@ import org.springframework.context.annotation.*;
  */
 @Configuration
 @ComponentScan(value = {"com.dubbo.benchmark","com.dubbo.controller"})
-@EnableDubbo(scanBasePackages="com.dubbo")
 //不支持yml文件扫描
 @PropertySource("classpath:/benchmark/application-benchmark.properties")
 public class AnnotationConfig {

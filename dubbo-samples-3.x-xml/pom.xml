@@ -24,8 +24,7 @@
         <source.level>1.8</source.level>
         <target.level>1.8</target.level>
         <skip_maven_deploy>true</skip_maven_deploy>
-        <spring-boot-dependencies.version>2.4.1</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Dalston.SR4</spring-cloud-dependencies.version>
+        <spring-boot-dependencies.version>2.7.2</spring-boot-dependencies.version>
         <junit.version>4.12</junit.version>
         <dubbo.version>3.0.10</dubbo.version>
     </properties>

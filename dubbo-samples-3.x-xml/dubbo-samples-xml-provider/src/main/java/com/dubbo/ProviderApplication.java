@@ -16,15 +16,25 @@
  */
 package com.dubbo;
 
+import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import java.util.concurrent.CountDownLatch;
 
+
+/**
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
+ * @site
+ * @date 2023年8月16日 23:56:47
+ * @Description
+ */
 @SpringBootApplication
 public class ProviderApplication {
-    public static void main(String[] args) throws InterruptedException {
+
+    @SneakyThrows
+    public static void main(String[] args) {
 
         new SpringApplicationBuilder()
                 .sources(ProviderApplication.class)
@@ -32,8 +42,6 @@ public class ProviderApplication {
                 .headless(false)
                 .logStartupInfo(false)
                 .run(args);
-
-
 
 //        System.out.println("dubbo service started..........");
 

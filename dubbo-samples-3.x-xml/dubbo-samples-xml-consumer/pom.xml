@@ -19,9 +19,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.dubbo</groupId>
-        <artifactId>dubbo-samples-springcloud</artifactId>
+        <artifactId>dubbo-samples-3.x-xml</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>dubbo-samples-xml-consumer</artifactId>
     <name>dubbo-samples-xml-consumer</name>
@@ -32,6 +31,18 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
         <!--dubbo-sample-api 项目 依赖-->
         <dependency>
             <groupId>com.dubbo</groupId>

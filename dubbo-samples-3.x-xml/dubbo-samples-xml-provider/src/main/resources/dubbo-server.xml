@@ -12,7 +12,7 @@
     <dubbo:application name="dubbo-samples-xml-provider"/>
 
     <!-- 定义注册中心地址 -->
-    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry address="zookeeper://192.168.0.181:2181,192.168.0.182:2181,192.168.0.183:2181"/>
 
 
     <!-- 定义服务信息，引用定义好的 bean -->
