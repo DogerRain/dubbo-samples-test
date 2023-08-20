@@ -44,9 +44,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.7.2</version>
-                <!--<version>2.6.6</version>-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <mainClass>com.dubbo.ProviderApplication</mainClass>
+                    <layout>JAR</layout>
+                    <!--构建完整可执行程序，可以直接运行-->
+                    <executable>true</executable>
                 </configuration>
             </plugin>
         </plugins>
