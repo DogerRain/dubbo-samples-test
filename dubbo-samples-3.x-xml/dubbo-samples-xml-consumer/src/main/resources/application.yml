@@ -6,3 +6,11 @@ management:
   health:
     db:
       enabled: false
+
+spring:
+  config:
+    import: application-dev.yaml
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

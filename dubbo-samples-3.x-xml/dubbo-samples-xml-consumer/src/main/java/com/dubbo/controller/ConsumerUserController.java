@@ -4,6 +4,7 @@ import com.dubbo.api.UserService;
 import com.dubbo.vo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,14 +26,14 @@ public class ConsumerUserController {
 //    @DubboReference(version = "*",protocol = "dubbo")
 //    private UserService userService2;
 
-    @RequestMapping("/user/{id}")
+    @GetMapping("/user/{id}")
     public User getUser(@PathVariable("id") Long id) {
         User user = userService.getUserInfo(id);
         log.info("response from provider: {}", user);
         return user;
     }
 
-    @RequestMapping("/userHessian/{id}")
+    @GetMapping("/userHessian/{id}")
     public User getUserHessian(@PathVariable("id") Long id) {
 //        User user = userService2.getUserInfo(id);
 //        log.info("response from provider: {}", user);

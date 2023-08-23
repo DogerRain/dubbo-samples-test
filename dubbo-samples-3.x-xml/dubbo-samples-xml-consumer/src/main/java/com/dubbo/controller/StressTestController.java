@@ -6,6 +6,7 @@ import com.dubbo.vo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class StressTestController {
     private int a = 1;
 
 
-    @RequestMapping("/stressTest/string1kNoFile")
+    @GetMapping("/stressTest/string1kNoFile")
     public Boolean string1kNoFile(){
         String s = "2021-11-2910:32:25.362INFO11552---[io-8091-exec-61]c.dubbo.controller.StressTestController:stressTest/string:430469\n" +
                 "2021-11-2910:32:25.362INFO11552---[io-8091-exec-68]c.dubbo.controller.StressTestController:stressTest/string:430470\n" +
@@ -48,7 +49,7 @@ public class StressTestController {
 
     }
 
-    @RequestMapping("/stressTest/string")
+    @GetMapping("/stressTest/string")
     public Boolean string(){
         String s = "Hello";
         String result = stressTestService.StressString(s);
@@ -57,7 +58,7 @@ public class StressTestController {
 
     }
 
-    @RequestMapping("/stressTest/string1k")
+    @GetMapping("/stressTest/string1k")
     public Boolean string1k(){
         // IO操作读取1k数据
         String s = new FileCapacity().getFileCapacity(1*1024);
@@ -66,14 +67,14 @@ public class StressTestController {
         return true;
     }
 
-    @RequestMapping("/stressTest/pojo")
+    @GetMapping("/stressTest/pojo")
     public Boolean pojo(){
         User user = stressTestService.StressTestPojo(new User(1L,"Stress","压力测试"));
         log.info("/stressTest/pojo:{}",user);
         return true;
     }
 
-    @RequestMapping("/stressTest/listPojo")
+    @GetMapping("/stressTest/listPojo")
     public Boolean listPojo(){
         List<User> list = new ArrayList<>();
         for (int i = 1 ;i<=10;i++){
@@ -85,7 +86,7 @@ public class StressTestController {
         return true;
     }
 
-    @RequestMapping("/stressTest/string50k")
+    @GetMapping("/stressTest/string50k")
     public Boolean string50k(){
         String s = new FileCapacity().getFileCapacity(50*1024);
         String result = stressTestService.StressTest50K(s);
@@ -93,7 +94,7 @@ public class StressTestController {
         return true;
     }
 
-    @RequestMapping("/stressTest/string100k")
+    @GetMapping("/stressTest/string100k")
     public Boolean string100k(){
         String s = new FileCapacity().getFileCapacity(100*1024);
         String result = stressTestService.StressTest100K(s);
