@@ -678,5 +678,5 @@ ab -n 1000000 -c  10
 
 Java资源分享：
 
-[Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://rain.baimuxym.cn/article/5#menu_5)
+[Java学习路线思维导图+Java学习视频+简历模板+Java电子书](https://learnjava.baimuxym.cn/)
 

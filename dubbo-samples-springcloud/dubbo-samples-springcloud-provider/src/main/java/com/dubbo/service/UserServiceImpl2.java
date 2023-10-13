@@ -7,7 +7,7 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Service;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @site
  * @date 2021/11/17
  * @Description

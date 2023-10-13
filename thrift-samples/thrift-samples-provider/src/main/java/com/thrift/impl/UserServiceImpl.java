@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author 醋酸菌HaC | WebSite📶 : https://rain.baimuxym.cn
+ * @author 醋酸菌HaC | WebSite📶 : https://learnjava.baimuxym.cn/
  * @site
  * @date 2021/11/24
  * @Description 实现thrift 生成的的接口
@@ -41,10 +41,10 @@ public class UserServiceImpl implements UserService.Iface {
         user.setId(id);
         user.setName(new String("醋酸菌"));
         user.setSex(1);
-        user.setEmail(new String(" https://rain.baimuxym.cn"));
+        user.setEmail(new String(" https://learnjava.baimuxym.cn/"));
         user.setMobile(new String("18612345678"));
         user.setAddress(new String("北京市 中关村 中关村大街1号 鼎好大厦 1605"));
-        user.setIcon(new String(" https://rain.baimuxym.cn"));
+        user.setIcon(new String(" https://learnjava.baimuxym.cn/"));
         user.setStatus(1);
         user.setUpdateTime(user.getCreateTime());
 
