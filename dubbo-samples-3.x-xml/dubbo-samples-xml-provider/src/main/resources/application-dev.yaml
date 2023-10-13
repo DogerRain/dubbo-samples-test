@@ -6,3 +6,4 @@ logging:
   level:
     root: INFO
   log-path: /data/dubboStress/provider
+

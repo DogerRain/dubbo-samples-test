@@ -1,0 +1,29 @@
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    db:
+      enabled: false
+
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+    qos-enable: true
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: zookeeper://${zookeeper.address:127.0.0.1}:2181
+
+spring:
+  application:
+    name: dubbo-samples-springboot-consumer
