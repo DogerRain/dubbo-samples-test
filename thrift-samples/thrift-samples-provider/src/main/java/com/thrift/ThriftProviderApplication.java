@@ -15,9 +15,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 @Slf4j
 public class ThriftProviderApplication {
 
+//    private static final Logger Sl4j = LoggerFactory.getLogger(ThriftProviderApplication.class);
+
     public static void main(String[] args) {
         ConfigurableApplicationContext ac = SpringApplication.run(ThriftProviderApplication.class, args);
         System.out.println("thrift service started..........");
+        log.info("I am Sl4j");
     }
 
 }

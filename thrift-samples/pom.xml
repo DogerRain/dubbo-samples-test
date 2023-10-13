@@ -20,7 +20,7 @@
 
     <properties>
         <!-- log4j-core 2.x 版本漏洞，现使用官方最新的版本-->
-        <log4j2.version>2.15.0</log4j2.version>
+        <log4j2.version>2.17.2</log4j2.version>
     </properties>
 
     <dependencies>
@@ -71,16 +71,11 @@
             </exclusions>
         </dependency>
 
-        <!--使用log4j2日志框架-->
         <dependency>
-            <artifactId>log4j-core</artifactId>
-            <groupId>org.apache.logging.log4j</groupId>
-            <version>${log4j2.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>log4j-api</artifactId>
-            <groupId>org.apache.logging.log4j</groupId>
-            <version>${log4j2.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.28</version>
+            <scope>compile</scope>
         </dependency>
         <!-- 桥接：告诉Slf4j使用Log4j2 -->
         <dependency>

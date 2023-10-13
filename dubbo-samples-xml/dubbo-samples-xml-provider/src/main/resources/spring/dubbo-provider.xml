@@ -45,7 +45,7 @@
 
     <!--这个接口仅支持hessian协议-->
     <dubbo:service interface="com.dubbo.api.OrderService"
-                   ref="orderServiceImpl2" protocol="hessian" group="two"/>
+                   ref="orderServiceImpl2" protocol="hessian" group="two" serialization="hessian2"/>
 
     <!--这个是rest协议，实现类使用 JAX-RS-->
     <dubbo:service interface="com.dubbo.api.OrderRESTService"

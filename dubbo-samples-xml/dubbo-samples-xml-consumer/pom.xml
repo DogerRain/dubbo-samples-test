@@ -43,10 +43,7 @@
             <artifactId>dubbo-registry-zookeeper</artifactId>
         </dependency>
         <!--hessian-->
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-rpc-hessian</artifactId>
-        </dependency>
+
 
     </dependencies>
 

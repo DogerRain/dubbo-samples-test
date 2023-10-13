@@ -62,12 +62,21 @@
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-registry-zookeeper</artifactId>
         </dependency>
-        <!--dubbo使用hessian-->
+        <!--dubbo使用hessian，这个在 2.7.x 版本出现，3.x 版本没有发现-->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-rpc-hessian</artifactId>
         </dependency>
-
+        <!--3.x-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.dubbo</groupId>-->
+            <!--<artifactId>dubbo-serialization-hessian2</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.alibaba</groupId>-->
+            <!--<artifactId>hessian-lite</artifactId>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
     </dependencies>
 
 

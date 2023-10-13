@@ -34,8 +34,8 @@
         <spring-boot-dependencies.version>2.4.1</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Dalston.SR4</spring-cloud-dependencies.version>
         <junit.version>4.12</junit.version>
-        <!--<dubbo.version>3.0.2.1</dubbo.version>-->
-        <dubbo.version>2.7.13</dubbo.version>
+        <!--官网最新版 2022年4月26日 14:55:48-->
+        <dubbo.version>3.0.7</dubbo.version>
     </properties>
 
     <dependencyManagement>
