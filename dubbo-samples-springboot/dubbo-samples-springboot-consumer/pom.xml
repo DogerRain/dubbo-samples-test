@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.dubbo</groupId>
-        <artifactId>dubbo-samples-3.x-xml</artifactId>
+        <artifactId>dubbo-samples-springboot</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dubbo-samples-xml-provider</artifactId>
-    <name>dubbo-samples-xml-provider</name>
+    <artifactId>dubbo-samples-springboot-consumer</artifactId>
+    <name>dubbo-samples-springboot-consumer</name>
     <packaging>jar</packaging>
 
     <dependencies>
