@@ -1,9 +1,17 @@
 @echo off
+
 set finishTime="%date% %time%"
-echo "æ‰§è¡Œæ—¶é—´ï¼š%finishTime%"
+echo "Ö´ĞĞÊ±¼ä£º%finishTime%"
 
-java -cp F:\å¼€å‘ä»»åŠ¡\Dubbo\dubbo-samples-test\dubbo-samples-springboot\dubbo-samples-springboot-provider\src\main\java\;. com.dubbo.util.ClassCopyUtils
+java -cp F:\¿ª·¢ÈÎÎñ\Dubbo\dubbo-samples-test\dubbo-samples-springboot\dubbo-samples-springboot-provider\src\main\java\;. com.dubbo.util.ClassCopyUtils
 
+
+cd\
+F:
+SET name="F:\¿ª·¢ÈÎÎñ\Dubbo\dubbo-samples-test"
+cd %name%
+
+echo %name%
 SET msg1=%date:~0,10%
 SET msg2=_autocommit_dubbo-samples-test
 SET msg=%msg1%%msg2%
