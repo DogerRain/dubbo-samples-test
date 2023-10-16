@@ -1,5 +1,7 @@
 package com.dubbo.util;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -19,10 +21,12 @@ import java.util.stream.Stream;
  * @Date 2023/10/13 17:25
  * @Description
  **/
+@Slf4j
 public class ClassCopyUtils {
     static Pattern pattern = Pattern.compile("ClassCopyUtils(\\d+).java");
 
-    public static void copyFile(String inputFilePath, String inputFileName, String outPutFilePath) throws IOException {
+    @SneakyThrows
+    public static void copyFile(String inputFilePath, String inputFileName, String outPutFilePath) {
 
         String outPutFileName = getOutPutFileName(inputFilePath, inputFileName, outPutFilePath);
 
@@ -42,7 +46,8 @@ public class ClassCopyUtils {
 
     }
 
-    public static String getOutPutFileName(String inputFilePath, String inputFileName, String outputFilePath) throws FileNotFoundException {
+    @SneakyThrows
+    public static String getOutPutFileName(String inputFilePath, String inputFileName, String outputFilePath) {
 
         File file = new File(inputFilePath + "\\" + inputFileName);
         if (!file.exists()) {
@@ -71,6 +76,7 @@ public class ClassCopyUtils {
             while (matcher.find()) {
                 String matchedNumber = matcher.group(1);
                 int number = Integer.parseInt(matchedNumber);
+                System.out.println("Extracted number: " + number);
                 if (number > maxNum) {
                     maxNum = number;
                     maxFileName = existingFile.getPath() + "\\" + existingFile.getName();
@@ -88,13 +94,11 @@ public class ClassCopyUtils {
 
             boolean sameDate = isSameDate(new Date(creationTime.toMillis()), new Date());
 
-            if (sameDate) {
-                throw new Exception("当天文件已经copy，请勿重复");
-            }
+//            if (sameDate) {
+//                throw new Exception("当天文件已经copy，请勿重复");
+//            }
 
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -130,7 +134,7 @@ public class ClassCopyUtils {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         String inputFileDir = "F:\\开发任务\\Dubbo\\dubbo-samples-test\\dubbo-samples-springboot\\dubbo-samples-springboot-provider\\src\\main\\java\\com\\dubbo\\util";
 
