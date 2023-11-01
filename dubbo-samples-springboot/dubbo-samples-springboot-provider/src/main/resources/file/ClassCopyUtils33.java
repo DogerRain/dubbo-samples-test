@@ -7,9 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +42,7 @@ public class ClassCopyUtils {
 
     }
 
-    public String getOutPutFileName(String inputFilePath, String inputFileName, String outputFilePath) throws FileNotFoundException {
+    public static String getOutPutFileName(String inputFilePath, String inputFileName, String outputFilePath) throws FileNotFoundException {
 
         File file = new File(inputFilePath + "\\" + inputFileName);
         if (!file.exists()) {
@@ -76,23 +73,29 @@ public class ClassCopyUtils {
                 int number = Integer.parseInt(matchedNumber);
                 if (number > maxNum) {
                     maxNum = number;
-                    maxFileName = existingFile.getName();
+                    maxFileName =  existingFile.getName();
                 }
             }
         }
+        System.out.println("查找到当前最大序号的文件："+ maxFileName);
+        try {
+            // 替换为实际的文件路径
+            Path filePath = Paths.get(maxFileName);
+            BasicFileAttributes fileAttributes = Files.readAttributes(filePath, BasicFileAttributes.class);
+            FileTime creationTime = fileAttributes.creationTime();
 
-        System.out.println("查找到当前最大序号的文件：" + maxFileName);
+            boolean sameDate = isSameDate(new Date(creationTime.toMillis()), new Date());
 
-        Date createTime = getFileCreateTime(inputFilePath + "\\" + maxFileName);
-        // 将日期转换为LocalDate
-        assert createTime != null;
-        LocalDate localDate1 = createTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate localDate2 = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if (sameDate) {
+                throw new Exception("当天文件已经copy，请勿重复");
+            }
 
-        if (localDate1.isEqual(localDate2)) {
-            System.out.println("当天已经创建过文件了，跳过提交");
-            return "";
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         maxNum = maxNum + 1;
         return outputFilePath + "\\" + inputFileName.substring(0, fileName.lastIndexOf(".")) + maxNum + "." + fileExtension;
 
@@ -137,28 +140,5 @@ public class ClassCopyUtils {
         copyFile(inputFileDir, copyInputFileName, outputFileDir);
 
 
-
-
-    }
-
-
-    private Date getFileCreateTime(String fileName) {
-        try {
-            Path path = Paths.get(fileName);
-
-            // 获取文件的基本属性
-            BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
-
-            // 获取文件的创建时间
-            FileTime creationTime = attributes.creationTime();
-            Date createdDate = new Date(creationTime.toMillis());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            System.out.println("创建时间: " + dateFormat.format(createdDate));
-
-            return createdDate;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
