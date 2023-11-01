@@ -6,7 +6,7 @@
     <groupId>com.dubbo</groupId>
     <artifactId>dubbo-samples-test</artifactId>
     <name>dubbo-samples-test</name>
-    <version>${rivison}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>dubbo stress test</description>
 
@@ -17,7 +17,7 @@
     </modules>
 
     <properties>
-        <rivison>0.0.1-SNAPSHOT</rivison>
+        <project.rivision>0.0.1-SNAPSHOT</project.rivision>
         <java.version>1.8</java.version>
         <source.level>1.8</source.level>
         <target.level>1.8</target.level>

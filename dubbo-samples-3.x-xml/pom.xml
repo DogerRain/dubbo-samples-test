@@ -29,7 +29,15 @@
         <dubbo.version>3.0.10</dubbo.version>
     </properties>
 
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <version>0.0.1-SNAPSHOT</version>
+                <groupId>com.dubbo</groupId>
+                <artifactId>dubbo-samples-xml-api</artifactId>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
 </project>
