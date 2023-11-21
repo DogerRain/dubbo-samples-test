@@ -1,0 +1,20 @@
+/**
+ * @Author 小雨哥
+ * @Date 2023/11/20 20:02
+ * @Description 公共包名说明：工具类
+ * <p>
+ * 1、公共说明，这部分会生成到javadoc
+ * 2、声明包中使用的类和常量（这个比较少用）
+ * 3、使用注解修饰包
+ **/
+
+@NonNullFields
+@NonNullApi
+package com.dubbo.util;
+
+import org.springframework.lang.NonNullApi;
+import org.springframework.lang.NonNullFields;
+
+class PACKAGE_CONST {
+    static final String COLA = "HelloWorld";
+}
