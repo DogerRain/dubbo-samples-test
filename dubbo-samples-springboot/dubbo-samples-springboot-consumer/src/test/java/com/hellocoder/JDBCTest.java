@@ -30,11 +30,11 @@ public class JDBCTest {
             connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
 
             // 3. 使用PreparedStatement执行SQL语句
-            String sql = "SELECT * FROM courses WHERE courseno = ?";
+            String sql = "SELECT * FROM ServerConfig WHERE 1 = ?";
             preparedStatement = connection.prepareStatement(sql);
 
             // 4. 设置占位符参数
-            preparedStatement.setString(1, "C001");
+            preparedStatement.setString(1, "1");
 
             // 5. 执行查询操作
             resultSet = preparedStatement.executeQuery();
@@ -42,8 +42,8 @@ public class JDBCTest {
             // 6. 处理查询结果
             while (resultSet.next()) {
                 // 获取结果集中的数据
-                String id = resultSet.getString("courseno");
-                String columnName = resultSet.getString("coursenm");
+                String id = resultSet.getString("Key");
+                String columnName = resultSet.getString("Value");
                 // 在这里处理数据，例如打印或进行其他操作
                 System.out.println("ID: " + id + ", Column Name: " + columnName);
             }
@@ -66,4 +66,6 @@ public class JDBCTest {
             }
         }
     }
+
+
 }
