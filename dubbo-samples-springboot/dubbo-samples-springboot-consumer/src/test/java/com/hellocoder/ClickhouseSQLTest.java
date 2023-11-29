@@ -9,12 +9,12 @@ import java.sql.*;
  * @Date 2023/11/13 9:39
  * @Description
  **/
-public class JDBCTest {
+public class ClickhouseSQLTest {
 
     // JDBC数据库连接URL
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mytest?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String JDBC_URL = "jdbc:postgresql://ep-plain-wave-75184973-pooler.ap-southeast-1.postgres.vercel-storage.com:5432/verceldb";
+    private static final String USER = "default";
+    private static final String PASSWORD = "ir4vw0FWXRyt";
 
     @Test
     public void testConnJDBC() {
@@ -24,17 +24,17 @@ public class JDBCTest {
 
         try {
             // 1. 注册JDBC驱动
-            Class<?> name = Class.forName("com.mysql.cj.jdbc.Driver");
+            Class<?> name = Class.forName("org.postgresql.Driver");
 
             // 2. 获取数据库连接
             connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
 
             // 3. 使用PreparedStatement执行SQL语句
-            String sql = "SELECT * FROM ServerConfig WHERE 1 = ?";
+            String sql = "SELECT * FROM public.newtable WHERE id = ?";
             preparedStatement = connection.prepareStatement(sql);
 
             // 4. 设置占位符参数
-            preparedStatement.setString(1, "1");
+            preparedStatement.setInt(1, 1);
 
             // 5. 执行查询操作
             resultSet = preparedStatement.executeQuery();
@@ -42,8 +42,8 @@ public class JDBCTest {
             // 6. 处理查询结果
             while (resultSet.next()) {
                 // 获取结果集中的数据
-                String id = resultSet.getString("Key");
-                String columnName = resultSet.getString("Value");
+                String id = resultSet.getString("id");
+                String columnName = resultSet.getString("app_name");
                 // 在这里处理数据，例如打印或进行其他操作
                 System.out.println("ID: " + id + ", Column Name: " + columnName);
             }
@@ -66,6 +66,4 @@ public class JDBCTest {
             }
         }
     }
-
-
 }
