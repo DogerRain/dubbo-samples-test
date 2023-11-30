@@ -15,6 +15,7 @@
         <module>dubbo-samples-3.x-xml</module>
         <module>dubbo-samples-springboot</module>
         <module>netty4.x</module>
+        <module>log-framework-demo</module>
     </modules>
 
     <properties>

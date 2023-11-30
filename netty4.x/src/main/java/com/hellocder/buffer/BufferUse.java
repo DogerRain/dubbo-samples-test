@@ -1,6 +1,7 @@
 package com.hellocder.buffer;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author HaC
@@ -15,20 +16,31 @@ public class BufferUse {
 
 
         //put
-        buffer.putInt(100);
-        buffer.putChar('鱼');
+        buffer.putInt('a');
+        buffer.putChar('s');
 
-        buffer.put("1hello world".getBytes());
+        buffer.put("hello world".getBytes());
 
+        buffer.putInt(200);
+
+        //切为可读模式
         buffer.flip();
 
 
         System.out.println(buffer.getInt());
         System.out.println(buffer.getChar());
 
-        byte[] array = buffer.array();
+        // 从 ByteBuffer 读取并转换为字符串 ， 后面 减去 int 共计 4个 字节
+        byte[] byteArray = new byte[buffer.remaining() - 4];
+        buffer.get(byteArray);
+        String result = new String(byteArray, StandardCharsets.UTF_8);
 
-        System.out.println(new String(array));
+        // 输出结果
+        System.out.println(result);
+
+        //后面还有4个字节还没读完
+        System.out.println(buffer.remaining());
+
 
 
     }
