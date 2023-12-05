@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -40,15 +41,17 @@ public class NIOServer {
                     readcount = socketChannel.read(byteBuffer);
                     // 将 ByteBuffer 切换为读取模式
                     byteBuffer.flip();
-                    System.out.println("server receive byteBuffer length" + readcount);
+                    //复制一个 ByteBuffer 。 其属性position、limit、capacity 和原来的一样
+                    ByteBuffer duplicate = byteBuffer.duplicate();
+                    System.out.println("server receive byteBuffer length" + readcount + ",value:" + StandardCharsets.UTF_8.decode(duplicate));
                     //把byteBuffer写到Channel
                     destinationChannel.write(byteBuffer);
                 } catch (Exception ex) {
                     // ex.printStackTrace();
                     break;
                 } finally {
-                    //
-                    byteBuffer.clear(); // 清空 position 和 limit，准备下一次读
+                    // 清空 position 和 limit，准备下一次读
+                    byteBuffer.clear();
                 }
             }
             destinationChannel.close();
