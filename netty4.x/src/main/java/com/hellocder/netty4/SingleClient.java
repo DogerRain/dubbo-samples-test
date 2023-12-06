@@ -29,6 +29,7 @@ public class SingleClient {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(new NettyClientHandler()); //加入自己的处理器
+                            ch.pipeline().addLast(new YourOutboundHandler()); //加入自己的处理器
                         }
                     });
             System.out.println("客户端 ok..");
@@ -46,13 +47,16 @@ public class SingleClient {
 
     }
 
+    /*
+     入站
+     */
     public static class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
         //当通道就绪就会触发该方法
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             System.out.println("client " + ctx);
-            ctx.writeAndFlush(Unpooled.copiedBuffer("hello, server: (>^ω^<)喵", CharsetUtil.UTF_8));
+            ctx.writeAndFlush(Unpooled.copiedBuffer("hello, 服务端: (>^ω^<)喵", CharsetUtil.UTF_8));
         }
 
         //当通道有读取事件时，会触发
@@ -61,6 +65,8 @@ public class SingleClient {
             ByteBuf buf = (ByteBuf) msg;
             System.out.println("服务器回复的消息:" + buf.toString(CharsetUtil.UTF_8));
             System.out.println("服务器的地址： " + ctx.channel().remoteAddress());
+
+
         }
 
         @Override
@@ -69,4 +75,19 @@ public class SingleClient {
             ctx.close();
         }
     }
+
+    public static class YourOutboundHandler extends ChannelOutboundHandlerAdapter {
+        @Override
+        public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+            // 处理将数据写入到远端节点的逻辑
+            // ...
+            System.out.println("ChannelOutboundHandlerAdapter write");
+            // 写入数据的操作
+            ctx.write(msg, promise);
+            // 刷新缓冲区，立马发送
+            ctx.flush();
+        }
+    }
+
+
 }
