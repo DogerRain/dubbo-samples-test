@@ -1,0 +1,182 @@
+2023-12-20 16:10:13.965 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:59] [main] One-Agent start
+2023-12-20 16:10:13.969 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:62] [main] [a] begin check logic
+2023-12-20 16:10:13.970 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:64] [main] [a] finish check logic
+2023-12-20 16:10:13.971 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:67] [main] [b] begin injected class to Bootstrap classloader
+2023-12-20 16:10:14.151 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:69] [main] [b] finish injected class to Bootstrap classloader: [com.meizu.xjsd.platform.agent.plugin.Dispatcher, com.meizu.xjsd.platform.agent.plugin.api.DynamicFieldAccessor, com.meizu.xjsd.platform.agent.plugin.api.MethodInfo, com.meizu.xjsd.platform.agent.plugin.api.interceptor.Interceptor, com.meizu.xjsd.platform.agent.plugin.api.interceptor.InterceptorChain, com.meizu.xjsd.platform.agent.plugin.api.interceptor.NoReentrantInterceptor, com.meizu.xjsd.platform.agent.plugin.api.interceptor.Ordered, com.meizu.xjsd.platform.agent.plugin.context.ContextManager, com.meizu.xjsd.platform.agent.plugin.context.MethodContext, com.meizu.xjsd.platform.agent.plugin.context.SessionContext]
+2023-12-20 16:10:14.153 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:72] [main] [c] begin load config
+2023-12-20 16:10:14.562 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:74] [main] [c] finish load config: AgentConfig{isInit=true, applicationName='jetty-server-demo', originalConfig={agent.http.metrics.path=/actuator/prometheus, agent.otlp.grpc.endpoint=http://localhost:4317, agent.http.server.port=8073, agent.nacos.server.addr=http://nacos.meizu.com}, remoteAppConfig={agent.status=true, plugin.jetty.metric.enabled=false}, remoteCommonConfig={plugin.spring.metric.enabled=true, plugin.logback.metric.enabled=true, plugin.rocketmq.metric.enabled=true, agent.metric.status=true, plugin.mybatis.metric.enabled=true, plugin.springmvc.metric.enabled=true, plugin.jetty.metric.enabled=true, plugin.jedis-v1.x-v2.x.metric.enabled=false, plugin.jdbc.metric.sql.slow-query-ms=3000, agent.status=true, plugin.kiev.metric.enabled=true, plugin.threadpool.metric.enabled=false, plugin.jdbc.metric.sql.tag.max.length=500, plugin.sentinel.metric.enabled=true, plugin.httpservlet.metric.slow-rt-ms=3000, plugin.brpc.metric.enabled=true, plugin.jdbc.metric.enabled=true, plugin.methods.include.names=, agent.trace.status=true, plugin.methods.metric.enabled=true, plugin.exception.metric.enabled=true, plugin.metric.maximum-expected-value-ms=500, plugin.httpservlet.metric.enabled=true, plugin.redisson.metric.enabled=true, plugin.exception.exclude.names=, plugin.httpUrlConnection.metric.enabled=true, plugin.lettuce.metric.enabled=true, plugin.jedis.metric.enabled=true, agent.log.status=true, plugin.metric.minimum-expected-value-ms=5}}
+2023-12-20 16:10:14.563 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:81] [main] [d] begin start prometheus http server
+2023-12-20 16:10:15.209 [INFO] [com.meizu.xjsd.platform.agent.metrics.PrometheusServer] [start:58] [main] Prometheus server started.
+2023-12-20 16:10:15.209 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:83] [main] [d] finish start prometheus http server
+2023-12-20 16:10:15.210 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:87] [main] [e] begin agent build, load plugin, load points, transform
+2023-12-20 16:10:15.292 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [getAgentBuilder:137] [main] AgentBuilder use time: 82ms
+2023-12-20 16:10:15.340 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [load:151] [main] Load enabled plugin [alibaba-dubbo,apache-dubbo,brpc,exception,httpUrlConnection,httpservlet,jdbc,jedis,kiev,lettuce,log4j,log4j2,logback,methods,mybatis,redisson,rocketmq,sentinel,spring,springmvc]
+2023-12-20 16:10:15.399 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [load:155] [main] Load plugin points [
+com.meizu.xjsd.platform.agent.plugin.alibaba.dubbo.points.AbstractDirectoryInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.alibaba.dubbo.points.AbstractConfigInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.apache.dubbo.points.AbstractDirectoryInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.apache.dubbo.points.AbstractConfigInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.brpc.points.CommunicationServerPoints,
+com.meizu.xjsd.platform.agent.plugin.brpc.points.ServerTraceInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.brpc.points.ClientTraceInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.exception.points.ExceptionPoints,
+com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.HttpUrlConnectionPoint,
+com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.GetResponseCodePoint,
+com.meizu.xjsd.platform.agent.plugin.httpservlet.points.ServletPoints,
+com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints,
+com.meizu.xjsd.platform.agent.plugin.jdbc.points.StatementPoints,
+com.meizu.xjsd.platform.agent.plugin.jedis.points.JedisConnectionPoint,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ClientInvokerPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.KievSessionPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.KievNodeDataPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ServiceManagerPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ServerTraceInvokerListenerPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ClientTraceInvokerListenerPoints,
+com.meizu.xjsd.platform.agent.plugin.lettuce.points.RedisChannelWriterPoint,
+com.meizu.xjsd.platform.agent.plugin.log4j.points.LoggingMdcPoints,
+com.meizu.xjsd.platform.agent.plugin.log4j.points.LoggingAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.log4j2.points.LoggingAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.log4j2.points.LogMessageAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.logback.points.LoggingAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.logback.points.LoggingEventPoints,
+com.meizu.xjsd.platform.agent.plugin.methods.points.AnnotationPoints,
+com.meizu.xjsd.platform.agent.plugin.methods.points.TraceContextPoints,
+com.meizu.xjsd.platform.agent.plugin.mybatis.points.MyBatisPluginInvokePoints,
+com.meizu.xjsd.platform.agent.plugin.mybatis.points.MyBatisStatementPoints,
+com.meizu.xjsd.platform.agent.plugin.redisson.points.RedisCommandDataPoint,
+com.meizu.xjsd.platform.agent.plugin.redisson.points.RedisConnectionPoint,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.MQClientAPIImplPoints,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.ConsumeMessageOrderlyPoints,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.ConsumeMessageConcurrentlyPoints,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.MQProducerPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtBlockedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtCompletedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtErrorPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtPassedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotAllBlockedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotAllCompletedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotAllPassedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.DefaultNodePoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotEntryPoints,
+com.meizu.xjsd.platform.agent.plugin.spring.points.ApplicationObjectSupportPoints,
+com.meizu.xjsd.platform.agent.plugin.spring.points.SpringBootJarLauncherPoints,
+com.meizu.xjsd.platform.agent.plugin.spring.points.SpringApplicationPoints,
+com.meizu.xjsd.platform.agent.plugin.springmvc.points.ControllerPoint]
+2023-12-20 16:10:16.948 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.HttpUrlConnectionPoint
+2023-12-20 16:10:17.014 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.GetResponseCodePoint
+2023-12-20 16:10:17.164 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class sun.net.www.protocol.http.HttpURLConnection loaded: true from classLoader null
+2023-12-20 16:10:17.167 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.HttpUrlConnectionPoint
+2023-12-20 16:10:17.175 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.GetResponseCodePoint
+2023-12-20 16:10:17.200 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class java.net.HttpURLConnection loaded: true from classLoader null
+2023-12-20 16:10:17.205 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:90] [main] [e] finish agent build,load plugin, load points, transform
+2023-12-20 16:10:17.205 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:93] [main] [f] begin open telemetry configuration
+2023-12-20 16:10:19.256 [INFO] [com.meizu.xjsd.platform.agent.otel.OpenTelemetryConfiguration] [initOpenTelemetry:57] [main] jetty-server-demo use NoopSpanExporter & NoopLogRecordExporter, because http://localhost:4317 can't connect, maybe sidecar otel-collector not deploy.
+2023-12-20 16:10:19.567 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:95] [main] [f] finish open telemetry configuration
+2023-12-20 16:10:19.568 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:98] [main] [g] begin register service
+2023-12-20 16:10:19.814 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:100] [main] [g] finish register service
+2023-12-20 16:10:19.834 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:106] [main] One-Agent finished
+2023-12-20 16:10:20.055 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints
+2023-12-20 16:10:20.077 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: interface java.sql.Connection loaded: false from classLoader null
+2023-12-20 16:10:20.156 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints
+2023-12-20 16:10:20.210 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class org.postgresql.jdbc.PgConnection loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 16:10:20.218 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints
+2023-12-20 16:10:20.237 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: interface org.postgresql.core.BaseConnection loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 16:10:21.821 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.StatementPoints
+2023-12-20 16:10:21.884 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class org.postgresql.jdbc.PgPreparedStatement loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 16:10:21.887 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.StatementPoints
+2023-12-20 16:10:21.911 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class org.postgresql.jdbc.PgStatement loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 16:10:22.073 [WARN] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [shutdown:108] [Thread-1] [HttpClientBeanHolder] Start destroying common HttpClient
+2023-12-20 16:10:22.074 [WARN] [com.alibaba.nacos.common.notify.NotifyCenter] [shutdown:145] [Thread-16] [NotifyCenter] Start destroying Publisher
+2023-12-20 16:10:22.075 [WARN] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [shutdown:114] [Thread-1] [HttpClientBeanHolder] Destruction of the end
+2023-12-20 16:10:22.075 [WARN] [com.alibaba.nacos.common.notify.NotifyCenter] [shutdown:162] [Thread-16] [NotifyCenter] Destruction of the end
+2023-12-20 16:11:22.140 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:59] [main] One-Agent start
+2023-12-20 16:11:22.143 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:62] [main] [a] begin check logic
+2023-12-20 16:11:22.145 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:64] [main] [a] finish check logic
+2023-12-20 16:11:22.145 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:67] [main] [b] begin injected class to Bootstrap classloader
+2023-12-20 16:11:22.322 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:69] [main] [b] finish injected class to Bootstrap classloader: [com.meizu.xjsd.platform.agent.plugin.Dispatcher, com.meizu.xjsd.platform.agent.plugin.api.DynamicFieldAccessor, com.meizu.xjsd.platform.agent.plugin.api.MethodInfo, com.meizu.xjsd.platform.agent.plugin.api.interceptor.Interceptor, com.meizu.xjsd.platform.agent.plugin.api.interceptor.InterceptorChain, com.meizu.xjsd.platform.agent.plugin.api.interceptor.NoReentrantInterceptor, com.meizu.xjsd.platform.agent.plugin.api.interceptor.Ordered, com.meizu.xjsd.platform.agent.plugin.context.ContextManager, com.meizu.xjsd.platform.agent.plugin.context.MethodContext, com.meizu.xjsd.platform.agent.plugin.context.SessionContext]
+2023-12-20 16:11:22.322 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:72] [main] [c] begin load config
+2023-12-20 16:11:22.714 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:74] [main] [c] finish load config: AgentConfig{isInit=true, applicationName='jetty-server-demo', originalConfig={agent.http.metrics.path=/actuator/prometheus, agent.otlp.grpc.endpoint=http://localhost:4317, agent.http.server.port=8073, agent.nacos.server.addr=http://nacos.meizu.com}, remoteAppConfig={agent.status=true, plugin.jetty.metric.enabled=false}, remoteCommonConfig={plugin.spring.metric.enabled=true, plugin.logback.metric.enabled=true, plugin.rocketmq.metric.enabled=true, agent.metric.status=true, plugin.mybatis.metric.enabled=true, plugin.springmvc.metric.enabled=true, plugin.jetty.metric.enabled=true, plugin.jedis-v1.x-v2.x.metric.enabled=false, plugin.jdbc.metric.sql.slow-query-ms=3000, agent.status=true, plugin.kiev.metric.enabled=true, plugin.threadpool.metric.enabled=false, plugin.jdbc.metric.sql.tag.max.length=500, plugin.sentinel.metric.enabled=true, plugin.httpservlet.metric.slow-rt-ms=3000, plugin.brpc.metric.enabled=true, plugin.jdbc.metric.enabled=true, plugin.methods.include.names=, agent.trace.status=true, plugin.methods.metric.enabled=true, plugin.exception.metric.enabled=true, plugin.metric.maximum-expected-value-ms=500, plugin.httpservlet.metric.enabled=true, plugin.redisson.metric.enabled=true, plugin.exception.exclude.names=, plugin.httpUrlConnection.metric.enabled=true, plugin.lettuce.metric.enabled=true, plugin.jedis.metric.enabled=true, agent.log.status=true, plugin.metric.minimum-expected-value-ms=5}}
+2023-12-20 16:11:22.714 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:81] [main] [d] begin start prometheus http server
+2023-12-20 16:11:23.345 [INFO] [com.meizu.xjsd.platform.agent.metrics.PrometheusServer] [start:58] [main] Prometheus server started.
+2023-12-20 16:11:23.345 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:83] [main] [d] finish start prometheus http server
+2023-12-20 16:11:23.345 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:87] [main] [e] begin agent build, load plugin, load points, transform
+2023-12-20 16:11:23.430 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [getAgentBuilder:137] [main] AgentBuilder use time: 84ms
+2023-12-20 16:11:23.478 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [load:151] [main] Load enabled plugin [alibaba-dubbo,apache-dubbo,brpc,exception,httpUrlConnection,httpservlet,jdbc,jedis,kiev,lettuce,log4j,log4j2,logback,methods,mybatis,redisson,rocketmq,sentinel,spring,springmvc]
+2023-12-20 16:11:23.538 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [load:155] [main] Load plugin points [
+com.meizu.xjsd.platform.agent.plugin.alibaba.dubbo.points.AbstractDirectoryInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.alibaba.dubbo.points.AbstractConfigInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.apache.dubbo.points.AbstractDirectoryInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.apache.dubbo.points.AbstractConfigInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.brpc.points.CommunicationServerPoints,
+com.meizu.xjsd.platform.agent.plugin.brpc.points.ServerTraceInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.brpc.points.ClientTraceInterceptorPoints,
+com.meizu.xjsd.platform.agent.plugin.exception.points.ExceptionPoints,
+com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.HttpUrlConnectionPoint,
+com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.GetResponseCodePoint,
+com.meizu.xjsd.platform.agent.plugin.httpservlet.points.ServletPoints,
+com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints,
+com.meizu.xjsd.platform.agent.plugin.jdbc.points.StatementPoints,
+com.meizu.xjsd.platform.agent.plugin.jedis.points.JedisConnectionPoint,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ClientInvokerPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.KievSessionPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.KievNodeDataPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ServiceManagerPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ServerTraceInvokerListenerPoints,
+com.meizu.xjsd.platform.agent.plugin.kiev.points.ClientTraceInvokerListenerPoints,
+com.meizu.xjsd.platform.agent.plugin.lettuce.points.RedisChannelWriterPoint,
+com.meizu.xjsd.platform.agent.plugin.log4j.points.LoggingMdcPoints,
+com.meizu.xjsd.platform.agent.plugin.log4j.points.LoggingAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.log4j2.points.LoggingAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.log4j2.points.LogMessageAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.logback.points.LoggingAppenderPoints,
+com.meizu.xjsd.platform.agent.plugin.logback.points.LoggingEventPoints,
+com.meizu.xjsd.platform.agent.plugin.methods.points.AnnotationPoints,
+com.meizu.xjsd.platform.agent.plugin.methods.points.TraceContextPoints,
+com.meizu.xjsd.platform.agent.plugin.mybatis.points.MyBatisPluginInvokePoints,
+com.meizu.xjsd.platform.agent.plugin.mybatis.points.MyBatisStatementPoints,
+com.meizu.xjsd.platform.agent.plugin.redisson.points.RedisCommandDataPoint,
+com.meizu.xjsd.platform.agent.plugin.redisson.points.RedisConnectionPoint,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.MQClientAPIImplPoints,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.ConsumeMessageOrderlyPoints,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.ConsumeMessageConcurrentlyPoints,
+com.meizu.xjsd.platform.agent.plugin.rocketmq.points.MQProducerPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtBlockedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtCompletedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtErrorPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.MetricsExtPassedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotAllBlockedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotAllCompletedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotAllPassedPoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.DefaultNodePoints,
+com.meizu.xjsd.platform.agent.plugin.sentinel.points.StatisticsSlotEntryPoints,
+com.meizu.xjsd.platform.agent.plugin.spring.points.ApplicationObjectSupportPoints,
+com.meizu.xjsd.platform.agent.plugin.spring.points.SpringBootJarLauncherPoints,
+com.meizu.xjsd.platform.agent.plugin.spring.points.SpringApplicationPoints,
+com.meizu.xjsd.platform.agent.plugin.springmvc.points.ControllerPoint]
+2023-12-20 16:11:25.087 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.HttpUrlConnectionPoint
+2023-12-20 16:11:25.143 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.GetResponseCodePoint
+2023-12-20 16:11:25.288 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class sun.net.www.protocol.http.HttpURLConnection loaded: true from classLoader null
+2023-12-20 16:11:25.292 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.HttpUrlConnectionPoint
+2023-12-20 16:11:25.300 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.httpurlconnection.points.GetResponseCodePoint
+2023-12-20 16:11:25.324 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class java.net.HttpURLConnection loaded: true from classLoader null
+2023-12-20 16:11:25.329 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:90] [main] [e] finish agent build,load plugin, load points, transform
+2023-12-20 16:11:25.329 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:93] [main] [f] begin open telemetry configuration
+2023-12-20 16:11:27.381 [INFO] [com.meizu.xjsd.platform.agent.otel.OpenTelemetryConfiguration] [initOpenTelemetry:57] [main] jetty-server-demo use NoopSpanExporter & NoopLogRecordExporter, because http://localhost:4317 can't connect, maybe sidecar otel-collector not deploy.
+2023-12-20 16:11:27.695 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:95] [main] [f] finish open telemetry configuration
+2023-12-20 16:11:27.695 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:98] [main] [g] begin register service
+2023-12-20 16:11:27.934 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:100] [main] [g] finish register service
+2023-12-20 16:11:27.954 [INFO] [com.meizu.xjsd.platform.agent.Bootstrap] [start:106] [main] One-Agent finished
+2023-12-20 16:11:28.169 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints
+2023-12-20 16:11:28.196 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: interface java.sql.Connection loaded: false from classLoader null
+2023-12-20 16:11:28.273 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints
+2023-12-20 16:11:28.334 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class org.postgresql.jdbc.PgConnection loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 16:11:28.340 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.ConnectionPoints
+2023-12-20 16:11:28.359 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: interface org.postgresql.core.BaseConnection loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 16:11:31.341 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.StatementPoints
+2023-12-20 16:11:31.405 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class org.postgresql.jdbc.PgPreparedStatement loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 16:11:31.409 [INFO] [com.meizu.xjsd.platform.agent.advice.AdviceTransformer] [transform:63] [main] Transform register interceptor chain: com.meizu.xjsd.platform.agent.plugin.jdbc.points.StatementPoints
+2023-12-20 16:11:31.440 [INFO] [com.meizu.xjsd.platform.agent.AgentListener] [onTransformation:28] [main] onTransformation: class org.postgresql.jdbc.PgStatement loaded: false from classLoader sun.misc.Launcher$AppClassLoader@18b4aac2
+2023-12-20 17:03:30.258 [WARN] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [shutdown:108] [Thread-1] [HttpClientBeanHolder] Start destroying common HttpClient
+2023-12-20 17:03:30.259 [WARN] [com.alibaba.nacos.common.notify.NotifyCenter] [shutdown:145] [Thread-16] [NotifyCenter] Start destroying Publisher
+2023-12-20 17:03:30.262 [WARN] [com.alibaba.nacos.common.notify.NotifyCenter] [shutdown:162] [Thread-16] [NotifyCenter] Destruction of the end
+2023-12-20 17:03:30.262 [WARN] [com.alibaba.nacos.common.http.HttpClientBeanHolder] [shutdown:114] [Thread-1] [HttpClientBeanHolder] Destruction of the end

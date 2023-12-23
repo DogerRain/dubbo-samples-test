@@ -17,7 +17,7 @@ public class PqSQLTest {
     private static final String PASSWORD = "ir4vw0FWXRyt";
 
     @Test
-    public void testConnJDBC() {
+    public void testConnJDBC() throws InterruptedException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -65,5 +65,6 @@ public class PqSQLTest {
                 e.printStackTrace();
             }
         }
+
     }
 }
